@@ -1,0 +1,64 @@
+# name: MasterDeployCI
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node-version: [10.x]
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#     - name: Install Packages
+#       run: npm install
+#     - name: Deploy to GH Pages
+#       run: |
+#         git config --global user.email "c.henriques@ua.pt"
+#         git config --global user.name "cfchenr"
+#         git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/minecode/website.git
+#         npm run deploy
+
+name: github pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          user_name: 'minecodebot'
+          user_email: 'minecode.geral@gmail.com'
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          external_repository: minecode/minecode.github.io
+          publish_branch: master
+          publish_dir: ./build

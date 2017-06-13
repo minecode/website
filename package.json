@@ -2,10 +2,12 @@
   "name": "react-gh-pages",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gitname.github.io/react-gh-pages",
+  "homepage": "http://minecode.github.io/",
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-markdown": "^4.3.1",
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
     "gh-pages": "^1.0.0",
@@ -13,10 +15,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build -p && cp build/index.html build/404.html",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"    
+    "deploy": "gh-pages -d build"
   }
 }

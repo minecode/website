@@ -32,7 +32,7 @@ class Post extends Component {
       .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
       .then(([data1, data2]) => {
         this.setState({
-          dataOpen: data1,
+          data: data1,
           comments: data2
         })
       })

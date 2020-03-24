@@ -117,8 +117,7 @@ class Applications extends Component {
         var a = document.createElement('a')
         a.setAttribute('target', '_blank')
         a.setAttribute('rel', 'noopener noreferrer')
-        a.setAttribute('href', '/' + application.name + '/privacyPolicy')
-        var link = document.createElement('Link')
+        a.setAttribute('href', '/privacyPolicy/' + application.name)
         var b = document.createElement('b')
         var textPP = document.createTextNode('Privacy policy')
         b.append(textPP)
@@ -134,8 +133,7 @@ class Applications extends Component {
   }
 
   async componentDidMount() {
-    var authorizationBasic = window.btoa(process.env.REACT_APP_APIKey);
-    console.log(process.env.REACT_APP_APIKey)
+    var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
     var header = new Headers();
     header.set('Authorization', 'Basic ' + authorizationBasic)
     fetch('https://api.github.com/orgs/minecode/repos', {

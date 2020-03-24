@@ -26,7 +26,7 @@ class App extends React.Component {
                         <Route path="/ocean_king" exact>
                             <Redirect to="/ocean_king/"/>
                         </Route>
-                        <Route path="/:application/privacyPolicy" component={PrivacyPolicy}></Route>
+                        <Route path="/privacyPolicy/:application" component={PrivacyPolicy}></Route>
                     </Switch>
                 </main>
                 <Footer />

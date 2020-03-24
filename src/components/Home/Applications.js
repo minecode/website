@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { titleCase } from '../Utils'
 
 class Applications extends Component {
   constructor(props) {
@@ -6,18 +7,6 @@ class Applications extends Component {
     this.state = {
       data: []
     };
-  }
-
-  titleCase(str) {
-    str = str.split('_').join(' ')
-    var splitStr = str.toLowerCase().split(' ');
-    for (var i = 0; i < splitStr.length; i++) {
-      // You do not need to check if i is larger than splitStr length, as your for does that for you
-      // Assign it back to the array
-      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-    }
-    // Directly return the joined string
-    return splitStr.join(' ');
   }
 
   getApplicationsList() {
@@ -32,7 +21,7 @@ class Applications extends Component {
         header.setAttribute('class', 'card-header');
         var title = document.createElement('h5');
         title.setAttribute('class', 'my-0 font-weight-normal');
-        var text = document.createTextNode(this.titleCase(application.name));
+        var text = document.createTextNode(titleCase(application.name));
         title.append(text);
         header.append(title);
         var body = document.createElement('div');
@@ -76,20 +65,6 @@ class Applications extends Component {
           homepageAdded = true
         }
         if (application.minecode_settings !== undefined) {
-          if (application.minecode_settings.privacy_policy !== null) {
-            var status = document.createElement('div');
-            status.setAttribute('class', 'mt-3 mb-4');
-            var a = document.createElement('a')
-            a.setAttribute('target', '_blank')
-            a.setAttribute('rel', 'noopener noreferrer')
-            a.setAttribute('href', 'https://raw.githubusercontent.com/minecode/' + application.name + '/master/' + application.minecode_settings.privacy_policy)
-            var b = document.createElement('b')
-            var textPP = document.createTextNode('Privacy policy')
-            b.append(textPP)
-            a.append(b)
-            status.append(a);
-            body.append(status);
-          }
           if (application.minecode_settings.link_mobile !== null) {
             labels = document.createElement('div');
             labels.setAttribute('class', 'text-center');
@@ -136,8 +111,20 @@ class Applications extends Component {
             labels.append(lab);
             body.append(labels);
           }
-
         }
+        var status = document.createElement('div');
+        status.setAttribute('class', 'mt-3 mb-4');
+        var a = document.createElement('a')
+        a.setAttribute('target', '_blank')
+        a.setAttribute('rel', 'noopener noreferrer')
+        a.setAttribute('href', '/' + application.name + '/privacyPolicy')
+        var link = document.createElement('Link')
+        var b = document.createElement('b')
+        var textPP = document.createTextNode('Privacy policy')
+        b.append(textPP)
+        a.append(b)
+        status.append(a);
+        body.append(status);
         card.append(header);
         card.append(body);
         card_deck_issue.append(card)
@@ -147,7 +134,8 @@ class Applications extends Component {
   }
 
   async componentDidMount() {
-    var authorizationBasic = window.btoa('97b2a912e67b0ae98cd5:e644319491835bcaa1dd08693df8185e6c950e6a');
+    var authorizationBasic = window.btoa(process.env.REACT_APP_APIKey);
+    console.log(process.env.REACT_APP_APIKey)
     var header = new Headers();
     header.set('Authorization', 'Basic ' + authorizationBasic)
     fetch('https://api.github.com/orgs/minecode/repos', {

@@ -4,6 +4,7 @@ import Home from './Home';
 import Post from './Post';
 import Blog from './Blog';
 import Ideas from './Ideas';
+import PrivacyPolicy from './PrivacyPolicy';
 import Footer from './Footer';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
@@ -25,6 +26,7 @@ class App extends React.Component {
                         <Route path="/ocean_king" exact>
                             <Redirect to="/ocean_king/"/>
                         </Route>
+                        <Route path="/:application/privacyPolicy" component={PrivacyPolicy}></Route>
                     </Switch>
                 </main>
                 <Footer />

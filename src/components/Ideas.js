@@ -93,7 +93,7 @@ class Ideas extends Component {
     }
 
     async componentDidMount() {
-        var authorizationBasic = window.btoa('97b2a912e67b0ae98cd5:e644319491835bcaa1dd08693df8185e6c950e6a');
+        var authorizationBasic = window.btoa(process.env.REACT_APP_APIKey);
         var header = new Headers();
         header.set('Authorization', 'Basic ' + authorizationBasic)
         Promise.all([

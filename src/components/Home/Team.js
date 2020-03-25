@@ -14,7 +14,7 @@ class Footer extends Component {
                 <h4 className="my-0 font-weight-normal">Fábio Henriques</h4>
                 </div>
                 <div className="card-body">
-                <img src="images/fh.jpeg" className="rounded-circle" alt="Fábio Henriques" width="96" height="96" />
+                <img src="/images/fh.jpeg" className="rounded-circle" alt="Fábio Henriques" width="96" height="96" />
                 <ul className="list-unstyled mt-3 mb-3">
                     <li><b>Master Degree in Mathematic and Applications</b></li>
                     <li>Full stack developer</li>
@@ -22,8 +22,8 @@ class Footer extends Component {
                 </ul>
                 <a type="button" className="mt-3 mb-4 btn btn-lg btn-outline-primary githublogo" href="https://github.com/fabiohfab"
                     target="_blank" rel="noopener noreferrer">
-                    <img src="images/github.svg" alt="Github" width="24" height="24" />
-                    GitHub
+                    <img src="/images/github.svg" alt="Github" width="24" height="24" />
+                    <span> GitHub</span>
                 </a>
                 </div>
             </div>
@@ -33,7 +33,7 @@ class Footer extends Component {
                 <h4 className="my-0 font-weight-normal">Cláudio Henriques</h4>
                 </div>
                 <div className="card-body">
-                <img src="images/ch.jpeg" className="rounded-circle" alt="Cláudio Henriques" width="96" height="96" />
+                <img src="/images/ch.jpeg" className="rounded-circle" alt="Cláudio Henriques" width="96" height="96" />
                 <ul className="list-unstyled mt-3 mb-3">
                     <li><b>Master Degree in Mathematic and Applications</b></li>
                     <li>Front-end and software tester</li>
@@ -41,8 +41,8 @@ class Footer extends Component {
                 </ul>
                 <a type="button" className="mt-3 mb-4 btn btn-lg btn-outline-primary githublogo" href="https://github.com/cfchenr"
                     target="_blank" rel="noopener noreferrer">
-                    <img src="images/github.svg" alt="Github" width="24" height="24" />
-                    GitHub
+                    <img src="/images/github.svg" alt="Github" width="24" height="24" />
+                    <span> GitHub</span>
                 </a>
                 </div>
             </div>

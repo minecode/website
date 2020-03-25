@@ -3,7 +3,8 @@ import { titleCase } from './Utils'
 
 class PrivacyPolic extends Component {
     componentDidMount() {
-        var app = document.createTextNode(titleCase(this.props.match.params.application))
+        var elements = this.props.match.path.split('/')
+        var app = document.createTextNode(titleCase(elements[elements.length-1]))
         document.getElementById('application_name').append(app)
     }
     render() {

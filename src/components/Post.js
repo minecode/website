@@ -70,7 +70,7 @@ class Post extends Component {
       githubLink.setAttribute("target", "_blank");
       githubLink.setAttribute("style", 'color: #000"');
       var githubLogo = document.createElement("img");
-      githubLogo.setAttribute("src", "../images/github.svg");
+      githubLogo.setAttribute("src", "/images/github.svg");
       githubLogo.setAttribute("alt", "Github");
       githubLogo.setAttribute("width", "24");
       githubLogo.setAttribute("height", "24");
@@ -100,18 +100,18 @@ class Post extends Component {
 
   getCommentsList = user => {
     this.state.comments.forEach(data => {
-      var div2 = document.createElement("div");
-      div2.setAttribute("class", "col-2 text-center");
+      var div1 = document.createElement("div");
+      div1.setAttribute("class", "col-1 text-center");
       var userLogo = document.createElement("img");
       userLogo.setAttribute("class", "m-3 rounded-circle");
       userLogo.setAttribute("src", data.user.avatar_url);
       userLogo.setAttribute("alt", "User");
       userLogo.setAttribute("width", "35");
       userLogo.setAttribute("height", "35");
-      div2.append(userLogo);
+      div1.append(userLogo);
 
-      var div10 = document.createElement("div");
-      div10.setAttribute("class", "col-10");
+      var div11 = document.createElement("div");
+      div11.setAttribute("class", "col-11");
       var all = document.createElement("div");
       all.setAttribute("class", "card mt-3 mb-3");
 
@@ -146,13 +146,13 @@ class Post extends Component {
       ReactDOM.render(<ReactMarkdown source={data.body} />, contentComment)
       all.append(allInfo);
       all.append(contentComment);
-      div10.append(all);
+      div11.append(all);
       if (data.user.login === user) {
-        document.getElementById("comments").append(div2);
-        document.getElementById("comments").append(div10);
+        document.getElementById("comments").append(div1);
+        document.getElementById("comments").append(div11);
       } else {
-        document.getElementById("comments").append(div10);
-        document.getElementById("comments").append(div2);
+        document.getElementById("comments").append(div11);
+        document.getElementById("comments").append(div1);
       }
     });
   };

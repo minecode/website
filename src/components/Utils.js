@@ -5,7 +5,7 @@ export function addPost(issue) {
   var title = document.createElement('h3');
   var link = document.createElement('a')
   title.setAttribute('class', 'my-0 font-weight-normal');
-  link.setAttribute('href', './blog/post.html?number=' + issue.number);
+  link.setAttribute('href', './blog/post/' + issue.number);
   var text = document.createTextNode(issue.title.split(/\[\w*\] /)[1]);
   link.append(text);
   title.append(link)
@@ -30,7 +30,7 @@ export function addPost(issue) {
   githubLink.setAttribute('target', '_blank')
   githubLink.setAttribute('style', 'color: #000"')
   var githubLogo = document.createElement('img')
-  githubLogo.setAttribute('src', 'images/github.svg')
+  githubLogo.setAttribute('src', '/images/github.svg')
   githubLogo.setAttribute('alt', 'Github')
   githubLogo.setAttribute('width', '14')
   githubLogo.setAttribute('height', '14')

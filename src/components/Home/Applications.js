@@ -36,7 +36,6 @@ class Applications extends Component {
             body.append(img)
           }
         }
-
         var description = document.createElement('div');
         description.setAttribute('class', 'mt-3 mb-3');
         text = document.createTextNode(application.description);
@@ -63,7 +62,7 @@ class Applications extends Component {
           body.append(labels);
         }
         if (application.minecode_settings !== undefined) {
-          if (application.minecode_settings.link_mobile !== null) {
+          if (application.minecode_settings.link_mobile !== undefined) {
             labels = document.createElement('div');
             labels.setAttribute('class', 'text-center');
             lab = document.createElement('a');

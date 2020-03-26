@@ -7,7 +7,7 @@ import Ideas from './Ideas';
 import PrivacyPolicy from './PrivacyPolicy';
 import Footer from './Footer';
 import NoMatch from './NoMatch.js'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 class App extends React.Component {
     render() {
@@ -21,11 +21,11 @@ class App extends React.Component {
                         <Route exact path="/blog" component={Blog}></Route>
                         <Route exact path="/blog/post/:id" component={Post}></Route>
                         <Route exact path="/ideas" component={Ideas}></Route>
-                        <Route exact path="/privacyPolicy/shopping_cart" exact component={PrivacyPolicy}></Route>
-                        <Route exact path="/privacyPolicy/pet_find" exact component={PrivacyPolicy}></Route>
-                        <Route exact path="/privacyPolicy/covid19" exact component={PrivacyPolicy}></Route>
-                        <Route exact path="/privacyPolicy/ocean_king" exact component={PrivacyPolicy}></Route>
-                        <Route exact path="/privacyPolicy/codecontest" exact component={PrivacyPolicy}></Route>
+                        <Route exact path="/privacyPolicy/shopping_cart" component={PrivacyPolicy}></Route>
+                        <Route exact path="/privacyPolicy/pet_find" component={PrivacyPolicy}></Route>
+                        <Route exact path="/privacyPolicy/covid19" component={PrivacyPolicy}></Route>
+                        <Route exact path="/privacyPolicy/ocean_king" component={PrivacyPolicy}></Route>
+                        <Route exact path="/privacyPolicy/codecontest" component={PrivacyPolicy}></Route>
                         <Route path="*" component={NoMatch}></Route>
                     </Switch>
                 </main>

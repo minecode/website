@@ -42,8 +42,7 @@ class Applications extends Component {
         text = document.createTextNode(application.description);
         description.append(text);
         body.append(description);
-        var homepageAdded = false
-        if (application.homepage !== null) {
+        if (application.homepage.length > 0) {
           var labels = document.createElement('div');
           labels.setAttribute('class', 'text-center');
           var lab = document.createElement('a');
@@ -62,7 +61,6 @@ class Applications extends Component {
           lab.append(text);
           labels.append(lab);
           body.append(labels);
-          homepageAdded = true
         }
         if (application.minecode_settings !== undefined) {
           if (application.minecode_settings.link_mobile !== null) {
@@ -84,29 +82,6 @@ class Applications extends Component {
             img.setAttribute('height', '24')
             lab.append(img)
             text = document.createTextNode(' Get app');
-            lab.append(text);
-            labels.append(lab);
-            body.append(labels);
-          }
-          if (application.minecode_settings.link_website !== null && homepageAdded === false) {
-            labels = document.createElement('div');
-            labels.setAttribute('class', 'text-center');
-            lab = document.createElement('a');
-            lab.setAttribute('class', 'mt-3 mb-4 btn btn-sm btn-outline-primary');
-            if (application.minecode_settings.link_website.includes('https://') || application.minecode_settings.link_website.includes('http://'))
-              lab.setAttribute('href', application.minecode_settings.link_website)
-            else 
-              lab.setAttribute('href', 'https://' + application.minecode_settings.link_website)
-            lab.setAttribute('target', '_blank')
-            lab.setAttribute('rel', 'nooper noreferrer')
-            lab.setAttribute('type', 'button')
-            img = document.createElement('img')
-            img.setAttribute('src', '/images/web-page.svg')
-            img.setAttribute('alt', 'Webpage')
-            img.setAttribute('width', '24')
-            img.setAttribute('height', '24')
-            lab.append(img)
-            text = document.createTextNode(' Go to website');
             lab.append(text);
             labels.append(lab);
             body.append(labels);

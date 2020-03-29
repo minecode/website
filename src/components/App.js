@@ -21,6 +21,9 @@ class App extends React.Component {
                         <Route exact path="/blog" component={Blog}></Route>
                         <Route exact path="/blog/post/:id" component={Post}></Route>
                         <Route exact path="/ideas" component={Ideas}></Route>
+                        <Route path="/covid19">
+                            <Redirect to="/covid_19"/>
+                        </Route>
                         <Route exact path="/privacyPolicy/shopping_cart" component={PrivacyPolicy}></Route>
                         <Route exact path="/privacyPolicy/pet_find" component={PrivacyPolicy}></Route>
                         <Route exact path="/privacyPolicy/covid19" component={PrivacyPolicy}></Route>

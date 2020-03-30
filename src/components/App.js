@@ -7,7 +7,7 @@ import Ideas from './Ideas';
 import PrivacyPolicy from './PrivacyPolicy';
 import Footer from './Footer';
 import NoMatch from './NoMatch.js'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 class App extends React.Component {
     render() {

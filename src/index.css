@@ -1,87 +1,92 @@
 body {
-  margin: 0;
-  padding: 0;
-  padding-top: 56px;
+	margin: 0;
+	padding: 0;
+	padding-top: 56px;
+	background-color: #f1f1f1;
 }
 
 html {
-  position: relative;
-  /* Allows the footer to notice content height */
-  min-height: 100vh;
-  /* My page will always take the full screen */
+	position: relative;
+	/* Allows the footer to notice content height */
+	min-height: 100vh;
+	/* My page will always take the full screen */
 }
 
 main {
-  margin-bottom: 150px;
+	margin-bottom: 150px;
 }
 
 footer {
-  position: absolute;
-  /* I don't care about other things */
-  bottom: 0;
-  /* I want to be on the bottom... */
-  width: 100%;
+	position: absolute;
+	/* I don't care about other things */
+	bottom: 0;
+	/* I want to be on the bottom... */
+	width: 100%;
 }
 
 .githublogo {
-  color: #000
+	color: #000;
 }
 
 .card-deck .card {
-  min-width: 220px;
+	min-width: 220px;
 }
 
 .kanban {
-  display: flex;
-  flex: 1 1 auto;
-  overflow: auto;
+	display: flex;
+	flex: 1 1 auto;
+	overflow: auto;
 }
 
 .kanban-container {
-  display: flex;
-  flex-direction: row;
-  padding: 10px 0 10px 10px;
+	display: flex;
+	flex-direction: row;
+	padding: 10px 0 10px 10px;
 }
 
 .kanban-column {
-  display: flex;
-  flex-direction: column;
-  margin-right: 6px;
-  min-width: 300px;
-  max-width: 300px;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
-  background-color: #eee;
+	display: flex;
+	flex-direction: column;
+	margin-right: 6px;
+	min-width: 300px;
+	max-width: 300px;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+	background-color: #eee;
 }
 
 .kanban-column-header {
-  padding: 10px;
-  font-weight: bold;
-  font-size: 0.875rem;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 0.875rem;
 }
 
 .kanban-column-list {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow-y: auto;
-  margin: 0;
-  padding: 10px 10px 0;
-  list-style: none;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	overflow-y: auto;
+	margin: 0;
+	padding: 10px 10px 0;
+	list-style: none;
 }
 
 .kanban-column-footer {
-  padding: 10px;
-  font-size: 0.875rem;
-  border-top: 1px solid #e5e5e5;
-  background-color: #f5f5f5;
+	padding: 10px;
+	font-size: 0.875rem;
+	border-top: 1px solid #e5e5e5;
+	background-color: #f5f5f5;
 }
 
-.kanban-column-list>.card {
-  padding: 20px 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  margin-bottom: 10px;
-  cursor: pointer;
+.kanban-column-list > .card {
+	padding: 20px 10px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.container {
+	padding-left: 75px;
+	padding-right: 75px;
 }

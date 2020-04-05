@@ -3,72 +3,12 @@ import Applications from './Home/Applications';
 import Blog from './Home/Blog';
 import Idea from './Home/Idea';
 import Team from './Home/Team';
-
+import Banner from './Banner';
 class Home extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className={'container-fluid py-5'}>
-					<div className={'container'}>
-						<div className='row' style={{ alignItems: 'center' }}>
-							<div className={'col-4 px-2'}>
-								<img
-									style={{ maxWidth: '100%', height: 'auto' }}
-									src={'./images/blog_1.png'}
-								/>
-							</div>
-							<div className={'col-8 px-2'}>
-								<div className={'row'}>
-									<div className={'col-6 p-0'}>
-										<div className={'col-12 px-5'}>
-											<div
-												className={
-													'col-sm-6 col-md-6 p-0'
-												}
-												style={{
-													color: '#323232',
-													fontWeight: 100,
-													fontSize: 30,
-												}}>
-												Aplicações
-											</div>
-										</div>
-										<div
-											className={'col-12 px-5 py-3'}
-											style={{
-												color: '#5ca4da',
-												fontSize: 20,
-												fontWeight: '100',
-											}}>
-											Últimas aplicações desenvolvidas
-										</div>
-									</div>
-									<div className={'col-sm-6 col-md-6 p-0'}>
-										<div className={'col-12 px-5'}>
-											<div
-												style={{
-													color: '#323232',
-													fontWeight: 100,
-													fontSize: 30,
-												}}>
-												Blog
-											</div>
-										</div>
-										<div
-											className={'col-12 px-5 py-3'}
-											style={{
-												color: '#5ca4da',
-												fontSize: 20,
-												fontWeight: '100',
-											}}>
-											Últimos artigos publicados
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<Banner />
 
 				<div className={'container-fluid py-5'}>
 					<div className={'container'}>
@@ -201,6 +141,24 @@ class Home extends React.Component {
 				{/* <Blog /> */}
 				{/* <Idea /> */}
 				<Team />
+				<p className='text-center mt-2'>
+					<a href='http://www.freepik.com'>Designed by Freepik</a>
+				</p>
+				<p className='text-center'>
+					<a href='http://www.freepik.com'>
+						Designed by slidesgo / Freepik
+					</a>
+				</p>
+				<p className='text-center'>
+					<a href='http://www.freepik.com'>
+						Designed by stories / Freepik
+					</a>
+				</p>
+				<p className='text-center'>
+					<a href='http://www.freepik.com'>
+						Designed by macrovector / Freepik
+					</a>
+				</p>
 			</div>
 		);
 	}

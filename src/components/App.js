@@ -11,7 +11,7 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Redirect
+	Redirect,
 } from 'react-router-dom';
 
 class App extends React.Component {

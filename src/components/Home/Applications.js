@@ -11,16 +11,16 @@ export default function Applications(props) {
 		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch('https://api.github.com/orgs/minecode/repos', {
 			method: 'GET',
-			headers: header
+			headers: header,
 		})
-			.then(res => res.json())
-			.then(data => {
+			.then((res) => res.json())
+			.then((data) => {
 				var count = 0;
 				header.set(
 					'Accept',
 					'application/vnd.github.mercy-preview+json'
 				);
-				data.forEach(repo => {
+				data.forEach((repo) => {
 					Promise.all([
 						fetch(
 							'https://api.github.com/repos/minecode/' +
@@ -28,7 +28,7 @@ export default function Applications(props) {
 								'/topics',
 							{
 								method: 'GET',
-								headers: header
+								headers: header,
 							}
 						),
 						fetch(
@@ -37,9 +37,9 @@ export default function Applications(props) {
 								'/contents/minecode_settings.json?ref=master',
 							{
 								method: 'GET',
-								headers: header
+								headers: header,
 							}
-						)
+						),
 					])
 						.then(([res1, res2]) =>
 							Promise.all([res1.json(), res2.json()])
@@ -49,7 +49,7 @@ export default function Applications(props) {
 								data3.content = JSON.parse(atob(data3.content));
 							}
 							var temp = 0;
-							data.forEach(element => {
+							data.forEach((element) => {
 								if (element.name === repo.name) {
 									data[temp].topic = data2;
 									data[temp].minecode_settings =
@@ -100,14 +100,14 @@ export default function Applications(props) {
 									color: color,
 									margin: 20,
 									justifyContent: 'flex-start',
-									backgroundColor: bg
+									backgroundColor: bg,
 								}}>
 								<div className='container'>
 									<div
 										className='row'
 										style={{
 											minHeight: 350,
-											alignItems: 'center'
+											alignItems: 'center',
 										}}>
 										<div
 											className={
@@ -119,7 +119,7 @@ export default function Applications(props) {
 												<h2
 													className='display-6'
 													style={{
-														color: color
+														color: color,
 													}}>
 													{titleCase(element.name)}
 												</h2>
@@ -152,7 +152,8 @@ export default function Applications(props) {
 																		.minecode_settings
 																		.link_mobile
 																}
-																target='_blank'>
+																target='_blank'
+																rel='noopener noreferrer'>
 																<img
 																	src='/images/google-play-store.svg'
 																	width='24'
@@ -172,7 +173,8 @@ export default function Applications(props) {
 																href={
 																	element.homepage
 																}
-																target='_blank'>
+																target='_blank'
+																rel='noopener noreferrer'>
 																<img
 																	src='/images/web-page.svg'
 																	width='24'

@@ -1,60 +1,79 @@
-import React, { Component } from 'react';
-import { addPost } from './Utils'
-class Blog extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: []
-    };
-  }
+import React, { useState, useEffect } from 'react';
 
-  getPostsList = () => {
-    var posts_list = document.getElementById('posts_list');
-    var card_deck_post = document.createElement('div');
-    card_deck_post.setAttribute('class', 'card-deck mb-3 text-center');
-    this.state.data.forEach(issue => {
-        issue.labels.forEach(label => {
-            if (label.name === 'Post') {
-                var card = addPost(issue)
-                card_deck_post.append(card);
-            }
-        });
-    })
-    posts_list.append(card_deck_post)
-  }
+function getDate(created_at) {
+  var date = new Date(created_at)
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  return monthNames[date.getMonth()] + ', ' + date.getFullYear()
+}
 
-  async componentDidMount() {
+export default function Blog(props) {
+
+	const [post, setPost] = useState(null);
+
+	useEffect(() => {
     var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
     var header = new Headers();
     header.set('Authorization', 'Basic ' + authorizationBasic)
     fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
-      method: 'GET',
-      headers: header
+      method: 'GET', headers: header
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          data: data
-        })
+        setPost(data);
       })
-  }
+  }, []);
 
-  componentDidUpdate() {
-    this.getPostsList()
-  }
-
-  render() {
-    return (
-<div className="container">
-        <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="posts">
-            <h1 className="display-4">Blog</h1>
-            <p className="lead">Minecode Posts</p>
-        </div>
-        <div id="posts_list">
-        </div>
+  return (
+    <div className="container">
+      <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="posts">
+      <h1 className="display-4">Blog</h1>
+      <p className="lead">Minecode Posts</p>
+      </div>
+      <div id="posts_list">
+        {post && post.map((element, i) => {
+          var isPost = false
+          {element.labels.forEach((element2, i2) => {
+            if (element2.name === 'Post') {
+              isPost = true;
+              return;
+            }
+          })}
+          if (isPost) {
+            return(
+              <div className="card-deck mb-3 text-center" key={i}>
+                <div className="col-12">
+                  <div>
+                    <h3 className="my-0 font-weight-normal" >
+                      <a href={"./blog/post/" + element.number}>
+                        {element.title.split(/\[\w*\] /)[1]}
+                      </a>
+                    </h3>
+                  </div>
+                  <div className="d-flex align-middle justify-content-center align-items-center">
+                    <div className="allign-self-center p-2">
+                    </div>
+                    <div className="allign-self-center p-2">
+                      <p>
+                        Posted on {
+                          getDate(element.created_at)
+                        } by {
+                          element.user.login
+                        }
+                        <a className="mt-3 mb-4 btn btn-sm" href={"https://github.com/" + element.user.login} target="_blank" style={{color: "#000"}}>
+                          <img src="/images/github.svg" alt="Github" width="14" height="14">
+                          </img>
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          }})
+        }
+      </div>
     </div>
-    );
-  }
+  );
 }
-
-export default Blog;

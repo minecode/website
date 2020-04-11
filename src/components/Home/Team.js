@@ -35,7 +35,7 @@ class Footer extends Component {
 								<li className='mt-3 mb-3'>
 									<a
 										target='_blank'
-										href=''
+										href='/'
 										rel='noopener noreferrer'
 										style={{ color: '#5ca4da' }}
 										git={'true'}>
@@ -85,7 +85,7 @@ class Footer extends Component {
 								<li className='mt-3 mb-3'>
 									<a
 										target='_blank'
-										href=''
+										href='/'
 										rel='noopener noreferrer'
 										style={{ color: '#5ca4da' }}>
 										Full profile (CV)

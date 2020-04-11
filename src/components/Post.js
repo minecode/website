@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from "react-dom";
 import ReactMarkdown from "react-markdown";
 
 function getDate(created_at) {
@@ -38,7 +37,7 @@ export default function Post(props) {
         setPost(data1);
         setComments(data2);
       })
-  }, []);
+  }, [props.match.params.id]);
 
   return (
     <div className="container" id="content">
@@ -48,12 +47,14 @@ export default function Post(props) {
           element.title.split("[")[1].split("]")[0] === "POST"
         ) {
           return(
-            <div className="pricing-header px-3 py-3 mx-auto text-center" id="title">
+            <div className="pricing-header px-3 py-3 mx-auto text-center" id="title" key={i}>
               <h1 className="display-4">
                 {element.title.split(/\[\w*\] /)[1]}
               </h1>
             </div>
           )
+        } else {
+          return(<></>)
         }
       })}
       <div className="pricing-header px-3 py-3 pb-md-4 mx-auto text-center">
@@ -64,11 +65,13 @@ export default function Post(props) {
               element.title.split("[")[1].split("]")[0] === "POST"
             ) {
               return(
-                <div className="align-self-center p-2" id="userLogo">
+                <div className="align-self-center p-2" id="userLogo" key={i}>
                   <img className="rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
                   </img>
                 </div>
               )
+            } else {
+              return(<></>)
             }
           })}
           {post && [post].map((element, i) => {
@@ -77,20 +80,22 @@ export default function Post(props) {
               element.title.split("[")[1].split("]")[0] === "POST"
             ) {
               return(
-                <div className="align-self-center p-2" id="infoPost">
+                <div className="align-self-center p-2" id="infoPost" key={i}>
                   <h5>
                     Posted on {
                       getDate(element.created_at)
                     } by {
                       element.user.login
                     }
-                    <a className="mt-3 mb-4 btn btn-sm" href={"https://github.com/" + element.user.login} target="_blank" style={{color: "#000"}}>
+                    <a className="mt-3 mb-4 btn btn-sm" href={"https://github.com/" + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: "#000"}}>
                       <img src="/images/github.svg" alt="Github" width="24" height="24">
                       </img>
                     </a>
                   </h5>
                 </div>
               )
+            } else {
+              return(<></>)
             }
           })}
         </div>
@@ -101,12 +106,14 @@ export default function Post(props) {
           element.title.split("[")[1].split("]")[0] === "POST"
         ) {
           return(
-            <div className="pt-md-5 pb-md-4 mx-auto text-center" id="post">
+            <div className="pt-md-5 pb-md-4 mx-auto text-center" id="post" key={i}>
               <div>
                 {element.body}
               </div>
             </div>
           )
+        } else {
+          return(<></>)
         }
       })}
       <div
@@ -116,7 +123,7 @@ export default function Post(props) {
         {post && comments && comments.map((element, i) => {
           if (element.user.login === post.user.login) {
             return(
-              <>
+              <div className="row col-12" key={i}>
                 <div className="col-1 text-center">
                   <img className="m-3 rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
                   </img>   
@@ -137,11 +144,11 @@ export default function Post(props) {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             )
           } else {
             return(
-              <>
+              <div className="row col-12" key={i}>
                 <div className="col-11">
                   <div className="card mt-3 mb-3">
                     <div className="card-header">
@@ -162,7 +169,7 @@ export default function Post(props) {
                   <img className="m-3 rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
                   </img>   
                 </div>
-              </>
+              </div>
             )
           }
         })}

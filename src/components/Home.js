@@ -1,7 +1,4 @@
 import React from 'react';
-import Applications from './Home/Applications';
-import Blog from './Home/Blog';
-import Idea from './Home/Idea';
 import Team from './Home/Team';
 import Banner from './Banner';
 class Home extends React.Component {
@@ -44,6 +41,7 @@ class Home extends React.Component {
 								<img
 									style={{ maxWidth: '100%', height: 'auto' }}
 									src={'./images/home_1.png'}
+									alt='Home'
 								/>
 							</div>
 						</div>
@@ -66,6 +64,7 @@ class Home extends React.Component {
 								<img
 									style={{ maxWidth: '100%', height: 'auto' }}
 									src={'./images/home_2.png'}
+									alt='Home'
 								/>
 							</div>
 							<div className={'col-sm-12 col-md-8 px-2'}>
@@ -131,6 +130,7 @@ class Home extends React.Component {
 								<img
 									style={{ maxWidth: '100%', height: 'auto' }}
 									src={'./images/home_3.png'}
+									alt='Home'
 								/>
 							</div>
 						</div>

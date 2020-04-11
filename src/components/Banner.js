@@ -19,6 +19,9 @@ export default function Banner(props) {
 				case 'pet_find':
 					setColor('green');
 					break;
+				default:
+					setColor('white');
+					break;
 			}
 		}
 	}, [element]);

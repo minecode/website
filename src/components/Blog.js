@@ -34,8 +34,8 @@ export default function Blog(props) {
       <div id="posts_list">
         {post && post.map((element, i) => {
           var isPost = false
-          {element.labels.forEach((element2, i2) => {
-            if (element2.name === 'Post') {
+          {element.labels.forEach((element, i) => {
+            if (element.name === 'Post') {
               isPost = true;
               return;
             }
@@ -61,7 +61,7 @@ export default function Blog(props) {
                         } by {
                           element.user.login
                         }
-                        <a className="mt-3 mb-4 btn btn-sm" href={"https://github.com/" + element.user.login} target="_blank" style={{color: "#000"}}>
+                        <a className="mt-3 mb-4 btn btn-sm" href={"https://github.com/" + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: "#000"}}>
                           <img src="/images/github.svg" alt="Github" width="14" height="14">
                           </img>
                         </a>
@@ -71,6 +71,8 @@ export default function Blog(props) {
                 </div>
               </div>
             )
+          }else {
+            return(<></>)
           }})
         }
       </div>

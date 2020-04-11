@@ -7,7 +7,7 @@ export default function Navbar(props) {
 
 	useEffect(() => {
 		setPath(location.pathname);
-	}, []);
+	}, [location.pathname]);
 
 	return (
 		<nav className='navbar navbar-expand-lg navbar-dark bg-dark fixed-top'>
@@ -29,7 +29,7 @@ export default function Navbar(props) {
 				<div className='collapse navbar-collapse' id='navbarResponsive'>
 					<ul className='navbar-nav ml-auto'>
 						<li
-							className={
+							className={path && 
 								path === '/' ? 'nav-item active' : 'nav-item'
 							}>
 							<a className='nav-link' href='/'>
@@ -37,8 +37,8 @@ export default function Navbar(props) {
 							</a>
 						</li>
 						<li
-							className={
-								path === '/blog'
+							className={path && 
+								path.includes('/blog')
 									? 'nav-item active'
 									: 'nav-item'
 							}>
@@ -47,7 +47,7 @@ export default function Navbar(props) {
 							</a>
 						</li>
 						<li
-							className={
+							className={path &&
 								path === '/ideas'
 									? 'nav-item active'
 									: 'nav-item'

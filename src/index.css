@@ -90,3 +90,9 @@ footer {
 	padding-left: 75px;
 	padding-right: 75px;
 }
+
+.color {
+	transition-property: background-color;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-in-out;
+}

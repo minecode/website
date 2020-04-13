@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Banner(props) {
+export default function Banner() {
 	const [color, setColor] = useState('#154360');
 	const [element, setElement] = useState('blog');
 	const [posts, setPosts] = useState(null);
@@ -166,7 +166,7 @@ export default function Banner(props) {
 									{element === 'blog' &&
 										posts &&
 										posts.map((post, i) => {
-											post.labels.map((label, j) => {
+											post.labels.map((label) => {
 												if (label.name === 'Post') {
 													isPost = true;
 													return;
@@ -185,7 +185,6 @@ export default function Banner(props) {
 															'./blog/post/' +
 															post.number
 														}
-														target='_blank'
 														onMouseEnter={() =>
 															setHoverElement(i)
 														}

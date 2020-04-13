@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 function getDate(created_at) {
 	var date = new Date(created_at);
@@ -8,9 +9,18 @@ function getDate(created_at) {
 	return monthNames[date.getMonth()] + ', ' + date.getFullYear();
 }
 
-export default function Blog() {
+Tag.propTypes = {
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			tag: PropTypes.isRequired
+		})
+	}),
+};
+
+export default function Tag(props) {
 
 	const [post, setPost] = useState(null);
+	const tag = props.match.params.tag;
 
 	useEffect(() => {
 		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
@@ -21,7 +31,14 @@ export default function Blog() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				setPost(data);
+				setPost(data.filter(element2 => {
+					if (element2.labels.filter(element => element.name === tag).length > 0) {
+						return true;
+					} else {
+						return false;
+					}
+
+				}));
 			});
 	}, []);
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { titleCase } from '../Utils';
 
-export default function Applications(props) {
+export default function Applications() {
 	const [data, setData] = useState(null);
 	let count = 0;
 

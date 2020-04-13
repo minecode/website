@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Banner(props) {
+export default function Banner() {
 	const [color, setColor] = useState('red');
 	const [element, setElement] = useState('blog');
 
 	useEffect(() => {
 		if (element) {
 			switch (element) {
-				case 'blog':
-					setColor('red');
-					break;
-				case 'ocean_king':
-					setColor('yellow');
-					break;
-				case 'shopping_cart':
-					setColor('blue');
-					break;
-				case 'pet_find':
-					setColor('green');
-					break;
-				default:
-					setColor('white');
-					break;
+			case 'blog':
+				setColor('red');
+				break;
+			case 'ocean_king':
+				setColor('yellow');
+				break;
+			case 'shopping_cart':
+				setColor('blue');
+				break;
+			case 'pet_find':
+				setColor('green');
+				break;
+			default:
+				setColor('white');
+				break;
 			}
 		}
 	}, [element]);

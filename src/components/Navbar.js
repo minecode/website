@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export default function Navbar(props) {
+export default function Navbar() {
 	const [path, setPath] = useState(null);
 	let location = useLocation();
 
@@ -39,8 +39,8 @@ export default function Navbar(props) {
 						<li
 							className={path && 
 								path.includes('/blog')
-									? 'nav-item active'
-									: 'nav-item'
+								? 'nav-item active'
+								: 'nav-item'
 							}>
 							<a className='nav-link' href='/blog'>
 								Blog
@@ -49,8 +49,8 @@ export default function Navbar(props) {
 						<li
 							className={path &&
 								path === '/ideas'
-									? 'nav-item active'
-									: 'nav-item'
+								? 'nav-item active'
+								: 'nav-item'
 							}>
 							<a className='nav-link' href='/ideas'>
 								Ideas

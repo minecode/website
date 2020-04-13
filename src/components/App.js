@@ -45,7 +45,7 @@ class App extends React.Component {
 								component={PrivacyPolicy}></Route>
 							<Route
 								exact
-								path='/privacyPolicy/covid19'
+								path='/privacyPolicy/covid_19'
 								component={PrivacyPolicy}></Route>
 							<Route
 								exact

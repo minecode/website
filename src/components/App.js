@@ -1,7 +1,9 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Home from './Home';
-import Post from './Post';
+import Post from './Blog/Post';
+import Tag from './Blog/Tag';
+import User from './Blog/User';
 import Blog from './Blog';
 import Ideas from './Ideas';
 import Footer from './Footer';
@@ -28,6 +30,14 @@ class App extends React.Component {
 								exact
 								path='/blog/post/:id'
 								component={Post}></Route>
+							<Route
+								exact
+								path='/blog/tag/:tag'
+								component={Tag}></Route>
+							<Route
+								exact
+								path='/blog/user/:user'
+								component={User}></Route>
 							<Route
 								exact
 								path='/ideas'

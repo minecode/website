@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
-import CodeBlock from './CodeBlock';
+import CodeBlock from '../CodeBlock';
 
 function getDate(created_at) {
 	var date = new Date(created_at);
@@ -172,9 +172,9 @@ export default function Post(props) {
 									{ labels && labels.map((element, i) => {
 										if (element.name !== 'Post') {
 											return(
-												<div key={i} className="m-1 btn btn-primary" style={{backgroundColor: '#' + element.color, border: 'none', cursor: 'default'}}>
+												<a key={i} href={'/blog/tag/' + element.name} className="m-1 btn btn-primary" style={{backgroundColor: '#' + element.color, border: 'none'}}>
 													{element.name}
-												</div>
+												</a>
 											);
 										} else {
 											return(
@@ -287,7 +287,7 @@ export default function Post(props) {
 										);
 									})}
 								</div>
-								{relatedPosts && relatedPosts.length > 0 && [relatedPosts[0]].map((element, i) => {
+								{relatedPosts && relatedPosts.length > 0 && [relatedPosts[0]].map((element) => {
 									return(
 										<>
 											<hr className="mt-5 mb-5"/><h4 className="col-12">More from {element.user.login}:</h4>

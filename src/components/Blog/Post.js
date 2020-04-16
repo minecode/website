@@ -146,12 +146,12 @@ export default function Post(props) {
 																return(
 																	<>
 																		{i === 0 ? <span style={{opacity:0.5}}>(</span> : <></>}
-																		<span key={i} style={{opacity:0.5}}>{element.login} <a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+																		<span key={i} style={{opacity:0.5}}>{element.login} <a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff', paddingRight: 0}}>
 																			<img src="/images/github_white.svg" alt="Github" width="24" height="24">
 																			</img>
 																		</a>
 																		</span>
-																		{i === (coAuthors.length-1) ? <span style={{opacity:0.5}}>)</span> : <></>}
+																		{i === (coAuthors.length-1) ? <span style={{opacity:0.5}}>)</span> : <><span style={{opacity:0.5}}>, </span></>}
 																	</>
 																);
 															})}
@@ -255,7 +255,7 @@ export default function Post(props) {
 								<div className="row justify-content-center">
 									{post && [post].map((element, i) => {
 										return(
-											<div className="col-4 row" key={i}>
+											<div className="col-4 row justify-content-center" key={i}>
 												<div className="align-self-center p-2" id="userLogo">
 													<img className="rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
 													</img>

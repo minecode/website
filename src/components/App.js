@@ -5,6 +5,7 @@ import Post from './Blog/Post';
 import Tag from './Blog/Tag';
 import User from './Blog/User';
 import Blog from './Blog';
+import ReleaseNotes from './ReleaseNotes';
 import Ideas from './Ideas';
 import Footer from './Footer';
 import NoMatch from './NoMatch';
@@ -47,6 +48,10 @@ class App extends React.Component {
 								exact
 								path='/ideas'
 								component={Ideas}></Route>
+							<Route
+								exact
+								path='/releasenotes'
+								component={ReleaseNotes}></Route>
 							<Route path='/covid19'>
 								<Redirect to='/covid_19' />
 							</Route>

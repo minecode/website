@@ -120,7 +120,7 @@ export default function Blog() {
 									} by {
 										element.user.login
 									} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-										<img src="/images/github_white.svg" alt="Github" width="16" height="16">
+										<img className="rounded-circle" src={element.user.avatar_url}alt="Github" width="16" height="16">
 										</img>
 									</a>
 								</p>

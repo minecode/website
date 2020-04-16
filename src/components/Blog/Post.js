@@ -122,24 +122,20 @@ export default function Post(props) {
 										{element.title.split(/\[\w*\] /)[1]}
 									</h1>
 								</div>
-								<div className="pricing-header px-3 py-3 pb-md-4 mx-auto text-center">
+								<div className="px-3 py-3 pb-md-4 mx-auto text-center">
 									<div className="d-flex align-middle justify-content-center align-items-center">
 										{post && [post].map((element, i) => {
 											return(
 												<div className="row" key={i}>
-													<div className="align-self-center p-2" id="userLogo" key={i}>
-														<img className="rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
-														</img>
-													</div>
 													<div className="align-self-center p-2" id="infoPost" key={i}>
-														<h5 style={{color: '#fff'}}>
+														<p style={{color: '#fff', fontSize:16}}>
 															Posted on {
 																getDate(element.created_at)
 															} by {
 																element.user.login
 															}
 															<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-																<img src="/images/github_white.svg" alt="Github" width="24" height="24">
+																<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="24" height="24">
 																</img>
 															</a>
 															{coAuthors && coAuthors.length > 0 && coAuthors.map((element, i) => {
@@ -147,7 +143,7 @@ export default function Post(props) {
 																	<>
 																		{i === 0 ? <span style={{opacity:0.5}}>(</span> : <></>}
 																		<span key={i} style={{opacity:0.5}}>{element.login} <a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff', paddingRight: 0}}>
-																			<img src="/images/github_white.svg" alt="Github" width="24" height="24">
+																			<img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
 																			</img>
 																		</a>
 																		</span>
@@ -155,7 +151,7 @@ export default function Post(props) {
 																	</>
 																);
 															})}
-														</h5>
+														</p>
 													</div>
 												</div>
 											);
@@ -256,14 +252,10 @@ export default function Post(props) {
 									{post && [post].map((element, i) => {
 										return(
 											<div className="col-4 row justify-content-center" key={i}>
-												<div className="align-self-center p-2" id="userLogo">
-													<img className="rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
-													</img>
-												</div>
 												<div className="align-self-center p-2">
 													{element.user.login}
 													<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-														<img src="/images/github.svg" alt="Github" width="24" height="24">
+														<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="24" height="24">
 														</img>
 													</a>
 												</div>
@@ -273,14 +265,10 @@ export default function Post(props) {
 									{coAuthors && coAuthors.map((element, i) => {
 										return(
 											<div className="col-4 row" key={i}>
-												<div className="align-self-center p-2" id="userLogo">
-													<img className="rounded-circle" src={element.avatar_url} alt="User" width="35" height="35">
-													</img>
-												</div>
 												<div className="align-self-center p-2">
 													{element.login}
 													<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-														<img src="/images/github.svg" alt="Github" width="24" height="24">
+														<img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
 														</img>
 													</a>
 												</div>
@@ -375,7 +363,7 @@ export default function Post(props) {
 													} by {
 														element.user.login
 													} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-														<img src="/images/github_white.svg" alt="Github" width="16" height="16">
+														<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="16" height="16">
 														</img>
 													</a>
 												</p>

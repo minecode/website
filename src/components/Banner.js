@@ -289,10 +289,10 @@ export default function Banner() {
 																getDate(post.created_at)
 															} by {
 																post.user.login
-															} <div href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-																<img src="/images/github_white.svg" alt="Github" width="16" height="16">
+															} <a href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+																<img className="rounded-circle" src={post.user.avatar_url} alt="Github" width="16" height="16">
 																</img>
-															</div>
+															</a>
 														</p>
 													</a>
 												);

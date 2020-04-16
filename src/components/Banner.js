@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { titleCase } from './Utils';
 
 function getDate(created_at) {
 	var date = new Date(created_at);
@@ -9,30 +10,22 @@ function getDate(created_at) {
 }
 
 export default function Banner() {
-	const [color, setColor] = useState('#154360');
+	const [color, setColor] = useState('#212121');
 	const [element, setElement] = useState('blog');
 	const [posts, setPosts] = useState(null);
 	const [hoverElement, setHoverElement] = useState(null);
+	const [data, setData] = useState(null);
+	
 	useEffect(() => {
+
+		getRepositories();
+
 		if (element) {
-			switch (element) {
-			case 'blog':
+			if(element === 'blog') {
 				getPostsList();
-				setColor('#154360');
-				break;
-			case 'ocean_king':
-				setColor('#1F618D');
-				break;
-			case 'shopping_cart':
-				setColor('#2980B9');
-				break;
-			case 'pet_find':
-				setColor('#5ca4da');
-				break;
-			default:
-				setColor('#5ca4da10');
-				break;
+
 			}
+			
 		}
 	}, [element]);
 
@@ -59,6 +52,69 @@ export default function Banner() {
 			});
 	}
 
+	async function getRepositories() {
+		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
+		var header = new Headers();
+		header.set('Authorization', 'Basic ' + authorizationBasic);
+		fetch('https://api.github.com/orgs/minecode/repos', {
+			method: 'GET',
+			headers: header,
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				var count = 0;
+				header.set(
+					'Accept',
+					'application/vnd.github.mercy-preview+json'
+				);
+				data.forEach((repo) => {
+					Promise.all([
+						fetch(
+							'https://api.github.com/repos/minecode/' +
+									repo.name +
+									'/topics',
+							{
+								method: 'GET',
+								headers: header,
+							}
+						),
+						fetch(
+							'https://api.github.com/repos/minecode/' +
+									repo.name +
+									'/contents/minecode_settings.json?ref=master',
+							{
+								method: 'GET',
+								headers: header,
+							}
+						),
+					])
+						.then(([res1, res2]) =>
+							Promise.all([res1.json(), res2.json()])
+						)
+						.then(([data2, data3]) => {
+							if (data3.content !== undefined) {
+								data3.content = JSON.parse(atob(data3.content));
+							}
+							var temp = 0;
+							data.forEach((element) => {
+								if (element.name === repo.name) {
+									data[temp].topic = data2;
+									data[temp].minecode_settings =
+											data3.content;
+								}
+								temp++;
+							});
+							count++;
+							if (data.length === count) {
+								setData(data);
+							}
+						});
+				});
+			});
+	}
+
+
+
 	return (
 		<div
 			className={'container-fluid'}
@@ -76,7 +132,7 @@ export default function Banner() {
 						minHeight: 500,
 					}}>
 					<div
-						className={'col-md-3 col-sm-12 text-left'}
+						className={'col-md-4 col-sm-12 text-left'}
 						style={{
 							height: 500,
 							display: 'flex',
@@ -84,7 +140,7 @@ export default function Banner() {
 							justifyContent: 'space-around',
 							alignItems: 'flex-start',
 						}}>
-						<div
+						{data && <div
 							className={'btn'}
 							style={{
 								color: '#f1f1f1',
@@ -99,63 +155,36 @@ export default function Banner() {
 								setElement('blog');
 							}}>
 							Blog
-						</div>
-						<div
-							className={'btn'}
-							style={{
-								color: '#f1f1f1',
-								fontSize: element === 'ocean_king' ? 30 : 20,
-								marginLeft: element === 'ocean_king' ? 10 : 0,
-								transition: 'all .5s ease',
-								WebkitTransition: 'all .5s ease',
-								MozTransition: 'all .5s ease',
-								fontWeight: 100,
-							}}
-							onClick={() => {
-								setElement('ocean_king');
-							}}>
-							Ocean King
-						</div>
-						<div
-							className={'btn'}
-							style={{
-								color: '#f1f1f1',
-								fontSize: element === 'shopping_cart' ? 30 : 20,
-								marginLeft:
-									element === 'shopping_cart' ? 10 : 0,
-								transition: 'all .5s ease',
-								WebkitTransition: 'all .5s ease',
-								MozTransition: 'all .5s ease',
-								fontWeight: 100,
-							}}
-							onClick={() => {
-								setElement('shopping_cart');
-							}}>
-							Shopping cart
-						</div>
-						<div
-							className={'btn'}
-							style={{
-								color: '#f1f1f1',
-								fontSize: element === 'pet_find' ? 30 : 20,
-								marginLeft: element === 'pet_find' ? 10 : 0,
-								transition: 'all .5s ease',
-								WebkitTransition: 'all .5s ease',
-								MozTransition: 'all .5s ease',
-								fontWeight: 100,
-							}}
-							onClick={() => {
-								setElement('pet_find');
-							}}>
-							Pet find
-						</div>
+						</div>}
+						{data && data.map((app,i) => {
+							if (app.topic.names.includes('production')) {
+								return <div
+									key={i}
+									className={'btn'}
+									style={{
+										color: '#f1f1f1',
+										fontSize: element === app.name ? 30 : 20,
+										marginLeft: element === app.name ? 10 : 0,
+										transition: 'all .5s ease',
+										WebkitTransition: 'all .5s ease',
+										MozTransition: 'all .5s ease',
+										fontWeight: 100,
+									}}
+									onClick={() => {
+										setElement(app.name);
+									}}>
+									{titleCase(app.name)}
+								</div>;	
+							}
+							
+						})}
 					</div>
 					<div
-						className={'col-sm-12 col-md-9 text-center '}
+						className={'col-sm-12 col-md-8 text-center '}
 						style={{
 							alignItems: 'center',
 						}}>
-						{element && (
+						{element && data && (
 							<div
 								style={{
 									alignItems: 'center',
@@ -166,7 +195,6 @@ export default function Banner() {
 								<div
 									className={'row justify-content-center vertical-align-midle'}
 									style={{
-										opacity: element === 'blog' ? '1' : 0,
 										transition: 'all .5s ease-out',
 										WebkitTransition: 'all .5s ease-out',
 										MozTransition: 'all .5s ease-out',
@@ -261,15 +289,159 @@ export default function Banner() {
 																getDate(post.created_at)
 															} by {
 																post.user.login
-															} <a href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+															} <div href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
 																<img src="/images/github_white.svg" alt="Github" width="16" height="16">
 																</img>
-															</a>
+															</div>
 														</p>
 													</a>
 												);
 											}
 										})}
+									{element !== 'blog' && data && data.map((app, i) => {
+										if(app.topic.names.includes('production') && app.name === element) {
+											return <div
+												key={i}
+												style={{
+													backgroundImage: `linear-gradient(#21212199, #21212199), url(${
+														'https://raw.githubusercontent.com/minecode/' +
+														app.name +
+														'/master/' +
+														app.minecode_settings
+															.image
+													})`,
+													backgroundSize:
+														'cover',
+													backgroundColor: '#212121',
+													borderRadius: 20,
+													border: 0,
+													width: '100%',
+													height:
+													'100%',
+													transition:
+														'all .5s ease',
+													WebkitTransition:
+														'all .5s ease',
+													MozTransition:
+														'all .5s ease',
+												}}>
+												<div className='container'>
+													<div
+														className='row'
+														style={{
+															minHeight: 350,
+															alignItems: 'center',
+															color: '#f1f1f1',
+															margin: 20
+														}}>
+														<div className={'col-12 row'}>
+															<div className={'col-6 text-right'}>
+																<div className={'col-12'}>
+																	<h2
+																		className='display-6'
+																		style={{
+																			color: '#f1f1f1',
+																		}}>
+																		{titleCase(app.name)}
+																	</h2>
+																</div>
+																<div className={'col-12'}>
+																	<div
+																		className={
+																			'col-12 pl-0 pr-0'
+																		}>
+																		{app.description}
+																	</div>
+																</div>
+															</div>
+															<div className={'col-6 text-right'}>
+																<img
+																	width='192'
+																	height='192'
+																	src={
+																		'https://raw.githubusercontent.com/minecode/' +
+																app.name +
+																'/master/' +
+																app.minecode_settings
+																	.image
+																	} />
+															</div>
+															<div className={'col-12 text-left mt-3'}>
+																<a href={
+																	'/app/' +
+																	app.name
+																} className={'btn btn-primary'}>Consultar página</a>
+															</div>
+														</div>
+														<div
+															className={
+																'text-left'
+															}>
+															
+															<div className={'col-12'}>
+																<div className='btn btn-group pl-0 pr-0'>
+																	<a
+																		className={
+																			'btn btn-primary'
+																		}
+																		href={
+																			app
+																				.html_url
+																		}
+																		target='_blank'
+																		rel='noopener noreferrer'>
+																		<img
+																			src='/images/github.svg'
+																			width='24'
+																			height='24'></img>{' '}
+																				Github
+																	</a>
+																	{app.minecode_settings.link_mobile && (
+																		<a
+																			className={
+																				'btn btn-primary'
+																			}
+																			href={
+																				app
+																					.minecode_settings
+																					.link_mobile
+																			}
+																			target='_blank'
+																			rel='noopener noreferrer'>
+																			<img
+																				src='/images/google-play-store.svg'
+																				width='24'
+																				height='24'></img>{' '}
+																				Play Store
+																		</a>
+																	)}
+																	{app.homepage && (
+																		<a
+																			className={
+																				'btn btn-primary'
+																			}
+																			href={
+																				app.homepage
+																			}
+																			target='_blank'
+																			rel='noopener noreferrer'>
+																			<img
+																				src='/images/web-page.svg'
+																				width='24'
+																				height='24'></img>{' '}
+																				Website
+																		</a>
+																	)}
+																</div>
+															</div>
+														</div>
+
+														
+													</div>
+												</div>
+											</div>;
+										}
+									})}
 								</div>
 							</div>
 						)}

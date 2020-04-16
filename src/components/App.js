@@ -8,6 +8,7 @@ import Blog from './Blog';
 import Ideas from './Ideas';
 import Footer from './Footer';
 import NoMatch from './NoMatch';
+import AppPage from './AppPage';
 import PrivacyPolicy from './PrivacyPolicy';
 import {
 	BrowserRouter as Router,
@@ -26,6 +27,10 @@ class App extends React.Component {
 						<Switch>
 							<Route exact path='/' component={Home}></Route>
 							<Route exact path='/blog' component={Blog}></Route>
+							<Route
+								exact
+								path='/app/:app_name'
+								component={AppPage}></Route>
 							<Route
 								exact
 								path='/blog/post/:id'

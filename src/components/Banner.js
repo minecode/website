@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
+function getDate(created_at) {
+	var date = new Date(created_at);
+	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+		'July', 'August', 'September', 'October', 'November', 'December'
+	];
+	return monthNames[date.getMonth()] + ', ' + date.getFullYear();
+}
+
 export default function Banner() {
 	const [color, setColor] = useState('#154360');
 	const [element, setElement] = useState('blog');
@@ -8,22 +16,22 @@ export default function Banner() {
 	useEffect(() => {
 		if (element) {
 			switch (element) {
-				case 'blog':
-					getPostsList();
-					setColor('#154360');
-					break;
-				case 'ocean_king':
-					setColor('#1F618D');
-					break;
-				case 'shopping_cart':
-					setColor('#2980B9');
-					break;
-				case 'pet_find':
-					setColor('#5ca4da');
-					break;
-				default:
-					setColor('#5ca4da10');
-					break;
+			case 'blog':
+				getPostsList();
+				setColor('#154360');
+				break;
+			case 'ocean_king':
+				setColor('#1F618D');
+				break;
+			case 'shopping_cart':
+				setColor('#2980B9');
+				break;
+			case 'pet_find':
+				setColor('#5ca4da');
+				break;
+			default:
+				setColor('#5ca4da10');
+				break;
 			}
 		}
 	}, [element]);
@@ -156,7 +164,7 @@ export default function Banner() {
 									MozTransition: 'all .5s ease',
 								}}>
 								<div
-									className={'row vertical-align-midle'}
+									className={'row justify-content-center vertical-align-midle'}
 									style={{
 										opacity: element === 'blog' ? '1' : 0,
 										transition: 'all .5s ease-out',
@@ -179,10 +187,10 @@ export default function Banner() {
 													<a
 														key={i}
 														className={
-															'col-sm-12 col-md-3 btn mx-2 my-2 p-2'
+															'col-sm-12 col-md-3 btn mx-2 my-2 p-2 row justify-content-center'
 														}
 														href={
-															'./blog/post/' +
+															'/blog/post/' +
 															post.number
 														}
 														onMouseEnter={() =>
@@ -198,17 +206,17 @@ export default function Banner() {
 																/(?:!\[(.*?)\]\((.*?)\))/g
 															)
 																? `linear-gradient(#21212190, #21212190), url(${
-																		post.body
-																			.match(
-																				/(?:!\[(.*?)\]\((.*?)\))/g
-																			)[0]
-																			.split(
-																				'('
-																			)[1]
-																			.split(
-																				')'
-																			)[0]
-																  })`
+																	post.body
+																		.match(
+																			/(?:!\[(.*?)\]\((.*?)\))/g
+																		)[0]
+																		.split(
+																			'('
+																		)[1]
+																		.split(
+																			')'
+																		)[0]
+																})`
 																: null,
 															backgroundSize:
 																'cover',
@@ -232,7 +240,10 @@ export default function Banner() {
 																'all .5s ease',
 														}}>
 														<div
+															className="col-12"
 															style={{
+																position: 'relative',
+																top: '10px',
 																color:
 																	'#f1f1f1',
 																fontSize: 25,
@@ -244,6 +255,17 @@ export default function Banner() {
 																)[1]
 															}
 														</div>
+														<br/>
+														<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
+															Posted on {
+																getDate(post.created_at)
+															} by {
+																post.user.login
+															} <a href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+																<img src="/images/github_white.svg" alt="Github" width="16" height="16">
+																</img>
+															</a>
+														</p>
 													</a>
 												);
 											}

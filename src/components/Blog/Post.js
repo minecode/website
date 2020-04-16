@@ -27,6 +27,7 @@ export default function Post(props) {
 	const [authorizedUsers, setAuthorizedUsers] = useState(null);
 	const [coAuthors, setCoAuthors] = useState(null);
 	const [relatedPosts, setRelatedPosts] = useState(null);
+	const [hoverElement, setHoverElement] = useState(null);
 
 	const id = props.match.params.id;
 
@@ -250,8 +251,8 @@ export default function Post(props) {
 									}
 								})}
 								<hr className="mt-5 mb-5"/>
-								<h4>Written by:</h4>
-								<div className="row">
+								<h4 className="col-12">Written by:</h4>
+								<div className="row justify-content-center">
 									{post && [post].map((element, i) => {
 										return(
 											<div className="col-4 row" key={i}>
@@ -294,28 +295,91 @@ export default function Post(props) {
 										</>
 									);
 								})}
-								<div className="row">
+								<div className="row justify-content-center">
 									{relatedPosts && relatedPosts.length > 0 && relatedPosts.map((element, i) => {
-										var bannerImage2 = [];
-										if (element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)) {
-											bannerImage2 = element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)[0].split('(')[1].split(')')[0];
-										}
-										return(
-											<>
-												<div className="col-4 mt-3 mb-3 text-center" key={i}>
-													<a href={'/blog/post/' + element.number}>
-														<div style={{
-															backgroundImage:  `url(${bannerImage2})`,
-															backgroundSize: 'cover',
-															backgroundRepeat: 'no-repeat',
-															backgroundPosition: 'center',
-															height: '250px',
-														}} className="mb-2">
-														</div>
-														<h4>{element.title.split(']')[1]}</h4>
-													</a>
+										return (
+											<a
+												key={i}
+												className={
+													'col-sm-12 col-md-3 btn mx-2 my-2 p-2 justify-content-center'
+												}
+												href={
+													'/blog/post/' +
+													element.number
+												}
+												onMouseEnter={() =>
+													setHoverElement(i)
+												}
+												onMouseLeave={() =>
+													setHoverElement(
+														null
+													)
+												}
+												style={{
+													backgroundImage: element.body.match(
+														/(?:!\[(.*?)\]\((.*?)\))/g
+													)
+														? `linear-gradient(#21212190, #21212190), url(${
+															element.body
+																.match(
+																	/(?:!\[(.*?)\]\((.*?)\))/g
+																)[0]
+																.split(
+																	'('
+																)[1]
+																.split(
+																	')'
+																)[0]
+														})`
+														: null,
+													backgroundSize:
+														'cover',
+													backgroundColor: element.body.match(
+														/(?:!\[(.*?)\]\((.*?)\))/g
+													)
+														? null
+														: '#21212180',
+													borderRadius: 20,
+													border: 0,
+													height:
+														hoverElement ===
+														i
+															? 320
+															: 300,
+													transition:
+														'all .5s ease',
+													WebkitTransition:
+														'all .5s ease',
+													MozTransition:
+														'all .5s ease',
+												}}>
+												<div
+													style={{
+														position: 'relative',
+														top: '10px',
+														color:
+															'#f1f1f1',
+														fontSize: 25,
+														fontWeight: 100,
+													}}>
+													{
+														element.title.split(
+															/\[\w*\] /
+														)[1]
+													}
 												</div>
-											</>
+												<br/>
+												<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
+													Posted on {
+														getDate(element.created_at)
+													} by {
+														element.user.login
+													} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+														<img src="/images/github_white.svg" alt="Github" width="16" height="16">
+														</img>
+													</a>
+												</p>
+											</a>
 										);
 									})}
 								</div>

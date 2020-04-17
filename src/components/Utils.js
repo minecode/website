@@ -118,7 +118,11 @@ export function getDate(date) {
 	return monthNames[dateFinal.getMonth()] + ', ' + dateFinal.getFullYear();
 }
 
-export function getCard(i, background, href, title, footer, hoverElement, setHoverElement) {
+export function getCard(i, element, hoverElement, setHoverElement) {
+	const background = element[2];
+	const title = element[1];
+	const href = element[0];
+	const footer = element[3];
 	return (
 		<a
 			key={i}
@@ -170,4 +174,65 @@ export function getCard(i, background, href, title, footer, hoverElement, setHov
 			</p>
 		</a>
 	);
+}
+
+export function getElement(type, element) {
+	if (type === 'post') {
+		const href = '/blog/post/' + element.number;
+		const title = element.title.split(
+			/\[\w*\] /
+		)[1];
+		const background = element.body.match(
+			/(?:!\[(.*?)\]\((.*?)\))/g
+		)
+			? `linear-gradient(#21212190, #21212190), url(${
+				element.body
+					.match(
+						/(?:!\[(.*?)\]\((.*?)\))/g
+					)[0]
+					.split(
+						'('
+					)[1]
+					.split(
+						')'
+					)[0]
+			})`
+			: null;
+		const footer = <>Posted on {
+			getDate(element.created_at)
+		} by {
+			element.user.login
+		} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+			<img className="rounded-circle" src={element.user.avatar_url}alt="Github" width="16" height="16">
+			</img>
+		</a></>;
+		return [href, title, background, footer];
+	} else if (type === 'app') {
+		const href = '/app/' + element.name;
+		const title = titleCase(
+			element.name
+		);
+		const background = `linear-gradient(#21212190, #21212190), url(${
+			'https://raw.githubusercontent.com/minecode/' +
+			element.name +
+			'/master/' +
+			element.minecode_settings.image
+		})`;
+		const footer = <></>;
+		return [href, title, background, footer];
+	} else if (type === 'release') {
+		const href = '/release/' + element.number;
+		const title = <div style={{color: '#fff'}}>
+			<p>Releases {element.title} {element.state === 'closed' ? 'at ' + getDate(element.closed_at) : 'due on ' + getDate(element.due_on) }</p><br/>
+			<p style={{opacity: 0.5}}>{element.description}</p>
+			<p>Open issues {element.open_issues}</p>
+			<p>Closed issues {element.closed_issues}</p>
+		</div>;
+		var background = 'linear-gradient(#ff000090, #00000090), url(https://image.freepik.com/free-vector/flat-design-concept-rocket-launch_16734-61.jpg)';
+		if (element.state === 'closed') {
+			background = 'linear-gradient(#00ff0090, #00000090), url(https://image.freepik.com/free-vector/flat-design-concept-rocket-launch_16734-61.jpg)';
+		}
+		const footer = <></>;
+		return [href, title, background, footer];
+	}
 }

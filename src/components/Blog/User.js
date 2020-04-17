@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getDate, getCard, getHeader } from '../Utils';
+import { getElement, getCard, getHeader } from '../Utils';
 
 
 User.propTypes = {
@@ -43,36 +43,9 @@ export default function User(props) {
 						}
 					});}
 					if (isPost) {
-						const href = '/blog/post/' + element.number;
-						const title = element.title.split(
-							/\[\w*\] /
-						)[1];
-						const background = element.body.match(
-							/(?:!\[(.*?)\]\((.*?)\))/g
-						)
-							? `linear-gradient(#21212190, #21212190), url(${
-								element.body
-									.match(
-										/(?:!\[(.*?)\]\((.*?)\))/g
-									)[0]
-									.split(
-										'('
-									)[1]
-									.split(
-										')'
-									)[0]
-							})`
-							: null;
-						const footer = <>Posted on {
-							getDate(element.created_at)
-						} by {
-							element.user.login
-						} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-							<img className="rounded-circle" src={element.user.avatar_url}alt="Github" width="16" height="16">
-							</img>
-						</a></>;
+						const postElement = getElement('post', element);
 						return(
-							getCard(i, background, href, title, footer, hoverElement, setHoverElement)
+							getCard(i, postElement, hoverElement, setHoverElement)
 						);
 					}else {
 						return(<></>);

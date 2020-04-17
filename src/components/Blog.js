@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDate, getCard, getHeader } from './Utils';
+import { getElement, getCard, getHeader } from './Utils';
 
 export default function Blog() {
 
@@ -7,8 +7,9 @@ export default function Blog() {
 	const [hoverElement, setHoverElement] = useState(null);
 
 	useEffect(() => {
+		const header = getHeader();
 		fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
-			method: 'GET', headers: getHeader()
+			method: 'GET', headers: header
 		})
 			.then(res => res.json())
 			.then(data => {
@@ -32,36 +33,9 @@ export default function Blog() {
 						}
 					});}
 					if (isPost) {
-						const href = '/blog/post/' + element.number;
-						const title = element.title.split(
-							/\[\w*\] /
-						)[1];
-						const background = element.body.match(
-							/(?:!\[(.*?)\]\((.*?)\))/g
-						)
-							? `linear-gradient(#21212190, #21212190), url(${
-								element.body
-									.match(
-										/(?:!\[(.*?)\]\((.*?)\))/g
-									)[0]
-									.split(
-										'('
-									)[1]
-									.split(
-										')'
-									)[0]
-							})`
-							: null;
-						const footer = <>Posted on {
-							getDate(element.created_at)
-						} by {
-							element.user.login
-						} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-							<img className="rounded-circle" src={element.user.avatar_url}alt="Github" width="16" height="16">
-							</img>
-						</a></>;
+						const postElement = getElement('post', element);
 						return(
-							getCard(i, background, href, title, footer, hoverElement, setHoverElement)
+							getCard(i, postElement, hoverElement, setHoverElement)
 						);
 					}else {
 						return(<></>);

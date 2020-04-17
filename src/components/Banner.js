@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDate, titleCase, getCard, getHeader } from './Utils';
+import { getElement, getCard, getHeader } from './Utils';
 
 export default function Banner() {
 	const color = '#f1f1f1';
@@ -15,8 +15,9 @@ export default function Banner() {
 	var nApps = 0;
 	let isPost = false;
 
+	function getPostsList() {
+		var header = getHeader();
 
-	async function getPostsList() {
 		fetch(
 			'https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed',
 			{
@@ -34,7 +35,9 @@ export default function Banner() {
 			});
 	}
 
-	async function getRepositories() {
+	function getRepositories() {
+		var header = getHeader();
+
 		fetch('https://api.github.com/orgs/minecode/repos', {
 			method: 'GET',
 			headers: header
@@ -206,58 +209,10 @@ export default function Banner() {
 											});
 											if (isPost && nPost < maxPost) {
 												nPost++;
-												const href =
-													'/blog/post/' + post.number;
-												const title = post.title.split(
-													/\[\w*\] /
-												)[1];
-												const background = post.body.match(
-													/(?:!\[(.*?)\]\((.*?)\))/g
-												)
-													? `linear-gradient(#21212190, #21212190), url(${
-														post.body
-															.match(
-																/(?:!\[(.*?)\]\((.*?)\))/g
-															)[0]
-															.split('(')[1]
-															.split(')')[0]
-													})`
-													: null;
-												const footer = (
-													<>
-														Posted on{' '}
-														{getDate(
-															post.created_at
-														)}{' '}
-														by {post.user.login}{' '}
-														<a
-															href={
-																'https://github.com/' +
-																post.user.login
-															}
-															target='_blank'
-															rel='noopener noreferrer'
-															style={{
-																color: '#fff',
-															}}>
-															<img
-																className='rounded-circle'
-																src={
-																	post.user
-																		.avatar_url
-																}
-																alt='Github'
-																width='16'
-																height='16'></img>
-														</a>
-													</>
-												);
+												const postElement = getElement('post', post);
 												return getCard(
 													i,
-													background,
-													href,
-													title,
-													footer,
+													postElement,
 													hoverElement,
 													setHoverElement
 												);
@@ -268,23 +223,10 @@ export default function Banner() {
 										data.map((app, i) => {
 											if (app.topic.names.includes('production') && nApps < maxApps) {
 												nApps++;
-												const href = '/app/' + app.name;
-												const title = titleCase(
-													app.name
-												);
-												const background = `linear-gradient(#21212190, #21212190), url(${
-													'https://raw.githubusercontent.com/minecode/' +
-													app.name +
-													'/master/' +
-													app.minecode_settings.image
-												})`;
-												const footer = <></>;
+												const appElement = getElement('app', app);
 												return getCard(
 													i,
-													background,
-													href,
-													title,
-													footer,
+													appElement,
 													hoverElement,
 													setHoverElement
 												);

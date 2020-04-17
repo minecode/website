@@ -46,16 +46,6 @@ export default function Navbar() {
 								Blog
 							</a>
 						</li>
-						<li
-							className={path &&
-								path === '/ideas'
-								? 'nav-item active'
-								: 'nav-item'
-							}>
-							<a className='nav-link' href='/ideas'>
-								Ideas
-							</a>
-						</li>
 					</ul>
 				</div>
 			</div>

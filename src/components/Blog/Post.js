@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import CodeBlock from '../CodeBlock';
-import { getDate, getCard, getHeader } from '../Utils';
+import { getDate, getCard, getHeader, getElement } from '../Utils';
 
 Post.propTypes = {
 	match: PropTypes.shape({
@@ -273,40 +273,9 @@ export default function Post(props) {
 								})}
 								<div className="row justify-content-center">
 									{relatedPosts && relatedPosts.length > 0 && relatedPosts.map((element, i) => {
-										
-										const href = '/blog/post/' + element.number;
-										const title = element.title.split(
-											/\[\w*\] /
-										)[1];
-										const background = element.body.match(
-											/(?:!\[(.*?)\]\((.*?)\))/g
-										)
-											? `linear-gradient(#21212190, #21212190), url(${
-												element.body
-													.match(
-														/(?:!\[(.*?)\]\((.*?)\))/g
-													)[0]
-													.split(
-														'('
-													)[1]
-													.split(
-														')'
-													)[0]
-											})`
-											: null;
-										const footer = <><a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-											<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
-												Posted on {
-													getDate(element.created_at)
-												} by {
-													element.user.login
-												}
-												<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="16" height="16">
-												</img>
-											</p>
-										</a></>;
+										const postElement = getElement('post', element);
 										return(
-											getCard(i, background, href, title, footer, hoverElement, setHoverElement)
+											getCard(i, postElement, hoverElement, setHoverElement)
 										);
 									})}
 								</div>

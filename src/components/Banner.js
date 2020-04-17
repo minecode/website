@@ -6,6 +6,7 @@ export default function Banner() {
 	const [element, setElement] = useState('blog');
 	const [posts, setPosts] = useState(null);
 	const [hoverElement, setHoverElement] = useState(null);
+	const [hoverTab, setHoverTab] = useState(null);
 	const [data, setData] = useState(null);
 	const [header, setHeader] = useState(null);
 
@@ -14,7 +15,6 @@ export default function Banner() {
 	var nPost = 0;
 	var nApps = 0;
 	let isPost = false;
-
 
 	async function getPostsList() {
 		fetch(
@@ -125,6 +125,7 @@ export default function Banner() {
 					className={'row vertical-align-middle'}
 					style={{
 						alignItems: 'center',
+						justifyContent: 'center',
 						height: data ? 500 : 0,
 						opacity: data ? 1 : 0,
 						transition: 'height 0.5s ease, opacity 1.5s ease',
@@ -137,15 +138,15 @@ export default function Banner() {
 							height: 500,
 							display: 'flex',
 							flexDirection: 'column',
-							justifyContent: 'space-around',
-							alignItems: 'flex-start',
+							justifyContent: 'center',
+							alignItems: 'flex-end',
 						}}>
 						{data && (
 							<>
 								<div
 									className={'btn'}
 									style={{
-										color: '#212121',
+										color: element === 'blog' ? '#5ca4da' : hoverTab === 'blog' ? '#5ca4da' : '#212121',
 										fontSize: element === 'blog' ? 30 : 20,
 										marginLeft: element === 'blog' ? 10 : 0,
 										transition: 'all .5s ease',
@@ -153,6 +154,12 @@ export default function Banner() {
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
 									}}
+									onMouseEnter={() =>
+										setHoverTab('blog')
+									}
+									onMouseLeave={() =>
+										setHoverTab(null)
+									}
 									onClick={() => {
 										setElement('blog');
 									}}>
@@ -161,7 +168,7 @@ export default function Banner() {
 								<div
 									className={'btn'}
 									style={{
-										color: '#212121',
+										color: element === 'applications' ? '#5ca4da' : hoverTab === 'applications' ? '#5ca4da' : '#212121',
 										fontSize:
 											element === 'applications'
 												? 30
@@ -173,6 +180,12 @@ export default function Banner() {
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
 									}}
+									onMouseEnter={() =>
+										setHoverTab('applications')
+									}
+									onMouseLeave={() =>
+										setHoverTab(null)
+									}
 									onClick={() => {
 										setElement('applications');
 									}}>

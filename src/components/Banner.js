@@ -14,7 +14,7 @@ export default function Banner() {
 	var nApps = 0;
 	let isPost = false;
 
-	var header = getHeader()
+	var header = getHeader();
 
 	async function getPostsList() {
 		fetch(

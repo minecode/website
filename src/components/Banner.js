@@ -7,6 +7,7 @@ export default function Banner() {
 	const [posts, setPosts] = useState(null);
 	const [hoverElement, setHoverElement] = useState(null);
 	const [data, setData] = useState(null);
+	const [header, setHeader] = useState(null);
 
 	let maxPost = 3;
 	let maxApps = 3;
@@ -14,7 +15,6 @@ export default function Banner() {
 	var nApps = 0;
 	let isPost = false;
 
-	var header = getHeader();
 
 	async function getPostsList() {
 		fetch(
@@ -29,6 +29,8 @@ export default function Banner() {
 				nPost = 0;
 				isPost = false;
 				setPosts(data);
+			}).catch(() => {
+				//Do something with error
 			});
 	}
 
@@ -52,7 +54,7 @@ export default function Banner() {
 								'/topics',
 							{
 								method: 'GET',
-								headers: getHeader,
+								headers: header,
 							}
 						),
 						fetch(
@@ -61,7 +63,7 @@ export default function Banner() {
 								'/contents/minecode_settings.json?ref=master',
 							{
 								method: 'GET',
-								headers: getHeader,
+								headers: header,
 							}
 						),
 					])
@@ -87,18 +89,27 @@ export default function Banner() {
 							}
 						});
 				});
+			}).catch(() => {
+				//Do something with error
 			});
 	}
 
 	useEffect(() => {
-		getRepositories();
-
-		if (element) {
-			if (element === 'blog') {
-				getPostsList();
+		if(header) {
+			getRepositories();
+			if (element) {
+				if (element === 'blog') {
+					getPostsList();
+				}
 			}
 		}
-	}, [element]);
+		
+	}, [element, header]);
+
+	useEffect(() => {
+		const temp = getHeader();
+		setHeader(temp);
+	}, []);
 
 	return (
 		<div
@@ -255,12 +266,7 @@ export default function Banner() {
 									{element === 'applications' &&
 										data &&
 										data.map((app, i) => {
-											if (
-												app.topic.names.includes(
-													'production'
-												) &&
-												nApps < maxApps
-											) {
+											if (app.topic.names.includes('production') && nApps < maxApps) {
 												nApps++;
 												const href = '/app/' + app.name;
 												const title = titleCase(

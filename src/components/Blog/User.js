@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getDate, getHeader } from '../Utils';
+import { getDate, getCard, getHeader } from '../Utils';
 
 
 User.propTypes = {
@@ -13,6 +13,7 @@ User.propTypes = {
 
 export default function User(props) {
 
+	const [hoverElement, setHoverElement] = useState(null);
 	const [post, setPost] = useState(null);
 	const user = props.match.params.user;
 
@@ -32,7 +33,7 @@ export default function User(props) {
 				<h1 className="display-4">Blog</h1>
 				<p className="lead">Minecode Posts</p>
 			</div>
-			<div id="posts_list">
+			<div id="posts_list" className="row justify-content-center">
 				{post && post.map((element, i) => {
 					var isPost = false;
 					{element.labels.forEach((element) => {
@@ -42,44 +43,36 @@ export default function User(props) {
 						}
 					});}
 					if (isPost) {
-						var bannerImage2 = [];
-						if (element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)) {
-							bannerImage2 = element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)[0].split('(')[1].split(')')[0];
-						}
+						const href = '/blog/post/' + element.number;
+						const title = element.title.split(
+							/\[\w*\] /
+						)[1];
+						const background = element.body.match(
+							/(?:!\[(.*?)\]\((.*?)\))/g
+						)
+							? `linear-gradient(#21212190, #21212190), url(${
+								element.body
+									.match(
+										/(?:!\[(.*?)\]\((.*?)\))/g
+									)[0]
+									.split(
+										'('
+									)[1]
+									.split(
+										')'
+									)[0]
+							})`
+							: null;
+						const footer = <>Posted on {
+							getDate(element.created_at)
+						} by {
+							element.user.login
+						} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+							<img className="rounded-circle" src={element.user.avatar_url}alt="Github" width="16" height="16">
+							</img>
+						</a></>;
 						return(
-							<div className="card-deck mb-3 text-center" key={i}>
-								<div className="col-12 text-center">
-									<div>
-										<a className="row" href={'/blog/post/' + element.number}>
-											<div style={{
-												backgroundImage:  `url(${bannerImage2})`,
-												backgroundSize: 'cover',
-												backgroundRepeat: 'no-repeat',
-												backgroundPosition: 'center',
-												height: '150px',
-											}} className="mb-2 offset-2 col-3">
-											</div>
-											<div className="offset-1 col-4 text-left d-flex align-middle align-items-center">
-												<div>
-													<h4>{element.title.split(']')[1]}</h4><br/>
-													<span>
-														Posted on {
-															getDate(element.created_at)
-														} by {
-															element.user.login
-														}
-														<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#000'}}>
-															<img src="/images/github.svg" alt="Github" width="14" height="14">
-															</img>
-														</a>
-													</span>
-												</div>
-											</div>
-										</a>
-									</div>
-									
-								</div>
-							</div>
+							getCard(i, background, href, title, footer, hoverElement, setHoverElement)
 						);
 					}else {
 						return(<></>);

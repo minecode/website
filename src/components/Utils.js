@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export function getHeader() {
 	var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
 	var header = new Headers();

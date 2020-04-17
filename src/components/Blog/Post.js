@@ -199,70 +199,40 @@ export default function Post(props) {
 									})}
 								</div>
 								{comments && comments.map((element, i) => {
-									if (element.user.login === post.user.login) {
-										return(
-											<>
-												{i === 0 ? <><hr className="mt-5 mb-5"/><h4>Comments:</h4></> : <></>}
-												<div
-													className="px-3 py-3 pt-md-5 pb-md-4 mx-auto row"
-													id="comments" key={i}
-												>
-													<div className="row col-12">
-														<div className="col-1 text-center" style={{zIndex: 1}}>
-															<img className="m-3 rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
-															</img>   
-														</div>
-														<div className="col-11">
-															<div className="card mt-3 mb-3">
-																<div className="card-header">
-																	<div>
-																		Posted on {
-																			getDate(element.created_at)
-																		} by {
-																			element.user.login
-																		}
-																	</div>
-																</div>
-																<div className="card-body">
-																	<ReactMarkdown source={element.body} renderers={{ code: CodeBlock }}/>
-																</div>
-															</div>
-														</div>
-													</div>
+									var user = <div className="col-1 text-center" style={{zIndex: 1}}>
+										<img className="m-3 rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
+										</img>   
+									</div>;
+									var comment = <div className="col-11">
+										<div className="card mt-3 mb-3">
+											<div className="card-header">
+												<div>
+													Posted on {
+														getDate(element.created_at)
+													} by {
+														element.user.login
+													}
 												</div>
-											</>
-										);
-									} else {
-										return(
+											</div>
+											<div className="card-body">
+												<ReactMarkdown source={element.body} renderers={{ code: CodeBlock }}/>
+											</div>
+										</div>
+									</div>;
+									return(
+										<>
+											{i === 0 ? <><hr className="mt-5 mb-5"/><h4>Comments:</h4></> : <></>}
 											<div
-												className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto row"
+												className="px-3 py-3 pt-md-5 pb-md-4 mx-auto row"
 												id="comments" key={i}
 											>
 												<div className="row col-12">
-													<div className="col-11">
-														<div className="card mt-3 mb-3">
-															<div className="card-header">
-																<div>
-																	Posted on {
-																		getDate(element.created_at)
-																	} by {
-																		element.user.login
-																	}
-																</div>
-															</div>
-															<div className="card-body">
-																<ReactMarkdown source={element.body} renderers={{ code: CodeBlock }}/>
-															</div>
-														</div>
-													</div>
-													<div className="col-1 text-center">
-														<img className="m-3 rounded-circle" src={element.user.avatar_url} alt="User" width="35" height="35">
-														</img>   
-													</div>
+													{element.user.login === post.user.login ? user : comment}
+													{element.user.login === post.user.login ? comment : user}
 												</div>
 											</div>
-										);
-									}
+										</>
+									);
 								})}
 								{relatedPosts && relatedPosts.length > 0 && [relatedPosts[0]].map((element) => {
 									return(

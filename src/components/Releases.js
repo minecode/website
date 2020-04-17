@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDate, getCard, getHeader } from './Utils';
+import { getCard, getHeader, getElement } from './Utils';
 
 
 export default function Releases() {
@@ -8,6 +8,7 @@ export default function Releases() {
 
 	const [milestoneReleasesd, setMilestonesReleasesd] = useState(null);
 	const [milestoneNonReleasesd, setMilestonesNonReleasesd] = useState(null);
+	
 	
 	useEffect(() => {
 		var header = getHeader();
@@ -37,34 +38,18 @@ export default function Releases() {
 			<h2>Versions Released</h2>
 			<div id="Releasesd" className="row justify-content-center">
 				{milestoneReleasesd && milestoneReleasesd.map((element, i) => {
-					const href = '/release/' + element.number;
-					const title = <div style={{color: '#fff'}}>
-						<p>Releases {element.title} at {getDate(element.closed_at)}</p><br/>
-						<p style={{opacity: 0.5}}>{element.description}</p>
-						<p>Open issues {element.open_issues}</p>
-						<p>Closed issues {element.closed_issues}</p>
-					</div>;
-					const background = 'linear-gradient(#00ff0090, #00000090), url(https://image.freepik.com/free-vector/flat-design-concept-rocket-launch_16734-61.jpg)';
-					const footer = <></>;
+					const releaseElement = getElement('release', element);
 					return(
-						getCard(i + '_1', background, href, title, footer, hoverElement, setHoverElement)
+						getCard(i + '_1', releaseElement, hoverElement, setHoverElement)
 					);
 				})}
 			</div>
 			<h2>Next Releases</h2>
 			<div id="nonReleasesd" className="row justify-content-center">
 				{milestoneNonReleasesd && milestoneNonReleasesd.map((element, i) => {
-					const href = '/release/' + element.number;
-					const title = <div style={{color: '#fff'}}>
-						<p>Releases {element.title} due on {getDate(element.due_on)}</p><br/>
-						<p style={{opacity: 0.5}}>{element.description}</p>
-						<p>Open issues {element.open_issues}</p>
-						<p>Closed issues {element.closed_issues}</p>
-					</div>;
-					const background = 'linear-gradient(#ff000090, #00000090), url(https://image.freepik.com/free-vector/flat-design-concept-rocket-launch_16734-61.jpg)';
-					const footer = <></>;
+					const releaseElement = getElement('release', element); 
 					return(
-						getCard(i + '_2', background, href, title, footer, hoverElement, setHoverElement)
+						getCard(i + '_2', releaseElement, hoverElement, setHoverElement)
 					);
 				})}
 			</div>

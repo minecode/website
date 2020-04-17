@@ -223,7 +223,7 @@ export default function Post(props) {
 										<>
 											{i === 0 ? <><hr className="mt-5 mb-5"/><h4>Comments:</h4></> : <></>}
 											<div
-												className="px-3 py-3 pt-md-5 pb-md-4 mx-auto row"
+												className="px-3 mx-auto row"
 												id="comments" key={i}
 											>
 												<div className="row col-12">

@@ -10,7 +10,7 @@ function getDate(created_at) {
 }
 
 export default function Banner() {
-	const [color, setColor] = useState('#212121');
+	const color = '#f1f1f1';
 	const [element, setElement] = useState('blog');
 	const [posts, setPosts] = useState(null);
 	const [hoverElement, setHoverElement] = useState(null);
@@ -23,14 +23,15 @@ export default function Banner() {
 		if (element) {
 			if(element === 'blog') {
 				getPostsList();
-
 			}
 			
 		}
 	}, [element]);
 
 	let maxPost = 3;
+	let maxApps = 3;
 	var nPost = 0;
+	var nApps = 0;
 	let isPost = false;
 
 	async function getPostsList() {
@@ -129,7 +130,11 @@ export default function Banner() {
 					className={'row vertical-align-middle'}
 					style={{
 						alignItems: 'center',
-						minHeight: 500,
+						height: data ? 500 : 0,
+						opacity: data ? 1 : 0,
+						transition: 'height 0.5s ease, opacity 1.5s ease',
+						WebkitTransition: 'height 0.5s ease, opacity 1.5s ease',
+						MozTransition: 'height 0.5s ease, opacity 1.5s ease',
 					}}>
 					<div
 						className={'col-md-4 col-sm-12 text-left'}
@@ -140,44 +145,40 @@ export default function Banner() {
 							justifyContent: 'space-around',
 							alignItems: 'flex-start',
 						}}>
-						{data && <div
-							className={'btn'}
-							style={{
-								color: '#f1f1f1',
-								fontSize: element === 'blog' ? 30 : 20,
-								marginLeft: element === 'blog' ? 10 : 0,
-								transition: 'all .5s ease',
-								WebkitTransition: 'all .5s ease',
-								MozTransition: 'all .5s ease',
-								fontWeight: 100,
-							}}
-							onClick={() => {
-								setElement('blog');
-							}}>
+						{data && <>
+							<div
+								className={'btn'}
+								style={{
+									color: '#212121',
+									fontSize: element === 'blog' ? 30 : 20,
+									marginLeft: element === 'blog' ? 10 : 0,
+									transition: 'all .5s ease',
+									WebkitTransition: 'all .5s ease',
+									MozTransition: 'all .5s ease',
+									fontWeight: 100,
+								}}
+								onClick={() => {
+									setElement('blog');
+								}}>
 							Blog
-						</div>}
-						{data && data.map((app,i) => {
-							if (app.topic.names.includes('production')) {
-								return <div
-									key={i}
-									className={'btn'}
-									style={{
-										color: '#f1f1f1',
-										fontSize: element === app.name ? 30 : 20,
-										marginLeft: element === app.name ? 10 : 0,
-										transition: 'all .5s ease',
-										WebkitTransition: 'all .5s ease',
-										MozTransition: 'all .5s ease',
-										fontWeight: 100,
-									}}
-									onClick={() => {
-										setElement(app.name);
-									}}>
-									{titleCase(app.name)}
-								</div>;	
-							}
-							
-						})}
+							</div>
+							<div
+								className={'btn'}
+								style={{
+									color: '#212121',
+									fontSize: element === 'applications' ? 30 : 20,
+									marginLeft: element === 'applications' ? 10 : 0,
+									transition: 'all .5s ease',
+									WebkitTransition: 'all .5s ease',
+									MozTransition: 'all .5s ease',
+									fontWeight: 100,
+								}}
+								onClick={() => {
+									setElement('applications');
+								}}>
+							Applications
+							</div>
+						</>}
 					</div>
 					<div
 						className={'col-sm-12 col-md-8 text-center '}
@@ -188,17 +189,10 @@ export default function Banner() {
 							<div
 								style={{
 									alignItems: 'center',
-									transition: 'all .5s ease',
-									WebkitTransition: 'all .5s ease',
-									MozTransition: 'all .5s ease',
 								}}>
 								<div
 									className={'row justify-content-center vertical-align-midle'}
-									style={{
-										transition: 'all .5s ease-out',
-										WebkitTransition: 'all .5s ease-out',
-										MozTransition: 'all .5s ease-out',
-									}}>
+								>
 									{element === 'blog' &&
 										posts &&
 										posts.map((post, i) => {
@@ -298,12 +292,28 @@ export default function Banner() {
 												);
 											}
 										})}
-									{element !== 'blog' && data && data.map((app, i) => {
-										if(app.topic.names.includes('production') && app.name === element) {
-											return <div
+									{element === 'applications' && data && data.map((app, i) => {
+										if(app.topic.names.includes('production') && nApps < maxApps) {
+											nApps++;
+											return <a
 												key={i}
+												className={
+													'col-sm-12 col-md-3 btn mx-2 my-2 p-2 row justify-content-center'
+												}
+												href={
+													'/app/' +
+															app.name
+												}
+												onMouseEnter={() =>
+													setHoverElement(i)
+												}
+												onMouseLeave={() =>
+													setHoverElement(
+														null
+													)
+												}
 												style={{
-													backgroundImage: `linear-gradient(#21212199, #21212199), url(${
+													backgroundImage: `linear-gradient(#21212190, #21212190), url(${
 														'https://raw.githubusercontent.com/minecode/' +
 														app.name +
 														'/master/' +
@@ -311,135 +321,38 @@ export default function Banner() {
 															.image
 													})`,
 													backgroundSize:
-														'cover',
-													backgroundColor: '#212121',
+																'cover',
+
 													borderRadius: 20,
 													border: 0,
-													width: '100%',
 													height:
-													'100%',
+																hoverElement ===
+																i
+																	? 320
+																	: 300,
 													transition:
-														'all .5s ease',
+																'all .5s ease',
 													WebkitTransition:
-														'all .5s ease',
+																'all .5s ease',
 													MozTransition:
-														'all .5s ease',
+																'all .5s ease',
+													backgroundPositionX: 'center',
+													backgroundPositionY: 'top'
 												}}>
-												<div className='container'>
-													<div
-														className='row'
-														style={{
-															minHeight: 350,
-															alignItems: 'center',
-															color: '#f1f1f1',
-															margin: 20
-														}}>
-														<div className={'col-12 row'}>
-															<div className={'col-6 text-right'}>
-																<div className={'col-12'}>
-																	<h2
-																		className='display-6'
-																		style={{
-																			color: '#f1f1f1',
-																		}}>
-																		{titleCase(app.name)}
-																	</h2>
-																</div>
-																<div className={'col-12'}>
-																	<div
-																		className={
-																			'col-12 pl-0 pr-0'
-																		}>
-																		{app.description}
-																	</div>
-																</div>
-															</div>
-															<div className={'col-6 text-right'}>
-																<img
-																	width='192'
-																	height='192'
-																	src={
-																		'https://raw.githubusercontent.com/minecode/' +
-																app.name +
-																'/master/' +
-																app.minecode_settings
-																	.image
-																	} />
-															</div>
-															<div className={'col-12 text-left mt-3'}>
-																<a href={
-																	'/app/' +
-																	app.name
-																} className={'btn btn-primary'}>Consultar página</a>
-															</div>
-														</div>
-														<div
-															className={
-																'text-left'
-															}>
-															
-															<div className={'col-12'}>
-																<div className='btn btn-group pl-0 pr-0'>
-																	<a
-																		className={
-																			'btn btn-primary'
-																		}
-																		href={
-																			app
-																				.html_url
-																		}
-																		target='_blank'
-																		rel='noopener noreferrer'>
-																		<img
-																			src='/images/github.svg'
-																			width='24'
-																			height='24'></img>{' '}
-																				Github
-																	</a>
-																	{app.minecode_settings.link_mobile && (
-																		<a
-																			className={
-																				'btn btn-primary'
-																			}
-																			href={
-																				app
-																					.minecode_settings
-																					.link_mobile
-																			}
-																			target='_blank'
-																			rel='noopener noreferrer'>
-																			<img
-																				src='/images/google-play-store.svg'
-																				width='24'
-																				height='24'></img>{' '}
-																				Play Store
-																		</a>
-																	)}
-																	{app.homepage && (
-																		<a
-																			className={
-																				'btn btn-primary'
-																			}
-																			href={
-																				app.homepage
-																			}
-																			target='_blank'
-																			rel='noopener noreferrer'>
-																			<img
-																				src='/images/web-page.svg'
-																				width='24'
-																				height='24'></img>{' '}
-																				Website
-																		</a>
-																	)}
-																</div>
-															</div>
-														</div>
-
-														
-													</div>
+												<div
+													className="col-12"
+													style={{
+														position: 'relative',
+														top: '10px',
+														color:
+																	'#f1f1f1',
+														fontSize: 25,
+														fontWeight: 100,
+													}}>
+													{titleCase(app.name)}
 												</div>
-											</div>;
+							
+											</a>;
 										}
 									})}
 								</div>

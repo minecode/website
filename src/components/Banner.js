@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { titleCase } from './Utils';
-
-function getDate(created_at) {
-	var date = new Date(created_at);
-	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
-	];
-	return monthNames[date.getMonth()] + ', ' + date.getFullYear();
-}
+import { getDate, titleCase, getCard } from './Utils';
 
 export default function Banner() {
 	const color = '#f1f1f1';
@@ -204,155 +196,54 @@ export default function Banner() {
 											});
 											if (isPost && nPost < maxPost) {
 												nPost++;
-
-												return (
-													<a
-														key={i}
-														className={
-															'col-sm-12 col-md-3 btn mx-2 my-2 p-2 row justify-content-center'
-														}
-														href={
-															'/blog/post/' +
-															post.number
-														}
-														onMouseEnter={() =>
-															setHoverElement(i)
-														}
-														onMouseLeave={() =>
-															setHoverElement(
-																null
-															)
-														}
-														style={{
-															backgroundImage: post.body.match(
+												const href = '/blog/post/' + post.number;
+												const title = post.title.split(
+													/\[\w*\] /
+												)[1];
+												const background = post.body.match(
+													/(?:!\[(.*?)\]\((.*?)\))/g
+												)
+													? `linear-gradient(#21212190, #21212190), url(${
+														post.body
+															.match(
 																/(?:!\[(.*?)\]\((.*?)\))/g
-															)
-																? `linear-gradient(#21212190, #21212190), url(${
-																	post.body
-																		.match(
-																			/(?:!\[(.*?)\]\((.*?)\))/g
-																		)[0]
-																		.split(
-																			'('
-																		)[1]
-																		.split(
-																			')'
-																		)[0]
-																})`
-																: null,
-															backgroundSize:
-																'cover',
-															backgroundColor: post.body.match(
-																/(?:!\[(.*?)\]\((.*?)\))/g
-															)
-																? null
-																: '#21212180',
-															borderRadius: 20,
-															border: 0,
-															height:
-																hoverElement ===
-																i
-																	? 320
-																	: 300,
-															transition:
-																'all .5s ease',
-															WebkitTransition:
-																'all .5s ease',
-															MozTransition:
-																'all .5s ease',
-														}}>
-														<div
-															className="col-12"
-															style={{
-																position: 'relative',
-																top: '10px',
-																color:
-																	'#f1f1f1',
-																fontSize: 25,
-																fontWeight: 100,
-															}}>
-															{
-																post.title.split(
-																	/\[\w*\] /
-																)[1]
-															}
-														</div>
-														<br/>
-														<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
-															Posted on {
-																getDate(post.created_at)
-															} by {
-																post.user.login
-															} <a href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-																<img className="rounded-circle" src={post.user.avatar_url} alt="Github" width="16" height="16">
-																</img>
-															</a>
-														</p>
-													</a>
+															)[0]
+															.split(
+																'('
+															)[1]
+															.split(
+																')'
+															)[0]
+													})`
+													: null;
+												const footer = <>Posted on {
+													getDate(post.created_at)
+												} by {
+													post.user.login
+												} <a href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+													<img className="rounded-circle" src={post.user.avatar_url} alt="Github" width="16" height="16">
+													</img>
+												</a></>;
+												return(
+													getCard(i, background, href, title, footer, hoverElement, setHoverElement)
 												);
 											}
 										})}
 									{element === 'applications' && data && data.map((app, i) => {
 										if(app.topic.names.includes('production') && nApps < maxApps) {
 											nApps++;
-											return <a
-												key={i}
-												className={
-													'col-sm-12 col-md-3 btn mx-2 my-2 p-2 row justify-content-center'
-												}
-												href={
-													'/app/' +
-															app.name
-												}
-												onMouseEnter={() =>
-													setHoverElement(i)
-												}
-												onMouseLeave={() =>
-													setHoverElement(
-														null
-													)
-												}
-												style={{
-													backgroundImage: `linear-gradient(#21212190, #21212190), url(${
-														'https://raw.githubusercontent.com/minecode/' +
-														app.name +
-														'/master/' +
-														app.minecode_settings
-															.image
-													})`,
-													backgroundSize:
-																'cover',
-
-													borderRadius: 20,
-													border: 0,
-													height:
-																hoverElement ===
-																i
-																	? 320
-																	: 300,
-													transition:
-																'all .5s ease',
-													WebkitTransition:
-																'all .5s ease',
-													MozTransition:
-																'all .5s ease',
-													backgroundPositionX: 'center',
-													backgroundPositionY: 'top'
-												}}>
-												<div
-													className="col-12"
-													style={{
-														position: 'relative',
-														top: '10px',
-														color:
-																	'#f1f1f1',
-														fontSize: 25,
-														fontWeight: 100,
-													}}>
-													{titleCase(app.name)}
-												</div>
-							
-											</a>;
+											const href = '/app/' + app.name;
+											const title = titleCase(app.name);											const background = `linear-gradient(#21212190, #21212190), url(${
+												'https://raw.githubusercontent.com/minecode/' +
+												app.name +
+												'/master/' +
+												app.minecode_settings
+													.image
+											})`;
+											const footer = <></>;
+											return(
+												getCard(i, background, href, title, footer, hoverElement, setHoverElement)
+											);
 										}
 									})}
 								</div>

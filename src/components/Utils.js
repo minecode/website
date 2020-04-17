@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+
+
 export function addPost(issue) {
 	var card = document.createElement('div');
 	card.setAttribute('class', 'col-12');
@@ -98,4 +101,66 @@ export function titleCase(str) {
 	}
 	// Directly return the joined string
 	return splitStr.join(' ');
+}
+
+export function getDate(date) {
+	var dateFinal = new Date(date);
+	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+		'July', 'August', 'September', 'October', 'November', 'December'
+	];
+	return monthNames[dateFinal.getMonth()] + ', ' + dateFinal.getFullYear();
+}
+
+export function getCard(i, background, href, title, footer, hoverElement, setHoverElement) {
+	return (
+		<a
+			key={i}
+			className={
+				'col-sm-12 col-md-3 btn mx-2 my-2 p-2 justify-content-center'
+			}
+			href={href}
+			onMouseEnter={() =>
+				setHoverElement(i)
+			}
+			onMouseLeave={() =>
+				setHoverElement(null)
+			}
+			style={{
+				backgroundImage: background,
+				backgroundSize:
+					'cover',
+				backgroundPosition: 'center',
+				backgroundColor: '#21212180',
+				borderRadius: 20,
+				border: 0,
+				height:
+					hoverElement ===
+					i
+						? 320
+						: 300,
+				transition:
+					'all .5s ease',
+				WebkitTransition:
+					'all .5s ease',
+				MozTransition:
+					'all .5s ease',
+			}}>
+			<div
+				className="col-12"
+				style={{
+					position: 'relative',
+					top: '10px',
+					color:
+						'#f1f1f1',
+					fontSize: 25,
+					fontWeight: 100,
+				}}>
+				{title}
+			</div>
+			<br/>
+			<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
+				{footer}
+			</p>
+		</a>
+	);
 }

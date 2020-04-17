@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import CodeBlock from '../CodeBlock';
-
-function getDate(created_at) {
-	var date = new Date(created_at);
-	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
-	];
-	return monthNames[date.getMonth()] + ', ' + date.getFullYear();
-}
+import { getDate } from '../Utils';
 
 Post.propTypes = {
 	match: PropTypes.shape({
@@ -131,19 +124,17 @@ export default function Post(props) {
 														<p style={{color: '#fff', fontSize:16}}>
 															Posted on {
 																getDate(element.created_at)
-															} by {
-																element.user.login
-															}
+															} by
 															<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-																<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="24" height="24">
+																{
+																	element.user.login
+																} <img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="24" height="24">
 																</img>
 															</a>
 															{coAuthors && coAuthors.length > 0 && coAuthors.map((element, i) => {
 																return(
 																	<>
-																		{i === 0 ? <span style={{opacity:0.5}}>(</span> : <></>}
-																		<span key={i} style={{opacity:0.5}}>{element.login} <a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff', paddingRight: 0}}>
-																			<img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
+																		{i === 0 ? <span style={{opacity:0.5}}>(</span>:<></>}<span key={i} style={{opacity:0.5}}><a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff', paddingRight: 0}}>{element.login} <img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
 																			</img>
 																		</a>
 																		</span>
@@ -180,13 +171,42 @@ export default function Post(props) {
 										}
 									})}
 								</div>
+								<div className="mt-5 mb-5"/>
+								<div className="row justify-content-center">
+									{post && [post].map((element, i) => {
+										return(
+											<div className="col-4 row justify-content-center" key={i}>
+												<div className="align-self-center p-2">
+													{element.user.login}
+													<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+														<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="24" height="24">
+														</img>
+													</a>
+												</div>
+											</div>
+										);
+									})}
+									{coAuthors && coAuthors.map((element, i) => {
+										return(
+											<div className="col-4 row justify-content-center" key={i}>
+												<div className="align-self-center p-2">
+													{element.login}
+													<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+														<img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
+														</img>
+													</a>
+												</div>
+											</div>
+										);
+									})}
+								</div>
 								{comments && comments.map((element, i) => {
 									if (element.user.login === post.user.login) {
 										return(
 											<>
 												{i === 0 ? <><hr className="mt-5 mb-5"/><h4>Comments:</h4></> : <></>}
 												<div
-													className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto row"
+													className="px-3 py-3 pt-md-5 pb-md-4 mx-auto row"
 													id="comments" key={i}
 												>
 													<div className="row col-12">
@@ -246,40 +266,10 @@ export default function Post(props) {
 										);
 									}
 								})}
-								<hr className="mt-5 mb-5"/>
-								<h4 className="col-12">Written by:</h4>
-								<div className="row justify-content-center">
-									{post && [post].map((element, i) => {
-										return(
-											<div className="col-4 row justify-content-center" key={i}>
-												<div className="align-self-center p-2">
-													{element.user.login}
-													<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-														<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="24" height="24">
-														</img>
-													</a>
-												</div>
-											</div>
-										);
-									})}
-									{coAuthors && coAuthors.map((element, i) => {
-										return(
-											<div className="col-4 row" key={i}>
-												<div className="align-self-center p-2">
-													{element.login}
-													<a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-														<img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
-														</img>
-													</a>
-												</div>
-											</div>
-										);
-									})}
-								</div>
 								{relatedPosts && relatedPosts.length > 0 && [relatedPosts[0]].map((element) => {
 									return(
 										<>
-											<hr className="mt-5 mb-5"/><h4 className="col-12">More from {element.user.login}:</h4>
+											<hr className="mt-5 mb-5"/><h4 className="col-12 mt-5 mb-5">More from {element.user.login}:</h4>
 										</>
 									);
 								})}
@@ -357,16 +347,17 @@ export default function Post(props) {
 													}
 												</div>
 												<br/>
-												<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
-													Posted on {
-														getDate(element.created_at)
-													} by {
-														element.user.login
-													} <a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+												<a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+													<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
+														Posted on {
+															getDate(element.created_at)
+														} by {
+															element.user.login
+														}
 														<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="16" height="16">
 														</img>
-													</a>
-												</p>
+													</p>
+												</a>
 											</a>
 										);
 									})}

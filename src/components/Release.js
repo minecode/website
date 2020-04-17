@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-ReleaseNotes.propTypes = {
+Release.propTypes = {
 	match: PropTypes.shape({
 		params: PropTypes.shape({
 			version: PropTypes.isRequired
@@ -9,7 +9,7 @@ ReleaseNotes.propTypes = {
 	}),
 };
 
-export default function ReleaseNotes(props) {
+export default function Release(props) {
 
 	const [milestone, setMilestones] = useState(null);
 	const [issuesMilestones, setIssuesMilestones] = useState(null);

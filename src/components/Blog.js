@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-function getDate(created_at) {
-	var date = new Date(created_at);
-	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
-	];
-	return monthNames[date.getMonth()] + ', ' + date.getFullYear();
-}
+import { getDate } from './Utils';
 
 export default function Blog() {
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getCard, getElement, getHeader } from '../Utils';
+import { getListCards, getHeader } from '../Utils';
 
 
 Tag.propTypes = {
@@ -34,31 +34,9 @@ export default function Tag(props) {
 			});
 	}, []);
 
-	return (
-		<div className="container">
-			<div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="posts">
-				<h1 className="display-4">Blog</h1>
-				<p className="lead">Minecode Posts</p>
-			</div>
-			<div id="posts_list" className="row justify-content-center">
-				{post && post.map((element, i) => {
-					var isPost = false;
-					{element.labels.forEach((element) => {
-						if (element.name === 'Post') {
-							isPost = true;
-							return;
-						}
-					});}
-					if (isPost) {
-						const postElement = getElement('post', element);
-						return(
-							getCard(i, postElement, hoverElement, setHoverElement)
-						);
-					}else {
-						return(<></>);
-					}})
-				}
-			</div>
-		</div>
+	return(
+		<>
+			{getListCards(post, hoverElement, setHoverElement)}
+		</>
 	);
 }

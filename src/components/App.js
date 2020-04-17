@@ -7,7 +7,6 @@ import User from './Blog/User';
 import Blog from './Blog';
 import Releases from './Releases';
 import Release from './Release';
-import Ideas from './Ideas';
 import Footer from './Footer';
 import NoMatch from './NoMatch';
 import AppPage from './AppPage';
@@ -45,10 +44,6 @@ class App extends React.Component {
 								exact
 								path='/blog/user/:user'
 								component={User}></Route>
-							<Route
-								exact
-								path='/ideas'
-								component={Ideas}></Route>
 							<Route
 								exact
 								path='/releases'

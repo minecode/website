@@ -208,13 +208,13 @@ export default function Banner() {
 													/(?:!\[(.*?)\]\((.*?)\))/g
 												)
 													? `linear-gradient(#21212190, #21212190), url(${
-															post.body
-																.match(
-																	/(?:!\[(.*?)\]\((.*?)\))/g
-																)[0]
-																.split('(')[1]
-																.split(')')[0]
-													  })`
+														post.body
+															.match(
+																/(?:!\[(.*?)\]\((.*?)\))/g
+															)[0]
+															.split('(')[1]
+															.split(')')[0]
+													})`
 													: null;
 												const footer = (
 													<>

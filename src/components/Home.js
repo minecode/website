@@ -1,5 +1,5 @@
 import React from 'react';
-import Team from './Home/Team';
+import Team from './Team';
 import Banner from './Banner';
 class Home extends React.Component {
 	render() {

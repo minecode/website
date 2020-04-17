@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDate, getCard } from './Utils';
+import { getDate, getCard, getHeader } from './Utils';
 
 export default function Blog() {
 
@@ -7,11 +7,8 @@ export default function Blog() {
 	const [hoverElement, setHoverElement] = useState(null);
 
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
-			method: 'GET', headers: header
+			method: 'GET', headers: getHeader()
 		})
 			.then(res => res.json())
 			.then(data => {

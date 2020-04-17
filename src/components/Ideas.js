@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addIssue } from './Utils';
+import { addIssue, getHeader } from './Utils';
 
 class Ideas extends Component {
 	constructor(props) {
@@ -93,9 +93,9 @@ class Ideas extends Component {
 	}
 
 	async componentDidMount() {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
+	
+		var header = getHeader();
+
 		Promise.all([
 			fetch('https://api.github.com/repos/minecode/minecode.github.io/issues', {
 				method: 'GET',

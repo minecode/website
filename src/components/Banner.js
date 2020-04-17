@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDate, titleCase, getCard } from './Utils';
+import { getDate, titleCase, getCard, getHeader } from './Utils';
 
 export default function Banner() {
 	const color = '#f1f1f1';
@@ -14,15 +14,14 @@ export default function Banner() {
 	var nApps = 0;
 	let isPost = false;
 
+	var header = getHeader()
+
 	async function getPostsList() {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch(
 			'https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed',
 			{
 				method: 'GET',
-				headers: header,
+				headers: header
 			}
 		)
 			.then((res) => res.json())
@@ -34,12 +33,9 @@ export default function Banner() {
 	}
 
 	async function getRepositories() {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch('https://api.github.com/orgs/minecode/repos', {
 			method: 'GET',
-			headers: header,
+			headers: header
 		})
 			.then((res) => res.json())
 			.then((data) => {
@@ -56,7 +52,7 @@ export default function Banner() {
 								'/topics',
 							{
 								method: 'GET',
-								headers: header,
+								headers: getHeader,
 							}
 						),
 						fetch(
@@ -65,7 +61,7 @@ export default function Banner() {
 								'/contents/minecode_settings.json?ref=master',
 							{
 								method: 'GET',
-								headers: header,
+								headers: getHeader,
 							}
 						),
 					])

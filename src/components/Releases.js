@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDate, getCard } from './Utils';
+import { getDate, getCard, getHeader } from './Utils';
 
 
 export default function Releases() {
@@ -10,9 +10,8 @@ export default function Releases() {
 	const [milestoneNonReleasesd, setMilestonesNonReleasesd] = useState(null);
 	
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
+		var header = getHeader();
+
 		fetch('https://api.github.com/repos/minecode/website/milestones?state=close', {
 			method: 'GET', headers: header
 		})

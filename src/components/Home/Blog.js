@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addPost } from '../Utils';
+import { addPost, getHeader } from '../Utils';
 class Blog extends Component {
 	constructor(props) {
 		super(props);
@@ -34,11 +34,8 @@ class Blog extends Component {
 	}
 
 	async componentDidMount() {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
-			method: 'GET', headers: header
+			method: 'GET', headers: getHeader()
 		})
 			.then(res => res.json())
 			.then(data => {

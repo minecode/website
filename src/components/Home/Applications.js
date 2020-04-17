@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { titleCase } from '../Utils';
+import { titleCase, getHeader } from '../Utils';
 
 export default function Applications() {
 	const [data, setData] = useState(null);
 	let count = 0;
 
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
+
+		var header = getHeader();
+
 		fetch('https://api.github.com/orgs/minecode/repos', {
 			method: 'GET',
-			headers: header,
+			headers: header
 		})
 			.then((res) => res.json())
 			.then((data) => {

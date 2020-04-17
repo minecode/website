@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { getHeader } from './Utils';
 
 Release.propTypes = {
 	match: PropTypes.shape({
@@ -18,9 +19,7 @@ export default function Release(props) {
 	const version = props.match.params.version;
 	
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
+		var header = getHeader();
 		fetch('https://api.github.com/repos/minecode/website/milestones/' + version, {
 			method: 'GET', headers: header
 		})

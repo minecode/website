@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getDate } from '../Utils';
+import { getDate, getHeader } from '../Utils';
 
 
 Tag.propTypes = {
@@ -17,11 +17,8 @@ export default function Tag(props) {
 	const tag = props.match.params.tag;
 
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
-			method: 'GET', headers: header
+			method: 'GET', headers: getHeader()
 		})
 			.then(res => res.json())
 			.then(data => {

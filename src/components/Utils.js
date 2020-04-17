@@ -1,6 +1,13 @@
 import React from 'react';
 
 
+export function getHeader() {
+	var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
+	var header = new Headers();
+	header.set('Authorization', 'Basic ' + authorizationBasic);
+	return header;
+}
+
 export function addPost(issue) {
 	var card = document.createElement('div');
 	card.setAttribute('class', 'col-12');

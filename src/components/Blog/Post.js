@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import CodeBlock from '../CodeBlock';
-import { getDate, getCard } from '../Utils';
+import { getDate, getCard, getHeader } from '../Utils';
 
 Post.propTypes = {
 	match: PropTypes.shape({
@@ -25,9 +25,8 @@ export default function Post(props) {
 	const id = props.match.params.id;
 
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
+		var header = getHeader();
+
 		Promise.all([
 			fetch(
 				'https://api.github.com/repos/minecode/minecode.github.io/issues/' +

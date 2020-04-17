@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { titleCase } from './Utils';
+import { titleCase, getHeader } from './Utils';
 
 AppPage.propTypes = {
 	match: PropTypes.shape({
@@ -16,12 +16,9 @@ export default function AppPage(props) {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-		var header = new Headers();
-		header.set('Authorization', 'Basic ' + authorizationBasic);
 		fetch('https://api.github.com/repos/minecode/' + appName, {
 			method: 'GET',
-			headers: header,
+			headers: getHeader(),
 		})
 			.then((res) => res.json())
 			.then((data) => {

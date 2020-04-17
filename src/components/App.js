@@ -31,7 +31,7 @@ class App extends React.Component {
 							<Route exact path='/blog' component={Blog}></Route>
 							<Route
 								exact
-								path='/app/:app_name'
+								path='/app/:appName'
 								component={AppPage}></Route>
 							<Route
 								exact

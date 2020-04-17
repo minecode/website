@@ -7,18 +7,6 @@ export default function Banner() {
 	const [posts, setPosts] = useState(null);
 	const [hoverElement, setHoverElement] = useState(null);
 	const [data, setData] = useState(null);
-	
-	useEffect(() => {
-
-		getRepositories();
-
-		if (element) {
-			if(element === 'blog') {
-				getPostsList();
-			}
-			
-		}
-	}, [element]);
 
 	let maxPost = 3;
 	let maxApps = 3;
@@ -64,8 +52,8 @@ export default function Banner() {
 					Promise.all([
 						fetch(
 							'https://api.github.com/repos/minecode/' +
-									repo.name +
-									'/topics',
+								repo.name +
+								'/topics',
 							{
 								method: 'GET',
 								headers: header,
@@ -73,8 +61,8 @@ export default function Banner() {
 						),
 						fetch(
 							'https://api.github.com/repos/minecode/' +
-									repo.name +
-									'/contents/minecode_settings.json?ref=master',
+								repo.name +
+								'/contents/minecode_settings.json?ref=master',
 							{
 								method: 'GET',
 								headers: header,
@@ -93,7 +81,7 @@ export default function Banner() {
 								if (element.name === repo.name) {
 									data[temp].topic = data2;
 									data[temp].minecode_settings =
-											data3.content;
+										data3.content;
 								}
 								temp++;
 							});
@@ -106,7 +94,15 @@ export default function Banner() {
 			});
 	}
 
+	useEffect(() => {
+		getRepositories();
 
+		if (element) {
+			if (element === 'blog') {
+				getPostsList();
+			}
+		}
+	}, [element]);
 
 	return (
 		<div
@@ -137,40 +133,46 @@ export default function Banner() {
 							justifyContent: 'space-around',
 							alignItems: 'flex-start',
 						}}>
-						{data && <>
-							<div
-								className={'btn'}
-								style={{
-									color: '#212121',
-									fontSize: element === 'blog' ? 30 : 20,
-									marginLeft: element === 'blog' ? 10 : 0,
-									transition: 'all .5s ease',
-									WebkitTransition: 'all .5s ease',
-									MozTransition: 'all .5s ease',
-									fontWeight: 100,
-								}}
-								onClick={() => {
-									setElement('blog');
-								}}>
-							Blog
-							</div>
-							<div
-								className={'btn'}
-								style={{
-									color: '#212121',
-									fontSize: element === 'applications' ? 30 : 20,
-									marginLeft: element === 'applications' ? 10 : 0,
-									transition: 'all .5s ease',
-									WebkitTransition: 'all .5s ease',
-									MozTransition: 'all .5s ease',
-									fontWeight: 100,
-								}}
-								onClick={() => {
-									setElement('applications');
-								}}>
-							Applications
-							</div>
-						</>}
+						{data && (
+							<>
+								<div
+									className={'btn'}
+									style={{
+										color: '#212121',
+										fontSize: element === 'blog' ? 30 : 20,
+										marginLeft: element === 'blog' ? 10 : 0,
+										transition: 'all .5s ease',
+										WebkitTransition: 'all .5s ease',
+										MozTransition: 'all .5s ease',
+										fontWeight: 100,
+									}}
+									onClick={() => {
+										setElement('blog');
+									}}>
+									Blog
+								</div>
+								<div
+									className={'btn'}
+									style={{
+										color: '#212121',
+										fontSize:
+											element === 'applications'
+												? 30
+												: 20,
+										marginLeft:
+											element === 'applications' ? 10 : 0,
+										transition: 'all .5s ease',
+										WebkitTransition: 'all .5s ease',
+										MozTransition: 'all .5s ease',
+										fontWeight: 100,
+									}}
+									onClick={() => {
+										setElement('applications');
+									}}>
+									Applications
+								</div>
+							</>
+						)}
 					</div>
 					<div
 						className={'col-sm-12 col-md-8 text-center '}
@@ -183,8 +185,9 @@ export default function Banner() {
 									alignItems: 'center',
 								}}>
 								<div
-									className={'row justify-content-center vertical-align-midle'}
-								>
+									className={
+										'row justify-content-center vertical-align-midle'
+									}>
 									{element === 'blog' &&
 										posts &&
 										posts.map((post, i) => {
@@ -196,7 +199,8 @@ export default function Banner() {
 											});
 											if (isPost && nPost < maxPost) {
 												nPost++;
-												const href = '/blog/post/' + post.number;
+												const href =
+													'/blog/post/' + post.number;
 												const title = post.title.split(
 													/\[\w*\] /
 												)[1];
@@ -204,48 +208,86 @@ export default function Banner() {
 													/(?:!\[(.*?)\]\((.*?)\))/g
 												)
 													? `linear-gradient(#21212190, #21212190), url(${
-														post.body
-															.match(
-																/(?:!\[(.*?)\]\((.*?)\))/g
-															)[0]
-															.split(
-																'('
-															)[1]
-															.split(
-																')'
-															)[0]
-													})`
+															post.body
+																.match(
+																	/(?:!\[(.*?)\]\((.*?)\))/g
+																)[0]
+																.split('(')[1]
+																.split(')')[0]
+													  })`
 													: null;
-												const footer = <>Posted on {
-													getDate(post.created_at)
-												} by {
-													post.user.login
-												} <a href={'https://github.com/' + post.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-													<img className="rounded-circle" src={post.user.avatar_url} alt="Github" width="16" height="16">
-													</img>
-												</a></>;
-												return(
-													getCard(i, background, href, title, footer, hoverElement, setHoverElement)
+												const footer = (
+													<>
+														Posted on{' '}
+														{getDate(
+															post.created_at
+														)}{' '}
+														by {post.user.login}{' '}
+														<a
+															href={
+																'https://github.com/' +
+																post.user.login
+															}
+															target='_blank'
+															rel='noopener noreferrer'
+															style={{
+																color: '#fff',
+															}}>
+															<img
+																className='rounded-circle'
+																src={
+																	post.user
+																		.avatar_url
+																}
+																alt='Github'
+																width='16'
+																height='16'></img>
+														</a>
+													</>
+												);
+												return getCard(
+													i,
+													background,
+													href,
+													title,
+													footer,
+													hoverElement,
+													setHoverElement
 												);
 											}
 										})}
-									{element === 'applications' && data && data.map((app, i) => {
-										if(app.topic.names.includes('production') && nApps < maxApps) {
-											nApps++;
-											const href = '/app/' + app.name;
-											const title = titleCase(app.name);											const background = `linear-gradient(#21212190, #21212190), url(${
-												'https://raw.githubusercontent.com/minecode/' +
-												app.name +
-												'/master/' +
-												app.minecode_settings
-													.image
-											})`;
-											const footer = <></>;
-											return(
-												getCard(i, background, href, title, footer, hoverElement, setHoverElement)
-											);
-										}
-									})}
+									{element === 'applications' &&
+										data &&
+										data.map((app, i) => {
+											if (
+												app.topic.names.includes(
+													'production'
+												) &&
+												nApps < maxApps
+											) {
+												nApps++;
+												const href = '/app/' + app.name;
+												const title = titleCase(
+													app.name
+												);
+												const background = `linear-gradient(#21212190, #21212190), url(${
+													'https://raw.githubusercontent.com/minecode/' +
+													app.name +
+													'/master/' +
+													app.minecode_settings.image
+												})`;
+												const footer = <></>;
+												return getCard(
+													i,
+													background,
+													href,
+													title,
+													footer,
+													hoverElement,
+													setHoverElement
+												);
+											}
+										})}
 								</div>
 							</div>
 						)}

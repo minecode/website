@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import CodeBlock from '../CodeBlock';
-import { getDate } from '../Utils';
+import { getDate, getCard } from '../Utils';
 
 Post.propTypes = {
 	match: PropTypes.shape({
@@ -134,8 +134,7 @@ export default function Post(props) {
 															{coAuthors && coAuthors.length > 0 && coAuthors.map((element, i) => {
 																return(
 																	<>
-																		{i === 0 ? <span style={{opacity:0.5}}>(</span>:<></>}<span key={i} style={{opacity:0.5}}><a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff', paddingRight: 0}}>{element.login} <img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24">
-																			</img>
+																		{i === 0 ? <span style={{opacity:0.5}}>(</span>:<></>}<span key={i} style={{opacity:0.5}}><a className="mt-3 mb-4 btn btn-sm" href={'https://github.com/' + element.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff', paddingRight: 0}}>{element.login} <img className="rounded-circle" src={element.avatar_url} alt="Github" width="24" height="24"></img>
 																		</a>
 																		</span>
 																		{i === (coAuthors.length-1) ? <span style={{opacity:0.5}}>)</span> : <><span style={{opacity:0.5}}>, </span></>}
@@ -275,90 +274,40 @@ export default function Post(props) {
 								})}
 								<div className="row justify-content-center">
 									{relatedPosts && relatedPosts.length > 0 && relatedPosts.map((element, i) => {
-										return (
-											<a
-												key={i}
-												className={
-													'col-sm-12 col-md-3 btn mx-2 my-2 p-2 justify-content-center'
-												}
-												href={
-													'/blog/post/' +
-													element.number
-												}
-												onMouseEnter={() =>
-													setHoverElement(i)
-												}
-												onMouseLeave={() =>
-													setHoverElement(
-														null
-													)
-												}
-												style={{
-													backgroundImage: element.body.match(
+										
+										const href = '/blog/post/' + element.number;
+										const title = element.title.split(
+											/\[\w*\] /
+										)[1];
+										const background = element.body.match(
+											/(?:!\[(.*?)\]\((.*?)\))/g
+										)
+											? `linear-gradient(#21212190, #21212190), url(${
+												element.body
+													.match(
 														/(?:!\[(.*?)\]\((.*?)\))/g
-													)
-														? `linear-gradient(#21212190, #21212190), url(${
-															element.body
-																.match(
-																	/(?:!\[(.*?)\]\((.*?)\))/g
-																)[0]
-																.split(
-																	'('
-																)[1]
-																.split(
-																	')'
-																)[0]
-														})`
-														: null,
-													backgroundSize:
-														'cover',
-													backgroundColor: element.body.match(
-														/(?:!\[(.*?)\]\((.*?)\))/g
-													)
-														? null
-														: '#21212180',
-													borderRadius: 20,
-													border: 0,
-													height:
-														hoverElement ===
-														i
-															? 320
-															: 300,
-													transition:
-														'all .5s ease',
-													WebkitTransition:
-														'all .5s ease',
-													MozTransition:
-														'all .5s ease',
-												}}>
-												<div
-													style={{
-														position: 'relative',
-														top: '10px',
-														color:
-															'#f1f1f1',
-														fontSize: 25,
-														fontWeight: 100,
-													}}>
-													{
-														element.title.split(
-															/\[\w*\] /
-														)[1]
-													}
-												</div>
-												<br/>
-												<a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
-													<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
-														Posted on {
-															getDate(element.created_at)
-														} by {
-															element.user.login
-														}
-														<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="16" height="16">
-														</img>
-													</p>
-												</a>
-											</a>
+													)[0]
+													.split(
+														'('
+													)[1]
+													.split(
+														')'
+													)[0]
+											})`
+											: null;
+										const footer = <><a href={'https://github.com/' + element.user.login} target="_blank" rel="noopener noreferrer" style={{color: '#fff'}}>
+											<p className="col-12" style={{color: '#f1f1f1', position: 'absolute', bottom: 10, left: 0, right: 0, fontSize:12, opacity: 0.8}}>
+												Posted on {
+													getDate(element.created_at)
+												} by {
+													element.user.login
+												}
+												<img className="rounded-circle" src={element.user.avatar_url} alt="Github" width="16" height="16">
+												</img>
+											</p>
+										</a></>;
+										return(
+											getCard(i, background, href, title, footer, hoverElement, setHoverElement)
 										);
 									})}
 								</div>

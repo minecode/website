@@ -63,8 +63,9 @@ export default function Releases() {
 						<p>Closed issues {element.closed_issues}</p>
 					</div>;
 					const background = 'linear-gradient(#ff000090, #00000090), url(https://image.freepik.com/free-vector/flat-design-concept-rocket-launch_16734-61.jpg)';
+					const footer = <></>;
 					return(
-						getCard(i + '_2', background, href, title, <></>, hoverElement, setHoverElement)
+						getCard(i + '_2', background, href, title, footer, hoverElement, setHoverElement)
 					);
 				})}
 			</div>

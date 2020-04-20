@@ -46,6 +46,16 @@ export default function Navbar() {
 								Blog
 							</a>
 						</li>
+						<li
+							className={path && 
+								path.includes('/release')
+								? 'nav-item active'
+								: 'nav-item'
+							}>
+							<a className='nav-link' href='/releases'>
+								Releases
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>

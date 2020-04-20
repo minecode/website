@@ -216,7 +216,7 @@ export default function Banner() {
 										posts &&
 										posts.map((post, i) => {
 											post.labels.map((label) => {
-												if (label.name === 'Post') {
+												if (label.name === 'post') {
 													isPost = true;
 													return;
 												}

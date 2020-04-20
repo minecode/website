@@ -1,3 +1,7 @@
+html, body, main {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -8,88 +12,25 @@ body {
 	line-height: 2;
 	word-wrap: break-word;
 	word-break: break-word;
+	text-rendering: optimizelegibility !important;
+	display: flex;
+	flex-direction: column;
 }
 
 html {
 	position: relative;
-	/* Allows the footer to notice content height */
-	min-height: 100vh;
-	/* My page will always take the full screen */
 }
 
 main {
-	margin-bottom: 150px;
+	flex: 1 0 auto;
 }
 
 footer {
-	position: absolute;
-	/* I don't care about other things */
-	bottom: 0;
-	/* I want to be on the bottom... */
-	width: 100%;
+	flex-shrink: 0;
 }
 
 .githublogo {
 	color: #000;
-}
-
-.card-deck .card {
-	min-width: 220px;
-}
-
-.kanban {
-	display: flex;
-	flex: 1 1 auto;
-	overflow: auto;
-}
-
-.kanban-container {
-	display: flex;
-	flex-direction: row;
-	padding: 10px 0 10px 10px;
-}
-
-.kanban-column {
-	display: flex;
-	flex-direction: column;
-	margin-right: 6px;
-	min-width: 300px;
-	max-width: 300px;
-	border: 1px solid #e5e5e5;
-	border-radius: 4px;
-	background-color: #eee;
-}
-
-.kanban-column-header {
-	padding: 10px;
-	font-weight: bold;
-	font-size: 0.875rem;
-}
-
-.kanban-column-list {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	overflow-y: auto;
-	margin: 0;
-	padding: 10px 10px 0;
-	list-style: none;
-}
-
-.kanban-column-footer {
-	padding: 10px;
-	font-size: 0.875rem;
-	border-top: 1px solid #e5e5e5;
-	background-color: #f5f5f5;
-}
-
-.kanban-column-list>.card {
-	padding: 20px 10px;
-	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	background-color: #fff;
-	margin-bottom: 10px;
-	cursor: pointer;
 }
 
 .container {
@@ -102,7 +43,6 @@ footer {
 	transition-duration: 0.5s;
 	transition-timing-function: ease-in-out;
 }
-
 
 #post img {
 	width: 100%;
@@ -125,4 +65,17 @@ hr {
 	border: none;
 	background: #000000;
 	opacity: 0.065;
+}
+
+h2 {
+	font-size: 36px;
+	line-height: 48px;
+}
+h2 {
+	font-size: 30px;
+	line-height: 48px;
+}
+
+li {
+ list-style-type:none;
 }

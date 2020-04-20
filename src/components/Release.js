@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getHeader } from './Utils';
+import { getHeader, getDate, getTitle } from './Utils';
 
 Release.propTypes = {
 	match: PropTypes.shape({
@@ -46,41 +46,40 @@ export default function Release(props) {
 
 	return (
 		<div className="container">
-			<div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="posts">
-				<h1 className="display-4">Release Notes</h1>
-			</div>
-			<div id="" className="row">
-				{milestone && [milestone].map((element, i) => {
-					return(
-						<div key={i}>
-							{element.state === 'closed' ? <p>Released {element.title} at {element.closed_at}</p> : <p>Release {element.title} due on {element.due_on}</p>}
-							<p style={{opacity: 0.5}}>{element.description}</p>
-							<p>Open issues {element.open_issues}</p>
-							<p>Closed issues {element.closed_issues}</p>
-							<ul>
-								{issuesMilestones && issuesMilestones.map((element, i) => {
-									return(
-										<li key={i}>
-											<p>{element.title}</p><br/>
-											<p style={{opacity: 0.5}}>{element.description}</p>
-											<p style={{opacity: 0.5}}>{element.closed_at}</p>
-										</li>
-									);
-								})}
-								{issuesNonClosedMilestones && issuesNonClosedMilestones.map((element, i) => {
-									return(
-										<li key={i} style={{opacity:0.5}}>
-											<p>{element.title}</p><br/>
-											<p style={{opacity: 0.5}}>{element.description}</p>
-											<p style={{opacity: 0.5}}>{element.created_at}</p>
-										</li>
-									);
-								})}
-							</ul>
+			{getTitle('Release Notes')}
+			{milestone && [milestone].map((element) => {
+				return(
+					<>
+						<div className="row text-center">
+							<h2 className="col-12">
+								Version  {element.title} {element.state === 'closed' ? ' released at ' + getDate(element.closed_at) : ' due on ' + getDate(element.due_on)}
+							</h2>
+							<p className="col-12" style={{opacity: 0.5}}>{element.description}</p>
+							<p className="col-12">Open issues {element.open_issues}<br/>Closed issues {element.closed_issues}</p>
 						</div>
-					);
-				})}
-			</div>
+						<ul className="row">
+							{issuesMilestones && issuesNonClosedMilestones && issuesMilestones.concat(issuesNonClosedMilestones).map((element2, i) => {
+								return(
+									<li key={i} className="col-6">
+										<p><span style={{
+											opacity: element2.state === 'closed' ? 1 : 0.5
+										}}>{element2.title}</span>
+										{ element2.labels.map((element3, i) => {
+											return(
+												<a key={i} className="m-1 btn btn-sm btn-primary" style={{backgroundColor: '#' + element3.color, border: 'none'}}>
+													{element3.name}
+												</a>
+											);
+										})}</p>
+										<p style={{opacity: 0.5}}>{element2.state === 'closed' ? getDate(element2.closed_at) : getDate(element.due_on)}</p>
+										<p style={{opacity: 0.5}}>{element2.description}</p>
+									</li>
+								);
+							})}
+						</ul>
+					</>
+				);
+			})}
 		</div>
 	);
 }

@@ -143,11 +143,16 @@ export function getCard(i, element, hoverElement, setHoverElement) {
 				backgroundColor: '#21212180',
 				borderRadius: 20,
 				border: 0,
-				height:
-					hoverElement ===
-					i
-						? 320
-						: 300,
+				height: 300,
+
+				MsTransform: hoverElement === i ?'scale(1.1)' : 'scale(1.0)',
+				MozTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+				transform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+				WebkitTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+				OTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+
+				display: 'block',
+
 				transition:
 					'all .5s ease',
 				WebkitTransition:
@@ -247,7 +252,7 @@ export function getListCards(post, hoverElement, setHoverElement) {
 				{post && post.map((element, i) => {
 					var isPost = false;
 					{element.labels.forEach((element) => {
-						if (element.name === 'Post') {
+						if (element.name === 'post') {
 							isPost = true;
 							return;
 						}
@@ -262,6 +267,14 @@ export function getListCards(post, hoverElement, setHoverElement) {
 					}})
 				}
 			</div>
+		</div>
+	);
+}
+
+export function getTitle(title) {
+	return(
+		<div className="p-5 row text-center">
+			<h1 className="col-12">{title}</h1>
 		</div>
 	);
 }

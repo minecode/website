@@ -59,7 +59,7 @@ export default function Post(props) {
 				setAuthorizedUsers(data3.map(function (element) { return element.login; }));
 				setCoAuthors(data1.assignees.filter(element2 => element2.login !== data1.user.login));
 				setRelatedPosts(data4.filter(element2 => {
-					if (element2.user.login === data1.user.login && element2.labels.filter(element => element.name === 'Post').length > 0 && element2.id !== data1.id) {
+					if (element2.user.login === data1.user.login && element2.labels.filter(element => element.name === 'post').length > 0 && element2.id !== data1.id) {
 						return true;
 					} else {
 						return false;
@@ -72,7 +72,7 @@ export default function Post(props) {
 	return (
 		<>
 			{post && authorizedUsers && labels && [post].map((element, i) => {
-				if (labels.length > 0 && element.state === 'closed' && labels.filter(element => element.name === 'Post') && authorizedUsers.includes(element.closed_by.login)
+				if (labels.length > 0 && element.state === 'closed' && labels.filter(element => element.name === 'post') && authorizedUsers.includes(element.closed_by.login)
 				) {
 					var bannerImage = [];
 					if (element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)) {
@@ -156,7 +156,7 @@ export default function Post(props) {
 								</div>
 								<div className="text-center">
 									{ labels && labels.map((element, i) => {
-										if (element.name !== 'Post') {
+										if (element.name !== 'post') {
 											return(
 												<a key={i} href={'/blog/tag/' + element.name} className="m-1 btn btn-primary" style={{backgroundColor: '#' + element.color, border: 'none'}}>
 													{element.name}

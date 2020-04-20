@@ -12,27 +12,23 @@ class Home extends React.Component {
 						<div className='row' style={{ alignItems: 'center' }}>
 							<div className={'col-sm-12 col-md-8 px-2'}>
 								<div className={'col-12 px-5'}>
-									<div
+									<h2
 										style={{
 											color: '#323232',
-											fontWeight: 100,
-											fontSize: 30,
 										}}>
 										Desenvolvimento de aplicações web e
 										mobile.
-									</div>
+									</h2>
 								</div>
-								<div
+								<p
 									className={'col-12 px-5 py-3'}
 									style={{
-										color: '#5ca4da',
-										fontSize: 20,
-										fontWeight: '100',
+										color: '#2d4f69',
 									}}>
 									Aplicações criadas e pensadas para o
 									utilizador final, tendo sempre em conta a
 									estrutura funcional e visual da aplicação.
-								</div>
+								</p>
 							</div>
 							<div
 								className={
@@ -69,27 +65,23 @@ class Home extends React.Component {
 							</div>
 							<div className={'col-sm-12 col-md-8 px-2'}>
 								<div className={'col-12 px-5'}>
-									<div
+									<h2
 										style={{
-											color: '#323232',
-											fontWeight: 100,
-											fontSize: 30,
+											color: '#f1f1f1',
 										}}>
 										As tecnologias mais usadas e com maior
 										tendência.
-									</div>
+									</h2>
 								</div>
-								<div
+								<p
 									className={'col-12 px-5 py-3'}
 									style={{
 										color: '#f1f1f1',
-										fontSize: 20,
-										fontWeight: '100',
 									}}>
 									Selecionamos e usamos as tecnologias que
 									melhor se adaptam ao projeto e às suas
 									necessidades.
-								</div>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -100,28 +92,24 @@ class Home extends React.Component {
 						<div className='row' style={{ alignItems: 'center' }}>
 							<div className={'col-sm-12 col-md-8 px-2'}>
 								<div className={'col-12 px-5'}>
-									<div
+									<h2
 										style={{
 											color: '#323232',
-											fontWeight: 100,
-											fontSize: 30,
 										}}>
 										Transparência e partilha de
 										conhecimento.
-									</div>
+									</h2>
 								</div>
-								<div
+								<p
 									className={'col-12 px-5 py-3'}
 									style={{
-										color: '#5ca4da',
-										fontSize: 20,
-										fontWeight: '100',
+										color: '#2d4f69',
 									}}>
 									Como principal objetivo de criar uma
 									comunidade open source para criação de
 									aplicações inovadoras e partilha de
 									conhecimentos.
-								</div>
+								</p>
 							</div>
 							<div
 								className={
@@ -136,29 +124,7 @@ class Home extends React.Component {
 						</div>
 					</div>
 				</div>
-
-				{/* <Applications /> */}
-				{/* <Blog /> */}
-				{/* <Idea /> */}
 				<Team />
-				<p className='text-center mt-2'>
-					<a href='http://www.freepik.com'>Designed by Freepik</a>
-				</p>
-				<p className='text-center'>
-					<a href='http://www.freepik.com'>
-						Designed by slidesgo / Freepik
-					</a>
-				</p>
-				<p className='text-center'>
-					<a href='http://www.freepik.com'>
-						Designed by stories / Freepik
-					</a>
-				</p>
-				<p className='text-center'>
-					<a href='http://www.freepik.com'>
-						Designed by macrovector / Freepik
-					</a>
-				</p>
 			</div>
 		);
 	}

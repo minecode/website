@@ -25,7 +25,7 @@ export default function User(props) {
 			.then(data => {
 				setPost(data.filter(element => element.user.login === user));
 			});
-	}, []);
+	}, [user]);
 
 	return(
 		<>

@@ -224,13 +224,13 @@ export function getElement(type, element) {
 	if (type === 'post') {
 		const href = '/blog/post/' + element.number;
 		var title = element.title.split(/\[\w*\] /)[1];
-		{element.labels.filter(e => e.name === 'highlight').length > 0 & getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? 
+		element.labels.filter(e => e.name === 'highlight').length > 0 & getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? 
 			title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></>)
 			: element.labels.filter(e => e.name === 'highlight').length > 0 ? 
 				title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div></>)
 				: getDiffDates(new Date(element.closed_at), new Date()) <= 2 ?
 					title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></>)
-					: title = <>{element.title.split(/\[\w*\] /)[1]}</>;}
+					: title = <>{element.title.split(/\[\w*\] /)[1]}</>;
 		const background = element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)
 			? `linear-gradient(#21212190, #21212190), url(${
 				element.body
@@ -322,14 +322,12 @@ export function getListCards(post, hoverElement, setHoverElement) {
 				{post &&
 					post.map((element, i) => {
 						var isPost = false;
-						{
-							element.labels.forEach((element) => {
-								if (element.name === 'post') {
-									isPost = true;
-									return;
-								}
-							});
-						}
+						element.labels.forEach((element) => {
+							if (element.name === 'post') {
+								isPost = true;
+								return;
+							}
+						});
 						if (isPost) {
 							const postElement = getElement('post', element);
 							return getCard(

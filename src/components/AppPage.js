@@ -172,7 +172,7 @@ export default function AppPage(props) {
 					setIssues(data);
 				});
 		}
-	}, [contents]);
+	}, [contents, appName, headers]);
 
 	return (
 		<div>
@@ -224,6 +224,8 @@ export default function AppPage(props) {
 													src={image.download_url}
 												/>
 											);
+										} else {
+											return <></>;
 										}
 									})}
 							</div>
@@ -422,6 +424,8 @@ export default function AppPage(props) {
 										hoverElement,
 										setHoverElement
 									);
+								} else {
+									return <></>;
 								}
 							})}
 						{milestoneNonReleasesd &&
@@ -438,6 +442,8 @@ export default function AppPage(props) {
 										hoverElement,
 										setHoverElement
 									);
+								} else {
+									return <></>;
 								}
 							})}
 					</div>
@@ -542,6 +548,8 @@ export default function AppPage(props) {
 											</a>
 										</div>
 									);
+								} else {
+									return <></>;
 								}
 							})}
 					</div>

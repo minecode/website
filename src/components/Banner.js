@@ -154,14 +154,13 @@ export default function Banner() {
 												: hoverTab === 'blog'
 													? '#5ca4da'
 													: '#212121',
-										border: 0,
+										border: 'solid 0',
 										borderRadius: 20,
 										fontSize: element === 'blog' ? 25 : 20,
 										transition: 'all .5s ease',
 										WebkitTransition: 'all .5s ease',
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
-										border: 'solid',
 										borderWidth: element === 'blog' ? 1 : 0,
 									}}
 									onMouseEnter={() => setHoverTab('blog')}
@@ -185,13 +184,12 @@ export default function Banner() {
 											element === 'applications'
 												? 25
 												: 20,
-										border: 0,
+										border: 'solid 0',
 										borderRadius: 20,
 										transition: 'all .5s ease',
 										WebkitTransition: 'all .5s ease',
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
-										border: 'solid',
 										borderWidth:
 											element === 'applications' ? 1 : 0,
 									}}

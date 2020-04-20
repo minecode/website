@@ -32,7 +32,7 @@ export default function Tag(props) {
 
 				}));
 			});
-	}, []);
+	}, [tag]);
 
 	return(
 		<>

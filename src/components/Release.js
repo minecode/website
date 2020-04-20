@@ -70,7 +70,7 @@ export default function Release(props) {
 			.then((data1) => {
 				setIssuesNonClosedMilestones(data1);
 			});
-	}, []);
+	}, [props.match.params.repository, version]);
 
 	return (
 		<div className='container'>
@@ -119,7 +119,7 @@ export default function Release(props) {
 														{element2.labels.map(
 															(element3, i) => {
 																return (
-																	<a
+																	<div
 																		key={i}
 																		className='m-1 btn btn-sm btn-primary'
 																		style={{
@@ -133,7 +133,7 @@ export default function Release(props) {
 																		{
 																			element3.name
 																		}
-																	</a>
+																	</div>
 																);
 															}
 														)}

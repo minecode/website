@@ -103,6 +103,7 @@ export default function Banner() {
 				}
 			}
 		}
+	// eslint-disable-next-line
 	}, [element, header]);
 
 	useEffect(() => {
@@ -226,11 +227,14 @@ export default function Banner() {
 								>
 									{element === 'blog' &&
 										posts &&
+										// eslint-disable-next-line
 										posts.map((post, i) => {
 											var isPost = false;
+											// eslint-disable-next-line
 											post.labels.map((label) => {
 												if (label.name === 'post') {
 													isPost = true;
+													// eslint-disable-next-line
 													return;
 												}
 											});
@@ -250,6 +254,7 @@ export default function Banner() {
 										})}
 									{element === 'applications' &&
 										data &&
+										// eslint-disable-next-line
 										data.map((app, i) => {
 											if (
 												app.topic.names.includes(

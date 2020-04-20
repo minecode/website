@@ -266,7 +266,9 @@ export function getElement(type, element) {
 		);
 		return [href, title, background, footer];
 	} else if (type === 'release') {
-		const href = '/release/' + element.number;
+		const href = element.repository
+			? '/release/' + element.repository + '/' + element.number
+			: '/release/' + element.number;
 		const title = (
 			<div style={{ color: '#fff' }}>
 				<p>

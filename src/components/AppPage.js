@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { titleCase, getHeader } from './Utils';
+import { titleCase, getHeader, getCard, getElement } from './Utils';
 
 import { faStar, faEye, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +22,9 @@ export default function AppPage(props) {
 	const [contents, setContents] = useState(null);
 	const [issues, setIssues] = useState(null);
 	const [images, setImages] = useState(null);
+	const [hoverElement, setHoverElement] = useState(null);
+	const [milestoneNonReleasesd, setMilestonesNonReleasesd] = useState(null);
+	const [milestoneReleasesd, setMilestonesReleasesd] = useState(null);
 
 	async function getRepInfo() {
 		fetch('https://api.github.com/repos/minecode/' + appName, {
@@ -70,6 +73,34 @@ export default function AppPage(props) {
 			});
 	}
 
+	async function getMilestones() {
+		fetch(
+			'https://api.github.com/repos/minecode/' +
+				appName +
+				'/milestones?state=close',
+			{
+				method: 'GET',
+				headers: headers,
+			}
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				setMilestonesReleasesd(data);
+			});
+
+		fetch(
+			'https://api.github.com/repos/minecode/' + appName + '/milestones',
+			{
+				method: 'GET',
+				headers: headers,
+			}
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				setMilestonesNonReleasesd(data);
+			});
+	}
+
 	useEffect(() => {
 		setHeaders(getHeader());
 	}, []);
@@ -77,6 +108,7 @@ export default function AppPage(props) {
 	useEffect(() => {
 		if (headers) {
 			getRepInfo();
+			getMilestones();
 		}
 	}, [headers]);
 
@@ -345,13 +377,44 @@ export default function AppPage(props) {
 				style={{ minHeight: 500, backgroundColor: '#212121' }}
 			>
 				<div
-					className={'container py-5'}
+					className={'container py-5 text-center'}
 					style={{ minHeight: 500, color: '#f1f1f1' }}
 				>
-					<h1>Next release</h1>
-					<h1>Last release</h1>
-					<h1>Implemented</h1>
-					<h1>In progress</h1>
+					<h2>Releases</h2>
+					<div className={'row'} style={{ justifyContent: 'center' }}>
+						{milestoneReleasesd &&
+							milestoneReleasesd.map((element, i) => {
+								if (i + 1 === milestoneReleasesd.length) {
+									element['repository'] = appName;
+									const releaseElement = getElement(
+										'release',
+										element
+									);
+									return getCard(
+										i + '_1',
+										releaseElement,
+										hoverElement,
+										setHoverElement
+									);
+								}
+							})}
+						{milestoneNonReleasesd &&
+							milestoneNonReleasesd.map((element, i) => {
+								if (i === 0) {
+									element['repository'] = appName;
+									const releaseElement = getElement(
+										'release',
+										element
+									);
+									return getCard(
+										i + '_2',
+										releaseElement,
+										hoverElement,
+										setHoverElement
+									);
+								}
+							})}
+					</div>
 				</div>
 			</div>
 			<div

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { titleCase, getHeader } from './Utils';
+import { titleCase, getHeader, getCard, getElement } from './Utils';
 
 import { faStar, faEye, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +22,10 @@ export default function AppPage(props) {
 	const [contents, setContents] = useState(null);
 	const [issues, setIssues] = useState(null);
 	const [images, setImages] = useState(null);
+	const [hoverElement, setHoverElement] = useState(null);
+	const [milestoneNonReleasesd, setMilestonesNonReleasesd] = useState(null);
+	const [milestoneReleasesd, setMilestonesReleasesd] = useState(null);
+	const [contributors, setContributors] = useState(null);
 
 	async function getRepInfo() {
 		fetch('https://api.github.com/repos/minecode/' + appName, {
@@ -70,6 +74,60 @@ export default function AppPage(props) {
 			});
 	}
 
+	async function getMilestones() {
+		fetch(
+			'https://api.github.com/repos/minecode/' +
+				appName +
+				'/milestones?state=close',
+			{
+				method: 'GET',
+				headers: headers,
+			}
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				setMilestonesReleasesd(data);
+			});
+
+		fetch(
+			'https://api.github.com/repos/minecode/' + appName + '/milestones',
+			{
+				method: 'GET',
+				headers: headers,
+			}
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				setMilestonesNonReleasesd(data);
+			});
+	}
+
+	async function getContributors() {
+		fetch(
+			'https://api.github.com/repos/minecode/' +
+				appName +
+				'/contributors',
+			{
+				method: 'GET',
+				headers: headers,
+			}
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				data.forEach(async (element) => {
+					fetch('https://api.github.com/users/' + element.login, {
+						method: 'GET',
+						headers: headers,
+					})
+						.then((res) => res.json())
+						.then((user) => {
+							element['user'] = user;
+						});
+				});
+				setContributors(data);
+			});
+	}
+
 	useEffect(() => {
 		setHeaders(getHeader());
 	}, []);
@@ -77,6 +135,7 @@ export default function AppPage(props) {
 	useEffect(() => {
 		if (headers) {
 			getRepInfo();
+			getMilestones();
 		}
 	}, [headers]);
 
@@ -93,6 +152,7 @@ export default function AppPage(props) {
 				);
 			}
 			getContents();
+			getContributors();
 		}
 	}, [data]);
 
@@ -118,12 +178,9 @@ export default function AppPage(props) {
 		<div>
 			<div
 				className={'container-fluid'}
-				style={{ minHeight: 500, backgroundColor: '#f1f1f1' }}
+				style={{ backgroundColor: '#f1f1f1' }}
 			>
-				<div
-					className={'container py-5'}
-					style={{ minHeight: 500, color: '#212121' }}
-				>
+				<div className={'container py-5'} style={{ color: '#212121' }}>
 					{data && (
 						<div>
 							<div
@@ -203,7 +260,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_mobile
 													: 'https://' +
-													  contents.link_mobile
+													contents.link_mobile
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -233,7 +290,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_website
 													: 'https://' +
-													  contents.link_website
+													contents.link_website
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -293,7 +350,7 @@ export default function AppPage(props) {
 															href={
 																issue.html_url
 															}
-															target='_blank'
+															target='_blank' rel='noopener noreferrer'
 														>
 															#{issue.number}{' '}
 															{titleCase(
@@ -342,28 +399,142 @@ export default function AppPage(props) {
 			</div>
 			<div
 				className={'container-fluid'}
-				style={{ minHeight: 500, backgroundColor: '#212121' }}
+				style={{ backgroundColor: '#212121' }}
 			>
 				<div
-					className={'container py-5'}
-					style={{ minHeight: 500, color: '#f1f1f1' }}
+					className={'container py-5 text-center'}
+					style={{ color: '#f1f1f1' }}
 				>
-					<h1>Next release</h1>
-					<h1>Last release</h1>
-					<h1>Implemented</h1>
-					<h1>In progress</h1>
+					<h2>Releases</h2>
+					<div className={'row'} style={{ justifyContent: 'center' }}>
+						{milestoneReleasesd &&
+							milestoneReleasesd.map((element, i) => {
+								if (i + 1 === milestoneReleasesd.length) {
+									element['repository'] = appName;
+									const releaseElement = getElement(
+										'release',
+										element
+									);
+									return getCard(
+										i + '_1',
+										releaseElement,
+										hoverElement,
+										setHoverElement
+									);
+								}
+							})}
+						{milestoneNonReleasesd &&
+							milestoneNonReleasesd.map((element, i) => {
+								if (i === 0) {
+									element['repository'] = appName;
+									const releaseElement = getElement(
+										'release',
+										element
+									);
+									return getCard(
+										i + '_2',
+										releaseElement,
+										hoverElement,
+										setHoverElement
+									);
+								}
+							})}
+					</div>
 				</div>
 			</div>
 			<div
 				className={'container-fluid'}
-				style={{ minHeight: 500, backgroundColor: '#f1f1f1' }}
+				style={{ backgroundColor: '#f1f1f1' }}
 			>
 				<div
-					className={'container py-5'}
-					style={{ minHeight: 500, color: '#212121' }}
+					className={'container py-5 text-center'}
+					style={{ color: '#212121' }}
 				>
-					<h1>Contributors</h1>
-					<div></div>
+					<h2>Contributors</h2>
+					<div className={'row'} style={{ justifyContent: 'center' }}>
+						{contributors &&
+							contributors.map((contributor, i) => {
+								if (
+									contributor.user &&
+									contributor.login !== 'minecodebot'
+								) {
+									return (
+										<div
+											key={i}
+											className={'mx-2'}
+											style={{
+												background: `linear-gradient(#21212190, #21212190), url(${contributor.user.avatar_url}`,
+												backgroundSize: 'cover',
+												backgroundPosition: 'center',
+												backgroundColor: '#21212180',
+												borderRadius: 20,
+												height: 300,
+												width: 200,
+												textAlign: 'center',
+												display: 'flex',
+												justifyContent: 'space-around',
+												flexDirection: 'column',
+												alignItems: 'center',
+
+												MsTransform:
+													hoverElement === 'c_' + i
+														? 'scale(1.1)'
+														: 'scale(1.0)',
+												MozTransform:
+													hoverElement === 'c_' + i
+														? 'scale(1.1)'
+														: 'scale(1.0)',
+												transform:
+													hoverElement === 'c_' + i
+														? 'scale(1.1)'
+														: 'scale(1.0)',
+												WebkitTransform:
+													hoverElement === 'c_' + i
+														? 'scale(1.1)'
+														: 'scale(1.0)',
+												OTransform:
+													hoverElement === 'c_' + i
+														? 'scale(1.1)'
+														: 'scale(1.0)',
+
+												transition: 'all .5s ease',
+												WebkitTransition:
+													'all .5s ease',
+												MozTransition: 'all .5s ease',
+											}}
+											onMouseEnter={() => {
+												setHoverElement('c_' + i);
+											}}
+											onMouseLeave={() => {
+												setHoverElement(null);
+											}}
+										>
+											<div style={{ color: '#f1f1f1' }}>
+												{contributor.user.name}
+											</div>
+											<a
+												type='button'
+												className='mt-3 mb-4 btn btn-lg btn-primary githublogo'
+												href={contributor.html_url}
+												target='_blank'
+												style={{
+													borderColor: '#5ca4da',
+												}}
+												rel='noopener noreferrer'
+											>
+												<img
+													src='/images/github.svg'
+													alt='Github'
+													width='24'
+													height='24'
+												/>
+												<span> GitHub</span>
+											</a>
+										</div>
+									);
+								}
+							})}
+					</div>
 				</div>
 			</div>
 		</div>

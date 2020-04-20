@@ -151,8 +151,8 @@ export default function Banner() {
 											element === 'blog'
 												? '#5ca4da'
 												: hoverTab === 'blog'
-												? '#5ca4da'
-												: '#212121',
+													? '#5ca4da'
+													: '#212121',
 										fontSize: element === 'blog' ? 30 : 20,
 										marginLeft: element === 'blog' ? 10 : 0,
 										transition: 'all .5s ease',
@@ -175,8 +175,8 @@ export default function Banner() {
 											element === 'applications'
 												? '#5ca4da'
 												: hoverTab === 'applications'
-												? '#5ca4da'
-												: '#212121',
+													? '#5ca4da'
+													: '#212121',
 										fontSize:
 											element === 'applications'
 												? 30

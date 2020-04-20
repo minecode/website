@@ -218,11 +218,11 @@ export function getElement(type, element) {
 		const title = element.title.split(/\[\w*\] /)[1];
 		const background = element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)
 			? `linear-gradient(#21212190, #21212190), url(${
-					element.body
-						.match(/(?:!\[(.*?)\]\((.*?)\))/g)[0]
-						.split('(')[1]
-						.split(')')[0]
-			  })`
+				element.body
+					.match(/(?:!\[(.*?)\]\((.*?)\))/g)[0]
+					.split('(')[1]
+					.split(')')[0]
+			})`
 			: null;
 		const footer = (
 			<>
@@ -266,17 +266,18 @@ export function getElement(type, element) {
 		);
 		return [href, title, background, footer];
 	} else if (type === 'release') {
-		const href = '/release/' + element.number;
+		const href = element.repository
+			? '/release/' + element.repository + '/' + element.number
+			: '/release/' + element.number;
 		const title = (
 			<div style={{ color: '#fff' }}>
 				<p>
-					Releases {element.title}{' '}
+					Release {element.title}{' '}
 					{element.state === 'closed'
 						? 'at ' + getDate(element.closed_at)
 						: 'due on ' + getDate(element.due_on)}
 				</p>
 				<br />
-				<p style={{ opacity: 0.5 }}>{element.description}</p>
 				<p>Open issues {element.open_issues}</p>
 				<p>Closed issues {element.closed_issues}</p>
 			</div>

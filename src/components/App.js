@@ -30,49 +30,66 @@ class App extends React.Component {
 						<Route
 							exact
 							path='/app/:appName'
-							component={AppPage}></Route>
+							component={AppPage}
+						></Route>
 						<Route
 							exact
 							path='/blog/post/:id'
-							component={Post}></Route>
+							component={Post}
+						></Route>
 						<Route
 							exact
 							path='/blog/tag/:tag'
-							component={Tag}></Route>
+							component={Tag}
+						></Route>
 						<Route
 							exact
 							path='/blog/user/:user'
-							component={User}></Route>
+							component={User}
+						></Route>
 						<Route
 							exact
 							path='/releases'
-							component={Releases}></Route>
+							component={Releases}
+						></Route>
 						<Route
 							exact
 							path='/release/:version'
-							component={Release}></Route>
+							component={Release}
+						></Route>
+						<Route
+							exact
+							path='/release/:repository/:version'
+							component={Release}
+						></Route>
 						<Route path='/covid19'>
-							<Redirect to='/covid_19' /></Route>
+							<Redirect to='/covid_19' />
+						</Route>
 						<Route
 							exact
 							path='/privacyPolicy/shopping_cart'
-							component={PrivacyPolicy}></Route>
+							component={PrivacyPolicy}
+						></Route>
 						<Route
 							exact
 							path='/privacyPolicy/pet_find'
-							component={PrivacyPolicy}></Route>
+							component={PrivacyPolicy}
+						></Route>
 						<Route
 							exact
 							path='/privacyPolicy/covid_19'
-							component={PrivacyPolicy}></Route>
+							component={PrivacyPolicy}
+						></Route>
 						<Route
 							exact
 							path='/privacyPolicy/ocean_king'
-							component={PrivacyPolicy}></Route>
+							component={PrivacyPolicy}
+						></Route>
 						<Route
 							exact
 							path='/privacyPolicy/codecontest'
-							component={PrivacyPolicy}></Route>
+							component={PrivacyPolicy}
+						></Route>
 						<Route path='*' component={NoMatch}></Route>
 					</Switch>
 				</main>

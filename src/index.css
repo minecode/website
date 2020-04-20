@@ -12,7 +12,7 @@ body {
 	line-height: 2;
 	word-wrap: break-word;
 	word-break: break-word;
-	text-rendering: optimizelegibility !important;
+	text-rendering: optimizelegibility;
 	display: flex;
 	flex-direction: column;
 }

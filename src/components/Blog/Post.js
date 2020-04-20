@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import CodeBlock from '../CodeBlock';
-import { getDate, getCard, getHeader, getElement } from '../Utils';
+import { getDate, getCard, getHeader, getElement, getDiffDates } from '../Utils';
+
+import { faStar, faCertificate } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 Post.propTypes = {
 	match: PropTypes.shape({
@@ -111,7 +114,9 @@ export default function Post(props) {
 							}}>
 								<div className="pricing-header px-3 py-3 mx-auto text-center"id="title">
 									<h1 className="display-4" style={{color: '#fff', marginTop: '5%'}}>
-										{element.title.split(/\[\w*\] /)[1]}
+										{element.title.split(/\[\w*\] /)[1]}<br/>
+										{element.labels.filter(e => e.name === 'highlight').length > 0 ? <><div className="m-1 btn btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div></> : <></>}
+										{getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? <><div className="m-1 btn btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></> : <></>}
 									</h1>
 								</div>
 								<div className="px-3 py-3 pb-md-4 mx-auto text-center">
@@ -156,7 +161,7 @@ export default function Post(props) {
 								</div>
 								<div className="text-center">
 									{ labels && labels.map((element, i) => {
-										if (element.name !== 'post') {
+										if (element.name !== 'post' && element.name !== 'highlight') {
 											return(
 												<a key={i} href={'/blog/tag/' + element.name} className="m-1 btn btn-primary" style={{backgroundColor: '#' + element.color, border: 'none'}}>
 													{element.name}

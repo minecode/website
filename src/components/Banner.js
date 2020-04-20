@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getElement, getCard, getHeader } from './Utils';
 
+import { faRss, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 export default function Banner() {
 	const color = '#f1f1f1';
 	const [element, setElement] = useState('blog');
@@ -14,34 +17,29 @@ export default function Banner() {
 	let maxApps = 3;
 	var nPost = 0;
 	var nApps = 0;
-	let isPost = false;
 
 	function getPostsList() {
-		var header = getHeader();
-
 		fetch(
 			'https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed',
 			{
 				method: 'GET',
-				headers: header
+				headers: header,
 			}
 		)
 			.then((res) => res.json())
 			.then((data) => {
 				nPost = 0;
-				isPost = false;
 				setPosts(data);
-			}).catch(() => {
+			})
+			.catch(() => {
 				//Do something with error
 			});
 	}
 
 	function getRepositories() {
-		var header = getHeader();
-
 		fetch('https://api.github.com/orgs/minecode/repos', {
 			method: 'GET',
-			headers: header
+			headers: header,
 		})
 			.then((res) => res.json())
 			.then((data) => {
@@ -93,13 +91,11 @@ export default function Banner() {
 							}
 						});
 				});
-			}).catch(() => {
-				//Do something with error
 			});
 	}
 
 	useEffect(() => {
-		if(header) {
+		if (header) {
 			getRepositories();
 			if (element) {
 				if (element === 'blog') {
@@ -107,7 +103,6 @@ export default function Banner() {
 				}
 			}
 		}
-		
 	}, [element, header]);
 
 	useEffect(() => {
@@ -123,7 +118,8 @@ export default function Banner() {
 				transition: 'all .5s ease',
 				WebkitTransition: 'all .5s ease',
 				MozTransition: 'all .5s ease',
-			}}>
+			}}
+		>
 			<div className={'container'}>
 				<div
 					className={'row vertical-align-middle'}
@@ -135,7 +131,8 @@ export default function Banner() {
 						transition: 'height 0.5s ease, opacity 1.5s ease',
 						WebkitTransition: 'height 0.5s ease, opacity 1.5s ease',
 						MozTransition: 'height 0.5s ease, opacity 1.5s ease',
-					}}>
+					}}
+				>
 					<div
 						className={'col-md-4 col-sm-12 text-left'}
 						style={{
@@ -143,56 +140,70 @@ export default function Banner() {
 							display: 'flex',
 							flexDirection: 'column',
 							justifyContent: 'center',
-							alignItems: 'flex-end',
-						}}>
+							alignItems: 'center',
+						}}
+					>
 						{data && (
 							<>
 								<div
-									className={'btn'}
+									className={'btn my-2'}
 									style={{
-										color: element === 'blog' ? '#5ca4da' : hoverTab === 'blog' ? '#5ca4da' : '#212121',
-										fontSize: element === 'blog' ? 30 : 20,
-										marginLeft: element === 'blog' ? 10 : 0,
+										color:
+											element === 'blog'
+												? '#5ca4da'
+												: hoverTab === 'blog'
+													? '#5ca4da'
+													: '#212121',
+										border: 0,
+										borderRadius: 20,
+										fontSize: element === 'blog' ? 25 : 20,
 										transition: 'all .5s ease',
 										WebkitTransition: 'all .5s ease',
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
+										border: 'solid',
+										borderWidth: element === 'blog' ? 1 : 0,
 									}}
-									onMouseEnter={() =>
-										setHoverTab('blog')
-									}
-									onMouseLeave={() =>
-										setHoverTab(null)
-									}
+									onMouseEnter={() => setHoverTab('blog')}
+									onMouseLeave={() => setHoverTab(null)}
 									onClick={() => {
 										setElement('blog');
-									}}>
-									Blog
+									}}
+								>
+									<FontAwesomeIcon icon={faRss} /> Blog
 								</div>
 								<div
-									className={'btn'}
+									className={'btn my-2'}
 									style={{
-										color: element === 'applications' ? '#5ca4da' : hoverTab === 'applications' ? '#5ca4da' : '#212121',
+										color:
+											element === 'applications'
+												? '#5ca4da'
+												: hoverTab === 'applications'
+													? '#5ca4da'
+													: '#212121',
 										fontSize:
 											element === 'applications'
-												? 30
+												? 25
 												: 20,
-										marginLeft:
-											element === 'applications' ? 10 : 0,
+										border: 0,
+										borderRadius: 20,
 										transition: 'all .5s ease',
 										WebkitTransition: 'all .5s ease',
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
+										border: 'solid',
+										borderWidth:
+											element === 'applications' ? 1 : 0,
 									}}
 									onMouseEnter={() =>
 										setHoverTab('applications')
 									}
-									onMouseLeave={() =>
-										setHoverTab(null)
-									}
+									onMouseLeave={() => setHoverTab(null)}
 									onClick={() => {
 										setElement('applications');
-									}}>
+									}}
+								>
+									<FontAwesomeIcon icon={faMobileAlt} />{' '}
 									Applications
 								</div>
 							</>
@@ -202,19 +213,23 @@ export default function Banner() {
 						className={'col-sm-12 col-md-8 text-center '}
 						style={{
 							alignItems: 'center',
-						}}>
+						}}
+					>
 						{element && data && (
 							<div
 								style={{
 									alignItems: 'center',
-								}}>
+								}}
+							>
 								<div
 									className={
 										'row justify-content-center vertical-align-midle'
-									}>
+									}
+								>
 									{element === 'blog' &&
 										posts &&
 										posts.map((post, i) => {
+											var isPost = false;
 											post.labels.map((label) => {
 												if (label.name === 'post') {
 													isPost = true;
@@ -223,7 +238,10 @@ export default function Banner() {
 											});
 											if (isPost && nPost < maxPost) {
 												nPost++;
-												const postElement = getElement('post', post);
+												const postElement = getElement(
+													'post',
+													post
+												);
 												return getCard(
 													i,
 													postElement,
@@ -235,9 +253,17 @@ export default function Banner() {
 									{element === 'applications' &&
 										data &&
 										data.map((app, i) => {
-											if (app.topic.names.includes('production') && nApps < maxApps) {
+											if (
+												app.topic.names.includes(
+													'production'
+												) &&
+												nApps < maxApps
+											) {
 												nApps++;
-												const appElement = getElement('app', app);
+												const appElement = getElement(
+													'app',
+													app
+												);
 												return getCard(
 													i,
 													appElement,

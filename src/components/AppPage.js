@@ -55,7 +55,11 @@ export default function AppPage(props) {
 								appName +
 								'/contents/' +
 								temp_contents.play_console_images +
-								'?ref=master'
+								'?ref=master',
+							{
+								method: 'GET',
+								headers: headers,
+							}
 						)
 							.then((res) => res.json())
 							.then((images) => {
@@ -154,6 +158,7 @@ export default function AppPage(props) {
 										if (k < 4) {
 											return (
 												<img
+													key={k}
 													style={{
 														margin: 10,
 														borderRadius: 20,
@@ -300,6 +305,9 @@ export default function AppPage(props) {
 																(label, j) => {
 																	return (
 																		<div
+																			key={
+																				j
+																			}
 																			className={
 																				'btn btn-danger btn-sm m-1'
 																			}

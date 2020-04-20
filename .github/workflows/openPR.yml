@@ -20,4 +20,4 @@ jobs:
             New release
             - Contains *today's* date
             - Auto-generated
-          branch: develop
+          base: develop 

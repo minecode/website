@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import { titleCase, getHeader, getCard, getElement } from './Utils';
 
 import { faStar, faEye, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
@@ -260,7 +260,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_mobile
 													: 'https://' +
-													  contents.link_mobile
+													contents.link_mobile
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -290,7 +290,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_website
 													: 'https://' +
-													  contents.link_website
+													contents.link_website
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -350,7 +350,7 @@ export default function AppPage(props) {
 															href={
 																issue.html_url
 															}
-															target='_blank'
+															target='_blank' rel='noopener noreferrer'
 														>
 															#{issue.number}{' '}
 															{titleCase(

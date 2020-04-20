@@ -84,7 +84,7 @@ export default function Release(props) {
 									Version {element.title}{' '}
 									{element.state === 'closed'
 										? ' released at ' +
-										  getDate(element.closed_at)
+										getDate(element.closed_at)
 										: ' due on ' + getDate(element.due_on)}
 								</h2>
 								<p className='col-12' style={{ opacity: 0.5 }}>
@@ -142,11 +142,11 @@ export default function Release(props) {
 														{element2.state ===
 														'closed'
 															? getDate(
-																	element2.closed_at
-															  )
+																element2.closed_at
+															)
 															: getDate(
-																	element.due_on
-															  )}
+																element.due_on
+															)}
 													</p>
 													<p style={{ opacity: 0.5 }}>
 														{element2.description}

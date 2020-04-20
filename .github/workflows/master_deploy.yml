@@ -1,4 +1,5 @@
 name: masterDeploy
+
 on:
   push:
     branches:
@@ -32,6 +33,23 @@ jobs:
           printenv
       - run: npm ci
       - run: npm run build
+
+      - name: 'Get Previous tag'
+        id: actualtag
+        uses: "WyriHaximus/github-action-get-previous-tag@master"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ teps.actualtag.outputs.tag }}
+          release_name: Release ${{ teps.actualtag.outputs.tag }}
+          draft: false
+          prerelease: false
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

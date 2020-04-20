@@ -137,7 +137,10 @@ export default function Release(props) {
 																);
 															}
 														)}
-													</p>
+													</p><br/>
+													<p style={{ opacity: 0.5 }}>
+														{element2.body}
+													</p><br/>
 													<p style={{ opacity: 0.5 }}>
 														{element2.state ===
 														'closed'
@@ -148,9 +151,7 @@ export default function Release(props) {
 																element.due_on
 															)}
 													</p>
-													<p style={{ opacity: 0.5 }}>
-														{element2.description}
-													</p>
+													
 												</li>
 											);
 										})}

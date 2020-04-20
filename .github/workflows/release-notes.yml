@@ -1,15 +1,13 @@
 on: 
   milestone:
     types: [closed]
-name: Milestone Closure
+name: milestoneClosure
 jobs:
-  create-release-notes:
+  openPR:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Create Release Notes
-      uses: docker://decathlon/release-notes-generator-action:2.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        OUTPUT_FOLDER: temp_release_notes
-        USE_MILESTONE_TITLE: "true"
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v2
+      with:
+        branch: master

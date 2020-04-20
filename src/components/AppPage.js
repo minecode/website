@@ -137,6 +137,7 @@ export default function AppPage(props) {
 			getRepInfo();
 			getMilestones();
 		}
+	// eslint-disable-next-line
 	}, [headers]);
 
 	useEffect(() => {
@@ -154,6 +155,7 @@ export default function AppPage(props) {
 			getContents();
 			getContributors();
 		}
+	// eslint-disable-next-line
 	}, [data]);
 
 	useEffect(() => {
@@ -215,6 +217,7 @@ export default function AppPage(props) {
 										if (k < 4) {
 											return (
 												<img
+													alt='Github'
 													key={k}
 													style={{
 														margin: 10,
@@ -269,6 +272,7 @@ export default function AppPage(props) {
 											type='button'
 										>
 											<img
+												alt='Github'
 												src={
 													'/images/google-play-store.svg'
 												}
@@ -299,6 +303,7 @@ export default function AppPage(props) {
 											type='button'
 										>
 											<img
+												alt='Github'
 												src={'/images/web-page.svg'}
 												width={24}
 												height={24}
@@ -326,6 +331,7 @@ export default function AppPage(props) {
 											type='button'
 										>
 											<img
+												alt='Github'
 												src={'/images/github.svg'}
 												width={24}
 												height={24}

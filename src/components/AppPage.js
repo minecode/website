@@ -260,7 +260,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_mobile
 													: 'https://' +
-													contents.link_mobile
+													  contents.link_mobile
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -290,7 +290,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_website
 													: 'https://' +
-													contents.link_website
+													  contents.link_website
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -350,7 +350,8 @@ export default function AppPage(props) {
 															href={
 																issue.html_url
 															}
-															target='_blank' rel='noopener noreferrer'
+															target='_blank'
+															rel='noopener noreferrer'
 														>
 															#{issue.number}{' '}
 															{titleCase(
@@ -514,12 +515,14 @@ export default function AppPage(props) {
 											</div>
 											<a
 												type='button'
-												className='mt-3 mb-4 btn btn-lg btn-primary githublogo'
+												className='mt-3 mb-4 btn btn-sm btn-secondary'
 												href={contributor.html_url}
 												target='_blank'
-												style={{
-													borderColor: '#5ca4da',
-												}}
+												style={
+													{
+														// borderColor: '#5ca4da',
+													}
+												}
 												rel='noopener noreferrer'
 											>
 												<img
@@ -528,7 +531,14 @@ export default function AppPage(props) {
 													width='24'
 													height='24'
 												/>
-												<span> GitHub</span>
+												<span
+													style={{
+														verticalAlign: 'middle',
+													}}
+												>
+													{' '}
+													GitHub
+												</span>
 											</a>
 										</div>
 									);

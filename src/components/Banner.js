@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getElement, getCard, getHeader } from './Utils';
 
+import { faRss, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 export default function Banner() {
 	const color = '#f1f1f1';
 	const [element, setElement] = useState('blog');
@@ -139,26 +142,29 @@ export default function Banner() {
 							display: 'flex',
 							flexDirection: 'column',
 							justifyContent: 'center',
-							alignItems: 'flex-end',
+							alignItems: 'center',
 						}}
 					>
 						{data && (
 							<>
 								<div
-									className={'btn'}
+									className={'btn my-2'}
 									style={{
 										color:
 											element === 'blog'
 												? '#5ca4da'
 												: hoverTab === 'blog'
-													? '#5ca4da'
-													: '#212121',
-										fontSize: element === 'blog' ? 30 : 20,
-										marginLeft: element === 'blog' ? 10 : 0,
+												? '#5ca4da'
+												: '#212121',
+										border: 0,
+										borderRadius: 20,
+										fontSize: element === 'blog' ? 25 : 20,
 										transition: 'all .5s ease',
 										WebkitTransition: 'all .5s ease',
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
+										border: 'solid',
+										borderWidth: element === 'blog' ? 1 : 0,
 									}}
 									onMouseEnter={() => setHoverTab('blog')}
 									onMouseLeave={() => setHoverTab(null)}
@@ -166,27 +172,30 @@ export default function Banner() {
 										setElement('blog');
 									}}
 								>
-									Blog
+									<FontAwesomeIcon icon={faRss} /> Blog
 								</div>
 								<div
-									className={'btn'}
+									className={'btn my-2'}
 									style={{
 										color:
 											element === 'applications'
 												? '#5ca4da'
 												: hoverTab === 'applications'
-													? '#5ca4da'
-													: '#212121',
+												? '#5ca4da'
+												: '#212121',
 										fontSize:
 											element === 'applications'
-												? 30
+												? 25
 												: 20,
-										marginLeft:
-											element === 'applications' ? 10 : 0,
+										border: 0,
+										borderRadius: 20,
 										transition: 'all .5s ease',
 										WebkitTransition: 'all .5s ease',
 										MozTransition: 'all .5s ease',
 										fontWeight: 100,
+										border: 'solid',
+										borderWidth:
+											element === 'applications' ? 1 : 0,
 									}}
 									onMouseEnter={() =>
 										setHoverTab('applications')
@@ -196,6 +205,7 @@ export default function Banner() {
 										setElement('applications');
 									}}
 								>
+									<FontAwesomeIcon icon={faMobileAlt} />{' '}
 									Applications
 								</div>
 							</>

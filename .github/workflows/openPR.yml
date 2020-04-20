@@ -4,20 +4,15 @@ on:
   milestone:
     types: [closed]
 jobs:
-  createPullRequest:
+  pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Deploy new release from develop into master
-          committer: minecodebot <minecode.geral@gmail.com>
-          author: minecodebot <minecode.geral@gmail.com>
-          title: '[Release] Deploy new release from develop into master'
-          body: |
-            New release
-            - Contains *today's* date
-            - Auto-generated
-          base: develop 
+    - uses: actions/checkout@v2
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        source_branch: develop
+        pr_title: "New release from develop into master" # Title of pull request
+        pr_body: "PR auto generated"              # Full markdown support, requires pr_title to be set
+        

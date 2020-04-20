@@ -1,0 +1,23 @@
+name: openPR
+
+on:
+  milestone:
+    types: [closed]
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Deploy new release from develop into master
+          committer: minecodebot <minecode.geral@gmail.com>
+          author: minecodebot <minecode.geral@gmail.com>
+          title: '[Release] Deploy new release from develop into master'
+          body: |
+            New release
+            - Contains *today's* date
+            - Auto-generated
+          branch: develop

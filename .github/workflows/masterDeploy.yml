@@ -9,6 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v1
       - uses: actions/checkout@v2
 
       - name: Setup Node
@@ -34,7 +35,6 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - uses: actions/checkout@v1
       - name: 'Get Previous tag'
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@master"

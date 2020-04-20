@@ -23,5 +23,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           source_branch: develop
-          pr_title: ${{ steps.semvers.outputs.patch }}
+          pr_title: ${{ steps.semvers.outputs.major }}
           pr_body: "PR auto generated"        

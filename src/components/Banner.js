@@ -17,7 +17,6 @@ export default function Banner() {
 	let maxApps = 3;
 	var nPost = 0;
 	var nApps = 0;
-	let isPost = false;
 
 	function getPostsList() {
 		fetch(
@@ -30,7 +29,6 @@ export default function Banner() {
 			.then((res) => res.json())
 			.then((data) => {
 				nPost = 0;
-				isPost = false;
 				setPosts(data);
 			})
 			.catch(() => {
@@ -154,8 +152,8 @@ export default function Banner() {
 											element === 'blog'
 												? '#5ca4da'
 												: hoverTab === 'blog'
-												? '#5ca4da'
-												: '#212121',
+													? '#5ca4da'
+													: '#212121',
 										border: 0,
 										borderRadius: 20,
 										fontSize: element === 'blog' ? 25 : 20,
@@ -181,8 +179,8 @@ export default function Banner() {
 											element === 'applications'
 												? '#5ca4da'
 												: hoverTab === 'applications'
-												? '#5ca4da'
-												: '#212121',
+													? '#5ca4da'
+													: '#212121',
 										fontSize:
 											element === 'applications'
 												? 25
@@ -231,6 +229,7 @@ export default function Banner() {
 									{element === 'blog' &&
 										posts &&
 										posts.map((post, i) => {
+											var isPost = false;
 											post.labels.map((label) => {
 												if (label.name === 'post') {
 													isPost = true;

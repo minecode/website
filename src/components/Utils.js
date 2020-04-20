@@ -1,10 +1,18 @@
 import React from 'react';
+import { faStar, faCertificate } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export function getHeader() {
 	var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
 	var header = new Headers();
 	header.set('Authorization', 'Basic ' + authorizationBasic);
 	return header;
+}
+
+export function getDiffDates(date1, date2) {
+	const diffTime = Math.abs(date2 - date1);
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+	return diffDays;
 }
 
 export function addPost(issue) {
@@ -187,7 +195,7 @@ export function getCard(i, element, hoverElement, setHoverElement) {
 					position: 'relative',
 					top: '10px',
 					color: '#f1f1f1',
-					fontSize: 25,
+					fontSize: 16,
 					fontWeight: 100,
 				}}
 			>
@@ -215,7 +223,14 @@ export function getCard(i, element, hoverElement, setHoverElement) {
 export function getElement(type, element) {
 	if (type === 'post') {
 		const href = '/blog/post/' + element.number;
-		const title = element.title.split(/\[\w*\] /)[1];
+		var title = element.title.split(/\[\w*\] /)[1];
+		{element.labels.filter(e => e.name === 'highlight').length > 0 & getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? 
+			title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></>)
+			: element.labels.filter(e => e.name === 'highlight').length > 0 ? 
+				title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div></>)
+				: getDiffDates(new Date(element.closed_at), new Date()) <= 2 ?
+					title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></>)
+					: title = <>{element.title.split(/\[\w*\] /)[1]}</>;}
 		const background = element.body.match(/(?:!\[(.*?)\]\((.*?)\))/g)
 			? `linear-gradient(#21212190, #21212190), url(${
 				element.body

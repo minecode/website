@@ -113,11 +113,11 @@ export default function Post(props) {
 								position: 'relative'
 							}}>
 								<div className="pricing-header px-3 py-3 mx-auto text-center"id="title">
-									<h3 className="display-4" style={{color: '#fff', marginTop: '5%'}}>
+									<h1 style={{color: '#fff', marginTop: '5%'}}>
 										{element.title.split(/\[\w*\] /)[1]}<br/>
 										{element.labels.filter(e => e.name === 'highlight').length > 0 ? <><div className="m-1 btn btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div></> : <></>}
 										{getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? <><div className="m-1 btn btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></> : <></>}
-									</h3>
+									</h1>
 								</div>
 								<div className="px-3 py-3 pb-md-4 mx-auto text-center">
 									<div className="d-flex align-middle justify-content-center align-items-center">

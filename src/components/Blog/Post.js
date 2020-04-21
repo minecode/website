@@ -94,7 +94,7 @@ export default function Post(props) {
 							}}>
 							</div>
 							<div className="container-fluid" style={{
-								backgroundColor: 'black',
+								backgroundColor: '#f1f1f1',
 								color: 'white',
 								fontWeight: 'bold',
 								zIndex: '-1',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCard, getHeader, getElement } from './Utils';
+import { getCard, getHeader, getElement } from '../components/Utils';
 
 
 export default function Releases() {

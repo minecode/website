@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { titleCase, getHeader, getCard, getElement } from './Utils';
+import { titleCase, getHeader, getCard, getElement } from '../components/Utils';
 
 import { faStar, faEye, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

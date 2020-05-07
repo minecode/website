@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getHeader, getDate, getTitle } from './Utils';
+import { getHeader, getDate, getTitle } from '../components/Utils';
 
 Release.propTypes = {
 	match: PropTypes.shape({

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router'
 
 export default function Navbar() {
 	const [path, setPath] = useState(null);
-	let location = useLocation();
+	let location = useRouter();
 
 	useEffect(() => {
 		setPath(location.pathname);

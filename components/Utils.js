@@ -2,6 +2,8 @@ import React from 'react';
 import { faStar, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Link from 'next/link'
+
 export function getHeader() {
 	var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
 	var header = new Headers();
@@ -20,9 +22,10 @@ export function addPost(issue) {
 	card.setAttribute('class', 'col-12');
 	var header = document.createElement('div');
 	var title = document.createElement('h3');
-	var link = document.createElement('a');
+	var link = document.createElement('Link');
 	title.setAttribute('class', 'my-0 font-weight-normal');
-	link.setAttribute('href', './blog/post/' + issue.number);
+	link.setAttribute('href', './blog/post/[id]');
+	link.setAttribute('as', './blog/post/' + issue.number + '');
 	var text = document.createTextNode(issue.title.split(/\[\w*\] /)[1]);
 	link.append(text);
 	title.append(link);
@@ -153,17 +156,18 @@ export function getDate(date) {
 }
 
 export function getCard(i, element, hoverElement, setHoverElement) {
-	const background = element[2];
-	const title = element[1];
+	const background = element[3];
+	const title = element[2];
 	const href = element[0];
-	const footer = element[3];
+	const as = element[1];
+	const footer = element[4];
 	return (
-		<a
+		<Link href={href} as={as}>
+		<div
 			key={i}
 			className={
 				'col-sm-12 col-md-3 btn mx-2 my-2 p-2 justify-content-center'
 			}
-			href={href}
 			onMouseEnter={() => setHoverElement(i)}
 			onMouseLeave={() => setHoverElement(null)}
 			style={{
@@ -216,13 +220,15 @@ export function getCard(i, element, hoverElement, setHoverElement) {
 			>
 				{footer}
 			</p>
-		</a>
+		</div>
+		</Link>
 	);
 }
 
 export function getElement(type, element) {
 	if (type === 'post') {
-		const href = '/blog/post/' + element.number;
+		const href = '/blog/post/[id]';
+		const as = '/blog/post/' + element.number;
 		var title = element.title.split(/\[\w*\] /)[1];
 		element.labels.filter(e => e.name === 'highlight').length > 0 & getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? 
 			title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></>)
@@ -258,9 +264,10 @@ export function getElement(type, element) {
 				</a>
 			</>
 		);
-		return [href, title, background, footer];
+		return [href, as, title, background, footer];
 	} else if (type === 'app') {
-		const href = '/app/' + element.name;
+		const href = '/app/[id]';
+		const as = '/app/' + element.name;
 		const title = titleCase(element.name);
 		const background = `linear-gradient(#21212190, #21212190), url(${
 			'https://raw.githubusercontent.com/minecode/' +
@@ -279,11 +286,12 @@ export function getElement(type, element) {
 					date.getFullYear()}
 			</>
 		);
-		return [href, title, background, footer];
+		return [href, as, title, background, footer];
 	} else if (type === 'release') {
-		const href = element.repository
+		const href = '/release/[repository]/[id]';
+		const as = element.repository
 			? '/release/' + element.repository + '/' + element.number
-			: '/release/' + element.number;
+			: '/release/website/' + element.number;
 		const title = (
 			<div style={{ color: '#fff' }}>
 				<p>
@@ -304,7 +312,7 @@ export function getElement(type, element) {
 				'linear-gradient(#00ff0090, #00000090), url(https://image.freepik.com/free-vector/flat-design-concept-rocket-launch_16734-61.jpg)';
 		}
 		const footer = <></>;
-		return [href, title, background, footer];
+		return [href, as, title, background, footer];
 	}
 }
 

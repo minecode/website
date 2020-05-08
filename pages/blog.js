@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getListCards, getHeader } from './Utils';
+import { getListCards, getHeader } from '../components/Utils';
 
 export default function Blog() {
 

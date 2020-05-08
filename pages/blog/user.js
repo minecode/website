@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getListCards, getHeader } from '../Utils';
+import { getListCards, getHeader } from '../../components/Utils';
 
 
 User.propTypes = {

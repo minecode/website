@@ -1,115 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { getElement, getCard, getHeader } from './Utils';
+import React, { useState } from 'react';
+import { getElement, getCard } from './Utils';
 
 import { faRss, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function Banner() {
+function Banner({ posts, data }) {
+	console.log(posts);
+	console.log(data);
 	const color = '#f1f1f1';
 	const [element, setElement] = useState('blog');
-	const [posts, setPosts] = useState(null);
 	const [hoverElement, setHoverElement] = useState(null);
 	const [hoverTab, setHoverTab] = useState(null);
-	const [data, setData] = useState(null);
-	const [header, setHeader] = useState(null);
 
 	let maxPost = 3;
 	let maxApps = 3;
 	var nPost = 0;
 	var nApps = 0;
-
-	function getPostsList() {
-		fetch(
-			'https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed',
-			{
-				method: 'GET',
-				headers: header,
-			}
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				nPost = 0;
-				setPosts(data);
-			})
-			.catch(() => {
-				//Do something with error
-			});
-	}
-
-	function getRepositories() {
-		fetch('https://api.github.com/orgs/minecode/repos', {
-			method: 'GET',
-			headers: header,
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				var count = 0;
-				header.set(
-					'Accept',
-					'application/vnd.github.mercy-preview+json'
-				);
-				data.forEach((repo) => {
-					Promise.all([
-						fetch(
-							'https://api.github.com/repos/minecode/' +
-								repo.name +
-								'/topics',
-							{
-								method: 'GET',
-								headers: header,
-							}
-						),
-						fetch(
-							'https://api.github.com/repos/minecode/' +
-								repo.name +
-								'/contents/minecode_settings.json?ref=master',
-							{
-								method: 'GET',
-								headers: header,
-							}
-						),
-					])
-						.then(([res1, res2]) =>
-							Promise.all([res1.json(), res2.json()])
-						)
-						.then(([data2, data3]) => {
-							if (data3.content !== undefined) {
-								data3.content = JSON.parse(atob(data3.content));
-							}
-							var temp = 0;
-							data.forEach((element) => {
-								if (element.name === repo.name) {
-									data[temp].topic = data2;
-									data[temp].minecode_settings =
-										data3.content;
-								}
-								temp++;
-							});
-							count++;
-							if (data.length === count) {
-								setData(data);
-							}
-						});
-				});
-			});
-	}
-
-	useEffect(() => {
-		if (header) {
-			getRepositories();
-			if (element) {
-				if (element === 'blog') {
-					getPostsList();
-				}
-			}
-		}
-	// eslint-disable-next-line
-	}, [element, header]);
-
-	useEffect(() => {
-		const temp = getHeader();
-		setHeader(temp);
-	}, []);
 
 	return (
 		<div
@@ -284,3 +190,5 @@ export default function Banner() {
 		</div>
 	);
 }
+
+export default Banner;

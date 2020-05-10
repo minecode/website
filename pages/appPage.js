@@ -265,7 +265,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_mobile
 													: 'https://' +
-													  contents.link_mobile
+													contents.link_mobile
 											}
 											rel='noopener noreferrer'
 											target='_blank'
@@ -296,7 +296,7 @@ export default function AppPage(props) {
 												)
 													? contents.link_website
 													: 'https://' +
-													  contents.link_website
+													contents.link_website
 											}
 											rel='noopener noreferrer'
 											target='_blank'

@@ -2,13 +2,10 @@ import React from 'react';
 import { faStar, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
 export function getHeader() {
-	var authorizationBasic = window.btoa(process.env.REACT_APP_APIKEY);
-	var header = new Headers();
-	header.set('Authorization', 'Basic ' + authorizationBasic);
-	return header;
+	return {'Authorization': 'Basic ' + process.env.REACT_APP_APIKEY};
 }
 
 export function getDiffDates(date1, date2) {
@@ -163,64 +160,64 @@ export function getCard(i, element, hoverElement, setHoverElement) {
 	const footer = element[4];
 	return (
 		<Link href={href} as={as}>
-		<div
-			key={i}
-			className={
-				'col-sm-12 col-md-3 btn mx-2 my-2 p-2 justify-content-center'
-			}
-			onMouseEnter={() => setHoverElement(i)}
-			onMouseLeave={() => setHoverElement(null)}
-			style={{
-				backgroundImage: background,
-				backgroundSize: 'cover',
-				backgroundPosition: 'center',
-				backgroundColor: '#21212180',
-				borderRadius: 20,
-				border: 0,
-				height: 300,
-
-				MsTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
-				MozTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
-				transform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
-				WebkitTransform:
-					hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
-				OTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
-
-				display: 'block',
-
-				transition: 'all .5s ease',
-				WebkitTransition: 'all .5s ease',
-				MozTransition: 'all .5s ease',
-			}}
-		>
 			<div
-				className='col-12'
+				key={i}
+				className={
+					'col-sm-12 col-md-3 btn mx-2 my-2 p-2 justify-content-center'
+				}
+				onMouseEnter={() => setHoverElement(i)}
+				onMouseLeave={() => setHoverElement(null)}
 				style={{
-					position: 'relative',
-					top: '10px',
-					color: '#f1f1f1',
-					fontSize: 16,
-					fontWeight: 100,
+					backgroundImage: background,
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					backgroundColor: '#21212180',
+					borderRadius: 20,
+					border: 0,
+					height: 300,
+
+					MsTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+					MozTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+					transform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+					WebkitTransform:
+					hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+					OTransform: hoverElement === i ? 'scale(1.1)' : 'scale(1.0)',
+
+					display: 'block',
+
+					transition: 'all .5s ease',
+					WebkitTransition: 'all .5s ease',
+					MozTransition: 'all .5s ease',
 				}}
 			>
-				{title}
+				<div
+					className='col-12'
+					style={{
+						position: 'relative',
+						top: '10px',
+						color: '#f1f1f1',
+						fontSize: 16,
+						fontWeight: 100,
+					}}
+				>
+					{title}
+				</div>
+				<br />
+				<p
+					className='col-12'
+					style={{
+						color: '#f1f1f1',
+						position: 'absolute',
+						bottom: 10,
+						left: 0,
+						right: 0,
+						fontSize: 12,
+						opacity: 0.8,
+					}}
+				>
+					{footer}
+				</p>
 			</div>
-			<br />
-			<p
-				className='col-12'
-				style={{
-					color: '#f1f1f1',
-					position: 'absolute',
-					bottom: 10,
-					left: 0,
-					right: 0,
-					fontSize: 12,
-					opacity: 0.8,
-				}}
-			>
-				{footer}
-			</p>
-		</div>
 		</Link>
 	);
 }

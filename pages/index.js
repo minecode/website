@@ -2,12 +2,11 @@ import React from 'react';
 import Team from '../components/Team';
 import Banner from '../components/Banner';
 import fetch from 'isomorphic-unfetch';
-import { getHeader } from '../components/Utils';
 
-function Home({ posts, data }) {
+function Home({ posts, labels }) {
 	return (
 		<div>
-			<Banner posts={posts} data={data} />
+			<Banner posts={posts} labels={labels} />
 			<div className={'container-fluid py-5'}>
 				<div className={'container'}>
 					<div className='row' style={{ alignItems: 'center' }}>
@@ -131,41 +130,13 @@ function Home({ posts, data }) {
 }
 
 export async function getStaticProps() {
-	const res = await fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed&access_token=914ab36578a5cd52062b44d75a40b1b25bc48443');
+	const res = await fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed&access_token=97c53338c6b41309a51302c95279e459f6f79c37');
 	const json = await res.json();
 	
-	const res2 = await fetch('https://api.github.com/orgs/minecode/repos?access_token=914ab36578a5cd52062b44d75a40b1b25bc48443');
+	const res2 = await fetch('https://api.github.com/repos/minecode/minecode.github.io/labels?access_token=97c53338c6b41309a51302c95279e459f6f79c37');
 	const json2 = await res2.json();
 
-	var count = 0;
-	var json5 = null;
-
-	await json2.forEach(async (repo) => {
-		const res3 = await fetch('https://api.github.com/repos/minecode/' + repo.name + '/topics?access_token=914ab36578a5cd52062b44d75a40b1b25bc48443');
-		const json3 = await res3.json();
-
-		const res4 = await fetch('https://api.github.com/repos/minecode/' + repo.name + '/contents/minecode_settings.json?ref=master&access_token=914ab36578a5cd52062b44d75a40b1b25bc48443');
-		const json4 = await res4.json();
-		
-		if (json4.content !== undefined) {
-			json4.content = JSON.parse(atob(json4.content));
-		}
-		var temp = 0;
-		await json2.forEach(async (element) => {
-			if (element.name === repo.name) {
-				json2[temp].topic = json3;
-				json2[temp].minecode_settings =
-					json4.content;
-			}
-			temp++;
-		});
-		count++;
-		if (json2.length === count) {
-			json5 = json2;
-		}
-	});
-
-	return { props: {posts: json, data: json2 }};
+	return { props: {posts: json, labels: json2 }};
 }
 
 export default Home;

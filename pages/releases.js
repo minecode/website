@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getHeader, getCard, getElement } from '../components/Utils';
+import { getCard, getElement } from '../components/Utils';
 import fetch from 'isomorphic-unfetch';
 
 function Releases({ milestoneReleased, milestoneNonReleased }) {
@@ -35,11 +35,10 @@ function Releases({ milestoneReleased, milestoneNonReleased }) {
 }
 
 export async function getStaticProps() {
-	var header = getHeader();
-	const res = await fetch('https://api.github.com/repos/minecode/website/milestones?state=close&access_token=914ab36578a5cd52062b44d75a40b1b25bc48443');
+	const res = await fetch('https://api.github.com/repos/minecode/website/milestones?state=close&access_token=97c53338c6b41309a51302c95279e459f6f79c37');
 	const json = await res.json();
 	
-	const res2 = await fetch('https://api.github.com/repos/minecode/website/milestones?&access_token=914ab36578a5cd52062b44d75a40b1b25bc48443');
+	const res2 = await fetch('https://api.github.com/repos/minecode/website/milestones?&access_token=97c53338c6b41309a51302c95279e459f6f79c37');
 	const json2 = await res2.json();
 
 	return { props: {milestoneReleased: json, milestoneNonReleased: json2 }};

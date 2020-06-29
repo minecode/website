@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { getListCards, getHeader } from '../components/Utils';
+import React, { useState } from 'react';
+import { getHeader, getListCards } from '../components/Utils';
+import fetch from 'isomorphic-unfetch';
 
-export default function Blog() {
-
-	const [post, setPost] = useState(null);
+function Blog({ post }) {
+	console.log(post);
 	const [hoverElement, setHoverElement] = useState(null);
 
-	useEffect(() => {
-		const header = getHeader();
-		fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
-			method: 'GET', headers: header
-		})
-			.then(res => res.json())
-			.then(data => {
-				setPost(data);
-			});
-	}, []);
 	return(
 		<>
 			{getListCards(post, hoverElement, setHoverElement)}
 		</>
 	);
 }
+
+export async function getStaticProps() {
+	var header = getHeader();
+	const res = await fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
+		headers: header
+	});
+	const json = await res.json();
+	return { props: {post: json }};
+}
+
+export default Blog;

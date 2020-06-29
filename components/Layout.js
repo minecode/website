@@ -1,12 +1,14 @@
-import Navbar from './Navbar'
-import Footer from './Footer'
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 const Layout = props => (
-    <div>
-        <Navbar />
-            <div className='content'>{props.children}</div>
-        <Footer />
-    </div>
-)
+	<>
+		<main>
+			<Navbar />
+			<div className='content'>{props.children}</div>
+		</main>
+		<Footer />
+	</>
+);
 
-export default Layout
+export default Layout;

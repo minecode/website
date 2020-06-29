@@ -1,10 +1,12 @@
 import React from 'react';
 import Team from '../components/Team';
 import Banner from '../components/Banner';
-export default function Home() {
+import fetch from 'isomorphic-unfetch';
+
+function Home({ posts, labels }) {
 	return (
 		<div>
-			<Banner />
+			<Banner posts={posts} labels={labels} />
 			<div className={'container-fluid py-5'}>
 				<div className={'container'}>
 					<div className='row' style={{ alignItems: 'center' }}>
@@ -126,3 +128,15 @@ export default function Home() {
 		</div>
 	);
 }
+
+export async function getStaticProps() {
+	const res = await fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed&access_token=97c53338c6b41309a51302c95279e459f6f79c37');
+	const json = await res.json();
+	
+	const res2 = await fetch('https://api.github.com/repos/minecode/minecode.github.io/labels?access_token=97c53338c6b41309a51302c95279e459f6f79c37');
+	const json2 = await res2.json();
+
+	return { props: {posts: json, labels: json2 }};
+}
+
+export default Home;

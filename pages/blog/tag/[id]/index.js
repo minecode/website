@@ -13,7 +13,7 @@ const tag = () => {
 
 	useEffect(() => {
 		if (id != undefined) {
-			fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
+			fetch('https://minecode.herokuapp.com/minecode-website/issues/closed', {
 				method: 'GET', headers: getHeader()
 			})
 				.then(res => res.json())

@@ -35,10 +35,10 @@ function Releases({ milestoneReleased, milestoneNonReleased }) {
 }
 
 export async function getStaticProps() {
-	const res = await fetch('https://api.github.com/repos/minecode/website/milestones?state=close&access_token=97c53338c6b41309a51302c95279e459f6f79c37');
+	const res = await fetch('https://minecode.herokuapp.com/minecode/website/milestones/close');
 	const json = await res.json();
 	
-	const res2 = await fetch('https://api.github.com/repos/minecode/website/milestones?&access_token=97c53338c6b41309a51302c95279e459f6f79c37');
+	const res2 = await fetch('https://minecode.herokuapp.com/minecode/website/milestones');
 	const json2 = await res2.json();
 
 	return { props: {milestoneReleased: json, milestoneNonReleased: json2 }};

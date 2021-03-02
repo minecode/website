@@ -17,9 +17,7 @@ const release = () => {
 		if (id !== undefined && repository !== undefined) {
 			var header = getHeader();
 			fetch(
-				'https://api.github.com/repos/minecode/' + repository +
-				'/milestones/' +
-				id,
+				'https://minecode.herokuapp.com/minecode/' + repository + '/milestones/' + id,
 				{
 					method: 'GET',
 					headers: header,
@@ -27,12 +25,11 @@ const release = () => {
 			)
 				.then((res) => res.json())
 				.then((data) => {
+					console.log(data)
 					setMilestones(data);
 				});
 			fetch(
-				'https://api.github.com/repos/minecode/' + repository +
-				'/issues?state=closed&milestone=' +
-				id,
+				'https://minecode.herokuapp.com/minecode/' + repository + '/milestones/' + id + '/issues/closed',
 				{
 					method: 'GET',
 					headers: header,
@@ -40,12 +37,11 @@ const release = () => {
 			)
 				.then((res1) => res1.json())
 				.then((data1) => {
+					console.log(data1)
 					setIssuesMilestones(data1);
 				});
 			fetch(
-				'https://api.github.com/repos/minecode/' + repository +
-				'/issues?milestone=' +
-				id,
+				'https://minecode.herokuapp.com/minecode/' + repository + '/milestones/' + id,
 				{
 					method: 'GET',
 					headers: header,
@@ -53,6 +49,7 @@ const release = () => {
 			)
 				.then((res1) => res1.json())
 				.then((data1) => {
+					console.log(data1)
 					setIssuesNonClosedMilestones(data1);
 				});
 		}
@@ -88,6 +85,7 @@ const release = () => {
 									issuesMilestones
 										.concat(issuesNonClosedMilestones)
 										.map((element2, i) => {
+											console.log(element2)
 											return (
 												<li key={i} className='col-6'>
 													<p>
@@ -102,7 +100,7 @@ const release = () => {
 														>
 															{element2.title}
 														</span>
-														{element2.labels.map(
+														{element2.labels && element2.labels.map(
 															(element3, i) => {
 																return (
 																	<div

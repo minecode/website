@@ -26,24 +26,24 @@ const post = () => {
 
 			Promise.all([
 				fetch(
-					'https://api.github.com/repos/minecode/minecode.github.io/issues/' +
+					'https://minecode.herokuapp.com/minecode-website/issues/' +
 					id, {
 						method: 'GET',
 						headers: header
 					}),
 				fetch(
-					'https://api.github.com/repos/minecode/minecode.github.io/issues/' +
+					'https://minecode.herokuapp.com/minecode-website/issues/' +
 					id + '/comments', {
 						method: 'GET',
 						headers: header
 					}),
 				fetch(
-					'https://api.github.com/orgs/minecode/members', {
+					'https://minecode.herokuapp.com/minecode-website/members', {
 						method: 'GET',
 						headers: header
 					}),
 				fetch(
-					'https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
+					'https://minecode.herokuapp.com/minecode-website/issues/closed', {
 						method: 'GET',
 						headers: header
 					})

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getHeader, getListCards } from '../components/Utils';
+import { getHeader, getListCards } from '../../components/Utils';
 import fetch from 'isomorphic-unfetch';
 
 function Blog({ post }) {
@@ -15,11 +15,11 @@ function Blog({ post }) {
 
 export async function getStaticProps() {
 	var header = getHeader();
-	const res = await fetch('https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
+	const res = await fetch('https://minecode.herokuapp.com/minecode-website/issues/closed', {
 		headers: header
 	});
 	const json = await res.json();
-	return { props: {post: json }};
+	return { props: {post: json } };
 }
 
 export default Blog;

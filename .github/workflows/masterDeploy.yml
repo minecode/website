@@ -65,4 +65,4 @@ jobs:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           external_repository: minecode/minecode.github.io
           publish_branch: master
-          publish_dir: ./.next
+          publish_dir: ./out/

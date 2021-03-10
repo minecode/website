@@ -26,24 +26,24 @@ const post = () => {
 
 			Promise.all([
 				fetch(
-					'https://api.github.com/repos/minecode/minecode.github.io/issues/' +
+					'https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/issues/' +
 					id, {
 						method: 'GET',
 						headers: header
 					}),
 				fetch(
-					'https://api.github.com/repos/minecode/minecode.github.io/issues/' +
+					'https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/issues/' +
 					id + '/comments', {
 						method: 'GET',
 						headers: header
 					}),
 				fetch(
-					'https://api.github.com/orgs/minecode/members', {
+					'https://minecode.herokuapp.com/github/orgs/minecode/members', {
 						method: 'GET',
 						headers: header
 					}),
 				fetch(
-					'https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed', {
+					'https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/issues/closed', {
 						method: 'GET',
 						headers: header
 					})
@@ -51,6 +51,9 @@ const post = () => {
 				.then(([res1, res2, res3, res4]) => Promise.all([res1.json(), res2.json(), res3.json(), res4.json()]))
 				.then(([data1, data2, data3, data4]) => {
 					console.log(data1);
+					console.log(data2);
+					console.log(data3);
+					console.log(data4);
 					setPost(data1);
 					setComments(data2);
 					setLabels(data1.labels);

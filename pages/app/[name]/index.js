@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { titleCase, getHeader, getCard, getElement } from '../components/Utils';
+import { titleCase, getHeader, getCard, getElement } from '../../../components/Utils';
 
 import { faStar, faEye, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-AppPage.propTypes = {
-	match: PropTypes.shape({
-		params: PropTypes.shape({
-			appName: PropTypes.isRequired,
-		}),
-	}),
-};
+import { useRouter } from 'next/router';
 
-export default function AppPage(props) {
-	const appName = props.match.params.appName;
+const appPage = () => {
+	const router = useRouter();
+	const { name } = router.query;
 
 	const [headers, setHeaders] = useState(null);
 	const [data, setData] = useState(null);
@@ -28,21 +23,23 @@ export default function AppPage(props) {
 	const [contributors, setContributors] = useState(null);
 
 	async function getRepInfo() {
-		fetch('https://api.github.com/repos/minecode/' + appName, {
+		fetch('https://minecode.herokuapp.com/github/repos/minecode/' + name, {
 			method: 'GET',
 			headers: headers,
 		})
 			.then((res) => res.json())
 			.then((data) => {
+                console.log('data')
+                console.log('https://minecode.herokuapp.com/github/repos/minecode/' + name)
+                console.log(data)
 				setData(data);
 			});
 	}
 
 	async function getContents() {
 		fetch(
-			'https://api.github.com/repos/minecode/' +
-				appName +
-				'/contents/minecode_settings.json?ref=master',
+			'https://minecode.herokuapp.com/github/repos/minecode/' + name +
+				'/contents',
 			{
 				method: 'GET',
 				headers: headers,
@@ -55,11 +52,11 @@ export default function AppPage(props) {
 					setContents(temp_contents);
 					if (temp_contents.play_console_images) {
 						fetch(
-							'https://api.github.com/repos/minecode/' +
-								appName +
+							'https://minecode.herokuapp.com/github/repos/minecode/' +
+								name +
 								'/contents/' +
 								temp_contents.play_console_images +
-								'?ref=master',
+								'',
 							{
 								method: 'GET',
 								headers: headers,
@@ -76,9 +73,9 @@ export default function AppPage(props) {
 
 	async function getMilestones() {
 		fetch(
-			'https://api.github.com/repos/minecode/' +
-				appName +
-				'/milestones?state=close',
+			'https://minecode.herokuapp.com/github/repos/minecode/' +
+				name +
+				'/milestones/closed',
 			{
 				method: 'GET',
 				headers: headers,
@@ -86,11 +83,13 @@ export default function AppPage(props) {
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				setMilestonesReleasesd(data);
+                console.log("setMilestonesReleasesd")
+				console.log(data)
+                setMilestonesReleasesd(data);
 			});
 
 		fetch(
-			'https://api.github.com/repos/minecode/' + appName + '/milestones',
+			'https://minecode.herokuapp.com/github/repos/minecode/' + name + '/milestones',
 			{
 				method: 'GET',
 				headers: headers,
@@ -98,14 +97,16 @@ export default function AppPage(props) {
 		)
 			.then((res) => res.json())
 			.then((data) => {
+                console.log("setMilestonesNonReleasesd")
+                console.log(data)
 				setMilestonesNonReleasesd(data);
 			});
 	}
 
 	async function getContributors() {
 		fetch(
-			'https://api.github.com/repos/minecode/' +
-				appName +
+			'https://minecode.herokuapp.com/github/repos/minecode/' +
+				name +
 				'/contributors',
 			{
 				method: 'GET',
@@ -115,7 +116,7 @@ export default function AppPage(props) {
 			.then((res) => res.json())
 			.then((data) => {
 				data.forEach(async (element) => {
-					fetch('https://api.github.com/users/' + element.login, {
+					fetch('https://minecode.herokuapp.com/github/users/' + element.login, {
 						method: 'GET',
 						headers: headers,
 					})
@@ -133,15 +134,15 @@ export default function AppPage(props) {
 	}, []);
 
 	useEffect(() => {
-		if (headers) {
+		if (headers && name) {
 			getRepInfo();
 			getMilestones();
 		}
 	// eslint-disable-next-line
-	}, [headers]);
+	}, [name, headers]);
 
 	useEffect(() => {
-		if (data) {
+		if (data && name) {
 			if (data.updated_at) {
 				let temp_date = new Date(data.updated_at);
 				setDate(
@@ -156,14 +157,19 @@ export default function AppPage(props) {
 			getContributors();
 		}
 	// eslint-disable-next-line
-	}, [data]);
+	}, [name, data]);
 
 	useEffect(() => {
-		if (contents) {
+        console.log('here')
+        console.log(contents)
+        console.log(name)
+        console.log(headers)
+		if (contents && name && headers) {
+            console.log('HERE')
 			fetch(
-				'https://api.github.com/repos/minecode/' +
-					appName +
-					'/issues?status=open&labels=bug',
+				'https://minecode.herokuapp.com/github/repos/minecode/' +
+					name +
+					'/issues/open/bug',
 				{
 					method: 'GET',
 					headers: headers,
@@ -171,10 +177,13 @@ export default function AppPage(props) {
 			)
 				.then((res) => res.json())
 				.then((data) => {
+                    console.log('data')
+                    console.log(data)
 					setIssues(data);
 				});
 		}
-	}, [contents, appName, headers]);
+	// eslint-disable-next-line
+	}, [name, contents, headers]);
 
 	return (
 		<div>
@@ -419,7 +428,7 @@ export default function AppPage(props) {
 						{milestoneReleasesd &&
 							milestoneReleasesd.map((element, i) => {
 								if (i + 1 === milestoneReleasesd.length) {
-									element['repository'] = appName;
+									element['repository'] = name;
 									const releaseElement = getElement(
 										'release',
 										element
@@ -437,7 +446,7 @@ export default function AppPage(props) {
 						{milestoneNonReleasesd &&
 							milestoneNonReleasesd.map((element, i) => {
 								if (i === 0) {
-									element['repository'] = appName;
+									element['repository'] = name;
 									const releaseElement = getElement(
 										'release',
 										element
@@ -564,3 +573,5 @@ export default function AppPage(props) {
 		</div>
 	);
 }
+
+export default appPage;

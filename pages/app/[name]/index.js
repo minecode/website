@@ -23,14 +23,14 @@ const appPage = () => {
 	const [contributors, setContributors] = useState(null);
 
 	async function getRepInfo() {
-		fetch('https://minecode.herokuapp.com/github/repo/' + name, {
+		fetch('https://minecode.herokuapp.com/github/repos/minecode/' + name, {
 			method: 'GET',
 			headers: headers,
 		})
 			.then((res) => res.json())
 			.then((data) => {
                 console.log('data')
-                console.log('https://minecode.herokuapp.com/github/repo/' + name)
+                console.log('https://minecode.herokuapp.com/github/repos/minecode/' + name)
                 console.log(data)
 				setData(data);
 			});
@@ -38,7 +38,7 @@ const appPage = () => {
 
 	async function getContents() {
 		fetch(
-			'https://minecode.herokuapp.com/minecode/' + name +
+			'https://minecode.herokuapp.com/github/repos/minecode/' + name +
 				'/contents',
 			{
 				method: 'GET',
@@ -52,9 +52,9 @@ const appPage = () => {
 					setContents(temp_contents);
 					if (temp_contents.play_console_images) {
 						fetch(
-							'https://minecode.herokuapp.com/minecode/' +
+							'https://minecode.herokuapp.com/github/repos/minecode/' +
 								name +
-								'/contents/image' +
+								'/contents/' +
 								temp_contents.play_console_images +
 								'',
 							{
@@ -73,9 +73,9 @@ const appPage = () => {
 
 	async function getMilestones() {
 		fetch(
-			'https://minecode.herokuapp.com/minecode/' +
+			'https://minecode.herokuapp.com/github/repos/minecode/' +
 				name +
-				'/milestones',
+				'/milestones/closed',
 			{
 				method: 'GET',
 				headers: headers,
@@ -89,7 +89,7 @@ const appPage = () => {
 			});
 
 		fetch(
-			'https://minecode.herokuapp.com/minecode/' + name + '/milestones',
+			'https://minecode.herokuapp.com/github/repos/minecode/' + name + '/milestones',
 			{
 				method: 'GET',
 				headers: headers,
@@ -105,7 +105,7 @@ const appPage = () => {
 
 	async function getContributors() {
 		fetch(
-			'https://minecode.herokuapp.com/minecode/' +
+			'https://minecode.herokuapp.com/github/repos/minecode/' +
 				name +
 				'/contributors',
 			{
@@ -167,7 +167,7 @@ const appPage = () => {
 		if (contents && name && headers) {
             console.log('HERE')
 			fetch(
-				'https://minecode.herokuapp.com/minecode-website/' +
+				'https://minecode.herokuapp.com/github/repos/minecode/' +
 					name +
 					'/issues/open/bug',
 				{

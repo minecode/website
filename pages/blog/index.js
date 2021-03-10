@@ -15,7 +15,7 @@ function Blog({ post }) {
 
 export async function getStaticProps() {
 	var header = getHeader();
-	const res = await fetch('https://minecode.herokuapp.com/minecode-website/issues/closed', {
+	const res = await fetch('https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/issues/closed', {
 		headers: header
 	});
 	const json = await res.json();

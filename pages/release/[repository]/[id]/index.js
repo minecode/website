@@ -17,7 +17,7 @@ const release = () => {
 		if (id !== undefined && repository !== undefined) {
 			var header = getHeader();
 			fetch(
-				'https://minecode.herokuapp.com/minecode/' + repository + '/milestones/' + id,
+				'https://minecode.herokuapp.com/github/repos/minecode/' + repository + '/milestones/' + id,
 				{
 					method: 'GET',
 					headers: header,
@@ -29,7 +29,7 @@ const release = () => {
 					setMilestones(data);
 				});
 			fetch(
-				'https://minecode.herokuapp.com/minecode/' + repository + '/milestones/' + id + '/issues/closed',
+				'https://minecode.herokuapp.com/github/repos/minecode/' + repository + '/milestones/' + id + '/issues/closed',
 				{
 					method: 'GET',
 					headers: header,
@@ -41,7 +41,7 @@ const release = () => {
 					setIssuesMilestones(data1);
 				});
 			fetch(
-				'https://minecode.herokuapp.com/minecode/' + repository + '/milestones/' + id,
+				'https://minecode.herokuapp.com/github/repos/minecode/' + repository + '/milestones/' + id,
 				{
 					method: 'GET',
 					headers: header,

@@ -130,10 +130,10 @@ function Home({ posts, labels }) {
 }
 
 export async function getStaticProps() {
-	const res = await fetch('https://minecode.herokuapp.com/minecode-website/issues/closed');
+	const res = await fetch('https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/issues/closed');
 	const json = await res.json();
 	
-	const res2 = await fetch('https://minecode.herokuapp.com/minecode-website/labels');
+	const res2 = await fetch('https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/labels');
 	const json2 = await res2.json();
 
 	return { props: {posts: json, labels: json2 }};

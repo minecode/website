@@ -23,17 +23,17 @@ const post = () => {
 
   useEffect(() => {
 		if (id != undefined) {
-      async () => {
+      var fetchApi = async () => {
         var header = getHeader();
 
-        const issue = await fetch(
+        const postJson = await fetch(
             'https://minecode.herokuapp.com/github/repos/minecode/minecode.github.io/issues/' + id, {
               method: 'GET',
               headers: header
-            })
-        const postJson : issueInterface = await issue.json();
-        setPost(post)
-
+            }).then(res => res.json()).then(data =>{
+                setPost(data)
+                return data;
+              })
         const members = await fetch(
             'https://minecode.herokuapp.com/github/orgs/minecode/members', {
               method: 'GET',
@@ -61,6 +61,7 @@ const post = () => {
         const coAuthors : userInterface[] = postJson.assignees?.filter(element => element.login !== postJson.user?.login)
         setCoAuthors(coAuthors)
       }
+      fetchApi()
     }
   }, [id]);
 

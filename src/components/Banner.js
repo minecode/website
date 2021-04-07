@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { getElement, getCard } from './Utils';
 
 function Banner({ posts, labels }) {
-	console.log(posts);
-	console.log(labels);
 	const color = '#f1f1f1';
 	const [element, setElement] = useState('blog');
 	const [hoverElement, setHoverElement] = useState(null);
@@ -84,7 +82,7 @@ function Banner({ posts, labels }) {
 						{ labels && labels.map((element, i) => {
 							if (element.name !== 'highlight') {
 								return(
-									<a key={i} href={'/blog/tag/' + element.name} className="m-1 btn btn-primary" style={{backgroundColor: '#' + element.color, border: 'none'}}>
+									<a key={i} href={'/tag/' + element.name} className="m-1 btn btn-primary" style={{backgroundColor: '#' + element.color, border: 'none'}}>
 										{element.name}
 									</a>
 								);

@@ -28,7 +28,7 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
-          FOLDER: build
+          FOLDER: out
           CLEAN: true # Automatically remove deleted files from the deploy branch
           GIT_CONFIG_NAME: 'minecodebot'
           GIT_CONFIG_EMAIL: 'minecode.geral@gmail.com'

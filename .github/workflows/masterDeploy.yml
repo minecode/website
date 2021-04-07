@@ -28,7 +28,7 @@ jobs:
       - run: yarn build     # runs `next build`
         env:
           CI: true
-          NEXT_PUBLIC_BASE_PATH: /
+          NEXT_PUBLIC_BASE_PATH:
       - run: touch .next/.nojekyll
         
       - name: Deploy 🚀

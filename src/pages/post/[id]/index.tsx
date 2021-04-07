@@ -195,7 +195,7 @@ const post = (props: Props) => {
 
 export default post;
 
-/*export const getStaticPaths = async () => {
+export const getStaticPaths = async () => {
 	var header = getHeader();
 
 	const issues = await fetch(
@@ -212,9 +212,9 @@ export default post;
 	}))
 
   return {paths, fallback: false}
-}*/
+}
 
-export const getServerSideProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
 	var header = getHeader();
 
 	const issue = await fetch(

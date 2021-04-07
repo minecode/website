@@ -21,8 +21,8 @@ export function addPost(issue) {
 	var title = document.createElement('h3');
 	var link = document.createElement('Link');
 	title.setAttribute('class', 'my-0 font-weight-normal');
-	link.setAttribute('href', './blog/post/[id]');
-	link.setAttribute('as', './blog/post/' + issue.number + '');
+	link.setAttribute('href', './post/[id]');
+	link.setAttribute('as', './post/' + issue.number + '');
 	var text = document.createTextNode(issue.title.split(/\[\w*\] /)[1]);
 	link.append(text);
 	title.append(link);
@@ -224,8 +224,8 @@ export function getCard(i, element, hoverElement, setHoverElement) {
 
 export function getElement(type, element) {
 	if (type === 'post') {
-		const href = '/blog/post/[id]';
-		const as = '/blog/post/' + element.number;
+		const href = '/post/[id]';
+		const as = '/post/' + element.number;
 		var title = element.title.split(/\[\w*\] /)[1];
 		element.labels.filter(e => e.name === 'highlight').length > 0 & getDiffDates(new Date(element.closed_at), new Date()) <= 2 ? 
 			title = (<>{element.title.split(/\[\w*\] /)[1]} <br/><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faStar} />{' '}Destaque</div><div className="m-1 btn btn-sm btn-outline-light btn-sm bordered"><FontAwesomeIcon icon={faCertificate} />{' '}Novo</div></>)

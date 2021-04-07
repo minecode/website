@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getListCards, getHeader } from '../../../../components/Utils';
+import { getListCards, getHeader } from '../../../components/Utils';
 
 import { useRouter } from 'next/router';
 
-const user = () => {
+const tag = () => {
 
 	const [hoverElement, setHoverElement] = useState(null);
 	const [post, setPost] = useState(null);
@@ -18,7 +18,14 @@ const user = () => {
 			})
 				.then(res => res.json())
 				.then(data => {
-					setPost(data.filter(element => element.user.login === id));
+					setPost(data.filter(element2 => {
+						if (element2.labels.filter(element => element.name === id).length > 0) {
+							return true;
+						} else {
+							return false;
+						}
+
+					}));
 				});
 		}
 	}, [id]);
@@ -30,4 +37,5 @@ const user = () => {
 	);
 };
 
-export default user;
+export default tag;
+

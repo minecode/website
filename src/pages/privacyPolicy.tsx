@@ -1,5 +1,4 @@
 import React from 'react';
-import { titleCase } from '../components/Utils';
 
 export default function privacyPolicy() {
 	// var elements = this.props.match.path.split('/');

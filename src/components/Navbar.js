@@ -26,38 +26,6 @@ export default function Navbar() {
 					aria-label='Toggle navigation'>
 					<span className='navbar-toggler-icon'></span>
 				</button>
-				<div className='collapse navbar-collapse' id='navbarResponsive'>
-					<ul className='navbar-nav ml-auto'>
-						<li
-							className={path && 
-								path === '/' ? 'nav-item active' : 'nav-item'
-							}>
-							<a className='nav-link' href='/'>
-								Home
-							</a>
-						</li>
-						<li
-							className={path && 
-								path.includes('/blog')
-								? 'nav-item active'
-								: 'nav-item'
-							}>
-							<a className='nav-link' href='/blog'>
-								Blog
-							</a>
-						</li>
-						<li
-							className={path && 
-								path.includes('/release')
-								? 'nav-item active'
-								: 'nav-item'
-							}>
-							<a className='nav-link' href='/releases'>
-								Releases
-							</a>
-						</li>
-					</ul>
-				</div>
 			</div>
 		</nav>
 	);

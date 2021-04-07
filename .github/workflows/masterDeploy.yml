@@ -28,15 +28,15 @@ jobs:
       - run: yarn build     # runs `next build`
         env:
           CI: true
-          DEPLOY_TARGET: master
-      - run: touch out/.nojekyll
+          NEXT_PUBLIC_BASE_PATH: /
+      - run: touch .next/.nojekyll
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.0
         with:
           ACCESS_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
-          FOLDER: out
+          FOLDER: .next
           CLEAN: true # Automatically remove deleted files from the deploy branch
           GIT_CONFIG_NAME: 'minecodebot'
           GIT_CONFIG_EMAIL: 'minecode.geral@gmail.com'

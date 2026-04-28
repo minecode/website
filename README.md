@@ -1,10 +1,11 @@
-# website
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/minecode/website/masterDeploy)
 
-![GitHub repo size](https://img.shields.io/github/repo-size/minecode/website)
+  # Redesign website with new logo
 
-![Codacy grade](https://img.shields.io/codacy/grade/32a9506ace914fe089da88d7c88eac8d)
+  This is a code bundle for Redesign website with new logo. The original project is available at https://www.figma.com/design/YF0xlLo1szr9dheexHD5E9/Redesign-website-with-new-logo.
 
-![License](https://img.shields.io/github/license/minecode/website)
+  ## Running the code
 
-![Issues](https://img.shields.io/github/issues/minecode/website)
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  

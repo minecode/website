@@ -7,6 +7,7 @@ WORKDIR /usr/src/app/frontend
 
 # Install dep
 COPY package*.json ./
+COPY yarn.lock ./
 RUN yarn
 
 # Copy source files
